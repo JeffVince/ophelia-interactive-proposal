@@ -1,0 +1,158 @@
+{
+    "process": [
+      {
+        "phase": "Phase 1: Brand Foundation",
+        "objective": "Establish and approve core brand identity before proceeding with creative execution.",
+        "deliverables": {
+          "brand_book_band_show": {
+            "concept_overview": "Cultural alignment, creative narrative",
+            "name_options": "3–5 options",
+            "logo": {
+              "wordmark": true,
+              "icon": true
+            },
+            "typography_pairings": true,
+            "pantone_palette": true,
+            "initial_merchandise_direction": true,
+            "stakeholder_approval": ["Isaac Lee", "Bang"]
+          }
+        },
+        "rounds": [
+          {
+            "round": "R1",
+            "tasks": [
+              "Discovery & moodboarding",
+              "Cultural analysis & creative exploration",
+              "3 distinct moodboards",
+              "Preliminary name & logo sketches"
+            ]
+          },
+          {
+            "round": "R2",
+            "tasks": [
+              "Stakeholder feedback integration",
+              "Refinement of names, logo, typography, Pantone selections"
+            ]
+          },
+          {
+            "round": "R3",
+            "tasks": [
+              "Final approval of comprehensive Band/Show Brand Book"
+            ]
+          }
+        ],
+        "approval_gate": "Core brand approval required to proceed to Phase 2"
+      },
+      {
+        "phase": "Phase 2: Brand Extensions",
+        "objective": "Apply approved brand identity to cohesive, high-quality visual and promotional content.",
+        "deliverables": {
+          "advertising_creative_direction_deck": {
+            "video_motion_graphics_styles": true,
+            "photoshoot_concepts": "Press, promotional",
+            "ad_mat": ["Digital", "Print", "Social Graphics"],
+            "graphic_packages": ["Lower thirds", "Titles", "Credits", "Transitions", "Visualizers"]
+          }
+        },
+        "rounds": [
+          {
+            "round": "R1",
+            "tasks": [
+              "Creative concept exploration aligned with approved brand foundation",
+              "Preliminary advertising and photo/video moodboards"
+            ]
+          },
+          {
+            "round": "R2",
+            "tasks": [
+              "Stakeholder revisions on advertising visuals and concepts",
+              "Refined photo/video shoot concepts, detailed treatments"
+            ]
+          },
+          {
+            "round": "R3",
+            "tasks": [
+              "Final approval of advertising material concepts for production",
+              "Delivery of Advertising Creative Direction Deck"
+            ]
+          }
+        ]
+      },
+      {
+        "phase": "Phase 3: EP Brand Book",
+        "objective": "Define and finalize EP-specific branding, leveraging foundational brand identity while introducing fresh visual elements.",
+        "deliverables": {
+          "ep_brand_book": {
+            "concept_overview": "EP narrative, thematic visual identity",
+            "name_options": "3–5 options",
+            "logo": {
+              "wordmark": true,
+              "icon": true
+            },
+            "typography_pairings": true,
+            "pantone_palette": "EP-specific adjustments",
+            "merchandise_line": "EP-driven merch concepts",
+            "press_photo_concept": true,
+            "initial_music_video_concepts": true
+          }
+        },
+        "rounds": [
+          {
+            "round": "R1",
+            "tasks": [
+              "EP-specific moodboarding and naming exploration",
+              "Preliminary EP logo and visuals"
+            ]
+          },
+          {
+            "round": "R2",
+            "tasks": [
+              "Stakeholder feedback integration",
+              "Refined EP brand assets (name, logo, typography, merch)"
+            ]
+          },
+          {
+            "round": "R3",
+            "tasks": [
+              "Final approval of EP branding package",
+              "Delivery of finalized EP Brand Book"
+            ]
+          }
+        ]
+      },
+      {
+        "phase": "Phase 4: Music Video & Press Concepts",
+        "objective": "Finalize detailed production-ready creative treatments aligned with established EP and foundational brand books.",
+        "deliverables": {
+          "production_documents": {
+            "music_videos": "Detailed treatments for 3 music videos",
+            "press_photoshoot_concept": "Production logistics, styling, locations, visual references",
+            "production_planning_documents": "Ready for immediate execution"
+          }
+        },
+        "rounds": [
+          {
+            "round": "R1",
+            "tasks": [
+              "Initial detailed creative outlines for music videos",
+              "Detailed press shoot direction"
+            ]
+          },
+          {
+            "round": "R2",
+            "tasks": [
+              "Stakeholder revisions and refinements",
+              "Logistics integration (supplier and partner alignment)"
+            ]
+          },
+          {
+            "round": "R3",
+            "tasks": [
+              "Finalized and approved creative treatments for execution",
+              "Final production roadmap & schedule delivery"
+            ]
+          }
+        ]
+      }
+    ]
+  } 

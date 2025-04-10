@@ -1,0 +1,359 @@
+FullCalendar Project Timeline Vue Component
+
+Architecture and Plan
+
+Data Structure and Timeline Mapping
+
+The project data is provided in data.json with phases and their rounds. Each phase has a number, name, and rounds (R1, R2, R3) with details:
+	•	duration_days for each round (e.g. 5 days each)
+	•	Lists of deliverables, tasks, and team roles for that round.
+
+We will import this data and map it into calendar events. Phase 1 is set to start on April 19 (assumed April 19, 2025 for concreteness), and subsequent rounds follow consecutively:
+	1.	Sequential Scheduling: Phase 1 Round 1 (R1) begins April 19. Its duration (5 days) means it spans April 19 through April 23 inclusive. Round 2 (R2) then starts immediately after, on April 24, running 5 days (through April 28), and R3 runs April 29–May 3. Phase 2 will start on May 4, right after Phase 1 ends, and so on. This creates a continuous timeline across phases with no gaps.
+	2.	Event Generation: We will iterate through phases in order (phase 1 to 4) and their rounds (R1 → R2 → R3). For each round, create a FullCalendar event with:
+	•	Title: Include phase and round info (e.g., “Phase 1 – R1: Discovery & Exploration”) so the calendar entry is identifiable.
+	•	Dates: A start date (the current timeline pointer) and an end date computed by adding the round’s duration_days. In FullCalendar, the end is exclusive, so if R1 is 5 days starting 2025-04-19, we set end = 2025-04-24 (exclusive end) to cover Apr 19–23 on the calendar.
+	•	All-day Event: Each round will be an all-day block (no specific time of day) spanning multiple days.
+	•	Extended Data: Attach the round’s deliverables, tasks, and team as extendedProps on the event. This will allow us to show detailed info when the event is clicked (drilldown).
+
+We will use a computed property or generation function to produce the events array from the JSON data. This makes event generation memoized and reactive – it will only re-run if the input data or UI filters change (see Phase toggling below), improving efficiency.
+
+FullCalendar Integration
+
+We will use FullCalendar’s official Vue 3 component (@fullcalendar/vue3) along with the DayGrid plugin for month/week/day views:
+	•	Views: Enable day, week, and month views (dayGridDay, dayGridWeek, dayGridMonth). We’ll configure FullCalendar’s headerToolbar with buttons for “Day”, “Week”, “Month” and navigation (prev/next/today) so the user can switch views easily.
+	•	No Drag/Resize: We will set editable: false and omit any drag/drop plugins. This ensures events are static blocks (the user cannot accidentally drag or resize rounds on the calendar).
+	•	Initial View: Default to month view for an overview, but the user can switch to week/day for details. We may also set initialDate to April 19, 2025, so the calendar starts at Phase 1 by default.
+	•	Event Click (Drilldown): Use FullCalendar’s eventClick callback to handle clicks on events. When a round event is clicked, we will open a detail side panel or modal showing that round’s information (deliverables, tasks, team members). This uses the extendedProps we attached to display details.
+
+Phase Visibility Toggle (ON/OFF/GRAY)
+
+We will implement controls to toggle the visibility of each phase:
+	•	A simple UI control (e.g. a dropdown or buttons) for each phase (1–4) will allow three states:
+	•	ON: show the phase’s events normally.
+	•	OFF: hide all events of that phase.
+	•	GRAYED: show the events in a desaturated/disabled style, and make them non-interactive.
+	•	Reactive State: We’ll maintain a reactive phaseStates object mapping each phase number to "ON", "OFF", or "GREY". Initially all will be "ON" (fully visible).
+	•	Filtering Events: The events computed array will respect these states:
+	•	If a phase is OFF, its rounds will not be included in the events list (filtered out).
+	•	If GREY, the events remain in the list but we add a flag or CSS class to indicate greying. We won’t attach the normal interactive color and we’ll disable pointer events for those events.
+	•	This dynamic filtering will be efficient by leveraging the computed event generation – it will regenerate the events array only when a toggle changes. FullCalendar will then update the displayed events accordingly (either removing or updating the styling of those events).
+	•	UI Implementation: For example, we could use a <select> or radio button group for each phase:
+	•	e.g. “Phase 1: [Show / Grey / Hide]” selection.
+Changing this selection updates phaseStates[1] and triggers event recomputation.
+	•	Grey Out Style: When a phase is greyed, its events will be styled with a muted appearance (e.g. light gray background and subdued text) and no hover/click effects. We can achieve this by applying a CSS class (like .greyed) to those event elements (via FullCalendar’s eventClassNames or by computing a class in the event object) and defining CSS to reduce opacity or apply grayscale. We will also set pointer-events: none on greyed events so clicks are ignored.
+
+Event Detail Drilldown (Side Panel/Modal)
+
+Clicking an event brings up a detail view for that round:
+	•	We will manage a selectedEvent state. On eventClick, we set selectedEvent to the FullCalendar event object (which contains our extended props).
+	•	The component will conditionally render a detail panel (could be a modal overlay or a sidebar) when selectedEvent is not null. This panel will show:
+	•	Round Name and Phase (e.g. “Phase 1 – R1: Discovery & Exploration” as a title).
+	•	Deliverables: list the deliverables for that round.
+	•	Tasks: list the tasks.
+	•	Team: list team roles and perhaps their day rates. For example, “Creative Director – $900/day”.
+	•	The panel will have a close button to hide it (simply set selectedEvent back to null).
+	•	We’ll ensure this panel is visually distinct (e.g. a white overlay with a slight shadow if modal, or a sidebar with separated styling) and is scrollable if content is long.
+	•	This approach cleanly separates the calendar view and the detailed information, fulfilling the drilldown requirement without cluttering the calendar itself.
+
+Color Coding and Aesthetics
+
+We aim for an elegant, Hybe-inspired design:
+	•	Color Palette: Hybe’s design aesthetic emphasizes clean neutrals (black, white, gray) with an accent. We will use graceful tone variations to color-code either each phase (or each round) distinctly. To keep it elegant rather than loud, we’ll use soft, muted colors for event backgrounds instead of FullCalendar’s default bright colors. For example:
+	•	Phase 1 events in a soft bluish tone,
+	•	Phase 2 in a light mint green,
+	•	Phase 3 in a pale pink,
+	•	Phase 4 in a warm pastel yellow (a nod to Hybe’s “Hyper Lemon” accent, but subdued).
+	•	Applying Colors: We can assign a CSS class per phase (e.g. .phase-1, .phase-2, etc.) on events. In scoped CSS, define background-color and border-color for each class using the chosen palette. The text color will be dark (black/gray) on light backgrounds for readability.
+	•	Grey State Styling: As mentioned, a .greyed class (in addition to phase class) will override the event’s style to a neutral gray and reduce opacity. This maintains the event’s block presence in the timeline layout but visually de-emphasizes it.
+	•	Overall Aesthetic: The calendar will have a clean white background by default. We won’t rely on the default FullCalendar coloring or theme. Instead, our custom event classes ensure a unique look. We’ll use scoped styles within the component to avoid affecting other pages, and the design will be minimalist (no overly bold colors or unnecessary embellishments) to align with Hybe’s modern aesthetic.
+
+Component Structure and Best Practices
+
+We will implement this as a Vue Single-File Component (SFC) containing:
+	•	Template: a container for the calendar and controls:
+	•	Phase toggle controls (likely at the top).
+	•	The <FullCalendar> component with bound props/options for events, view, etc.
+	•	The detail panel markup.
+	•	Script:
+	•	Import FullCalendar and needed plugins (dayGridPlugin, etc.).
+	•	Import the JSON data.
+	•	Define component data: phaseStates, selectedEvent, etc.
+	•	Compute the events list from phaseStates and data (memoized generation).
+	•	Methods: handleEventClick for opening the detail panel.
+	•	Style: scoped CSS for event colors, grey-out styling, and layout of the panel and controls. We’ll use flex or grid to layout the controls, and ensure the modal/panel has a fixed position or absolute overlay with appropriate styling.
+
+We’ll separate concerns such that:
+	•	Data processing (event generation) is done in the script logic, not intermingled with template.
+	•	UI state (selected event, toggle states) is managed in the component’s reactive state.
+	•	Styles are modular (scoped to this component) and we avoid inline styles or excessive global CSS.
+
+Now, following this plan, below is the complete Vue component implementation:
+
+Vue Single-File Component
+
+<template>
+  <div class="timeline-container">
+    <!-- Phase Toggle Controls -->
+    <div class="phase-controls">
+      <div v-for="phase in timelineData.phases" :key="phase.number" class="phase-toggle">
+        <label>{{ phase.displayName || 'Phase ' + phase.number }}</label>
+        <select v-model="phaseStates[phase.number]">
+          <option value="ON">Show</option>
+          <option value="GREY">Greyed</option>
+          <option value="OFF">Hide</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- FullCalendar Component -->
+    <FullCalendar :options="calendarOptions" />
+
+    <!-- Detail Side Panel / Modal for Event Drilldown -->
+    <div v-if="selectedEvent" class="details-panel">
+      <div class="details-header">
+        <h3>
+          {{ selectedEvent.title }}
+        </h3>
+        <button class="close-btn" @click="selectedEvent = null">×</button>
+      </div>
+      <div class="details-body">
+        <p><strong>Deliverables:</strong></p>
+        <ul>
+          <li v-for="item in selectedEvent.extendedProps.deliverables" :key="item">{{ item }}</li>
+        </ul>
+        <p><strong>Tasks:</strong></p>
+        <ul>
+          <li v-for="task in selectedEvent.extendedProps.tasks" :key="task">{{ task }}</li>
+        </ul>
+        <p><strong>Team Members:</strong></p>
+        <ul>
+          <li v-for="member in selectedEvent.extendedProps.team" :key="member.role">
+            {{ member.role }} – ${{ member.day_rate }}/day
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'  // for clicking
+// Import week/day timeline views (dayGrid is used for week/day in all-day context)
+import timelineData from '@/data.json'  // assuming data.json is in project src (adjust path as needed)
+
+export default {
+  name: 'ProjectTimelineCalendar',
+  components: { FullCalendar },
+  data() {
+    // Initialize phaseStates (all phases ON by default)
+    const states = {}
+    timelineData.phases.forEach(ph => {
+      states[ph.number] = 'ON'
+    })
+    return {
+      timelineData,
+      phaseStates: states,
+      selectedEvent: null,
+      // FullCalendar options (some properties will be reactive)
+      calendarOptions: {
+        plugins: [ dayGridPlugin, interactionPlugin ],
+        initialView: 'dayGridMonth',
+        initialDate: '2025-04-19',  // start at Phase 1
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,dayGridWeek,dayGridDay'
+        },
+        editable: false,            // disable drag/drop
+        eventClick: this.handleEventClick,
+        events: []  // will set below via created hook or watch
+      }
+    }
+  },
+  computed: {
+    // Compute events from timelineData + phaseStates
+    generatedEvents() {
+      const events = []
+      // Starting date for Phase 1 Round 1
+      let pointerDate = new Date('2025-04-19')  // or use Date.now() logic if dynamic
+      for (const phase of this.timelineData.phases.sort((a, b) => a.number - b.number)) {
+        // Skip this phase entirely if OFF
+        if (this.phaseStates[phase.number] === 'OFF') {
+          // Still advance pointer through its rounds (to maintain overall timeline continuity)
+          for (const roundKey in phase.rounds) {
+            const duration = phase.rounds[roundKey].duration_days
+            pointerDate = new Date(pointerDate.getTime() + duration * 24 * 60 * 60 * 1000)
+          }
+          continue
+        }
+        // Iterate rounds in order (R1, R2, R3)
+        for (const roundKey of Object.keys(phase.rounds)) {
+          const round = phase.rounds[roundKey]
+          const startDateObj = new Date(pointerDate.getTime())  // clone current pointer
+          const endDateObj = new Date(pointerDate.getTime() + round.duration_days * 24 * 60 * 60 * 1000)
+          // Format dates as YYYY-MM-DD (FullCalendar will treat as all-day events)
+          const startStr = startDateObj.toISOString().slice(0, 10)
+          const endStr = endDateObj.toISOString().slice(0, 10)  // exclusive end
+          // Determine if this event should be greyed
+          const isGrey = (this.phaseStates[phase.number] === 'GREY')
+          // Build event object
+          events.push({
+            title: `Phase ${phase.number} – ${roundKey}: ${round.name}`,
+            start: startStr,
+            end: endStr,
+            allDay: true,
+            // Assign class for phase (for color) and possibly grey state
+            classNames: [
+              `phase-${phase.number}`,
+              isGrey ? 'greyed' : ''
+            ].filter(Boolean),
+            // Include extended props for detail drilldown
+            extendedProps: {
+              phase: phase.name,
+              phaseNumber: phase.number,
+              round: roundKey,
+              deliverables: round.deliverables,
+              tasks: round.tasks,
+              team: round.team
+            }
+          })
+          // Advance pointer to end for next round (endObj is the next start)
+          pointerDate = endDateObj
+        }
+      }
+      return events
+    }
+  },
+  watch: {
+    // Watch for changes in generatedEvents and update calendar options
+    generatedEvents: {
+      handler(newEvents) {
+        this.calendarOptions.events = newEvents
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  methods: {
+    handleEventClick(info) {
+      // If event is greyed (non-interactive), do nothing
+      if (info.event.classNames.includes('greyed')) {
+        return
+      }
+      this.selectedEvent = info.event
+    }
+  }
+}
+</script>
+
+<style scoped>
+/* Layout Styles */
+.timeline-container {
+  position: relative;
+  padding: 1rem;
+}
+.phase-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+.phase-toggle label {
+  margin-right: 0.3em;
+  font-weight: 600;
+}
+.phase-toggle select {
+  padding: 0.2em 0.4em;
+}
+.details-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: #fff;
+  border-left: 2px solid #ddd;
+  overflow-y: auto;
+  padding: 1rem;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.details-header h3 {
+  font-size: 1.1em;
+  margin: 0;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  line-height: 1;
+  cursor: pointer;
+}
+.details-body {
+  margin-top: 0.5em;
+}
+.details-body ul {
+  margin: 0.3em 0 1em 1.2em;
+}
+
+/* Color Palette for Phases (soft, Hybe-inspired tones) */
+:root {
+  --phase1-color: #D6E4FF;   /* light blue */
+  --phase2-color: #D6F5E4;   /* light mint */
+  --phase3-color: #FFE4F0;   /* light pink */
+  --phase4-color: #FFF4CC;   /* light yellow */
+  --grey-color:  #E0E0E0;    /* grey for disabled */
+}
+
+/* Apply phase colors to event blocks */
+::v-deep .fc-event.phase-1 {
+  background-color: var(--phase1-color) !important;
+  border-color: var(--phase1-color) !important;
+  color: #000 !important;
+}
+::v-deep .fc-event.phase-2 {
+  background-color: var(--phase2-color) !important;
+  border-color: var(--phase2-color) !important;
+  color: #000 !important;
+}
+::v-deep .fc-event.phase-3 {
+  background-color: var(--phase3-color) !important;
+  border-color: var(--phase3-color) !important;
+  color: #000 !important;
+}
+::v-deep .fc-event.phase-4 {
+  background-color: var(--phase4-color) !important;
+  border-color: var(--phase4-color) !important;
+  color: #000 !important;
+}
+
+/* Greyed-out events (overrides phase color) */
+::v-deep .fc-event.greyed {
+  background-color: var(--grey-color) !important;
+  border-color: var(--grey-color) !important;
+  color: #808080 !important;
+  filter: grayscale(80%);
+  pointer-events: none;
+}
+</style>
+
+Styling and Interaction Improvements
+	•	Refined Color Scheme: The chosen pastel colors are placeholders; you should adjust them to perfectly match the desired aesthetic. Hybe’s accent “Hyper Lemon” (a vibrant yellow-green) could be used more boldly for emphasis (perhaps for the current date indicator or hover highlights) while keeping round blocks pastel. Ensure text is always high-contrast against the background (e.g., use dark text on light event colors as we did).
+	•	Interactive Enhancements: Consider adding hover tooltips on events to preview key info. FullCalendar can show tooltips via the eventDidMount hook or using a library. A tooltip could display a summary (e.g., round name and phase) to complement the drilldown panel.
+	•	Transitions: Add CSS transition effects for the detail panel (slide-in from right) and maybe a fade-out for greyed events toggling. For example, use Vue’s <transition> wrapper for the panel to animate its appearance. This will make the UI feel smoother.
+	•	Toggle UI: The phase filter controls could be more visual. For instance, use colored indicators or buttons instead of a raw <select>. One idea is to show each phase name with a small color swatch and make it clickable to cycle through states. This way “Grey” state could visually desaturate the label as well. Using a library component (like a toggle switch or tri-state checkbox) could improve clarity.
+	•	Layout and Responsiveness: If embedding this in a narrow view, the side panel might overlap the calendar. You could instead implement the drilldown as a modal dialog centered on screen (using a semi-transparent backdrop). This can be done with a simple absolute overlay or using a UI framework’s modal component for better accessibility (focus trapping, etc.). Ensure that on smaller screens, the modal or panel is sized appropriately (perhaps full-screen on mobile).
+	•	Scoped Style Caution: We used ::v-deep to reach into FullCalendar’s DOM for styling. This is fine, but in a larger app consider encapsulating the calendar in a wrapper div with an ID or class and target that in global CSS or use the FullCalendar theming options. This would avoid relying on deep selectors. However, since we kept styles scoped, the rest of the app won’t be affected by these rules.
+	•	Performance: For very large timelines, generating all events at once could be heavy. In that case, consider using FullCalendar’s lazy loading (event sources that fetch events on the fly) or splitting phases into separate event sources. For our scale (4 phases, 12 rounds total) this is not an issue. We also ensured that toggling a phase doesn’t recompute everything needlessly beyond what’s necessary thanks to the computed property.
+	•	Accessibility: Ensure that color is not the only way to distinguish phases – we added labels in titles (“Phase X”) for clarity. You might also include an on-calendar legend or different border styles/dash patterns per phase to aid those with color vision deficiencies. Also, add appropriate aria labels on the detail panel for screen readers (e.g., aria-label on close button, etc.).
+
+By following this plan and refining with the suggestions above, the result is a maintainable Vue component that cleanly displays the project timeline with FullCalendar, allows filtering by phase, and provides rich detail on demand – all while sporting a modern, elegant aesthetic inspired by Hybe’s design principles.

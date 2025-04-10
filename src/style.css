@@ -1,0 +1,96 @@
+/* Import Space Grotesk font */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: #f5f5f0; /* Warmer ivory color for text */
+  background-color: #101010; /* Deeper onyx black */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #e6e6dc; /* Ivory color for links */
+  text-decoration: inherit;
+  transition: all 0.25s ease;
+}
+a:hover {
+  color: #ffffff; /* Pure white on hover */
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 100%;
+  min-height: 100vh;
+  background-color: #101010; /* Deeper onyx black */
+  color: #f5f5f0; /* Warmer ivory color */
+  width: 100%;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid #333;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1c1c1c; /* Slightly lighter black */
+  color: #f0f0e6; /* Warm ivory color */
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+button:hover {
+  background-color: #282828; /* Lighter shade on hover */
+  border-color: #444;
+  transform: translateY(-2px);
+}
+button:focus,
+button:focus-visible {
+  outline: 2px solid #f0f0e6; /* Ivory outline instead of purple */
+}
+
+.card {
+  padding: 2em;
+  background-color: #1c1c1c; /* Slightly lighter black */
+  border-radius: 12px;
+  border: 1px solid #333;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: #f5f5f0; /* Warm ivory color */
+}
+
+/* Remove light theme overrides */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #f5f5f0; /* Keep consistent with dark theme */
+    background-color: #101010;
+  }
+  a:hover {
+    color: #ffffff;
+  }
+  button {
+    background-color: #1c1c1c;
+  }
+}
