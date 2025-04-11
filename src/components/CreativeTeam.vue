@@ -454,8 +454,8 @@ const getOrgChartClass = (name) => {
     case 'Wesley So': return 'position-right-bottom'
     
     // Far Right column (was Far right)
-    case 'Blake Bohls': return 'position-far-right-top'
-    case 'Muhozi Nintunze': return 'position-far-right-bottom'
+    case 'Muhozi Nintunze': return 'position-far-right-top'
+    case 'Blake Bohls': return 'position-far-right-bottom'
     
     default: return 'position-default'
   }
@@ -582,8 +582,8 @@ const updateConnectionPositions = () => {
     ['Ava Rikki', 'Yussef Haridy'],
     ['DJ Jung', 'Angelo Rosales'],
     ['DJ Jung', 'Wesley So'],
-    ['Angelo Rosales', 'Blake Bohls'],
-    ['Muhozi Nintunze', 'Wesley So']
+    ['Angelo Rosales', 'Muhozi Nintunze'],
+    ['Blake Bohls', 'Wesley So']
   ];
   
   // Draw connection lines
@@ -1511,11 +1511,11 @@ iframe {
 
 /* Column 5 (far right): Muhozi, Blake */
 .position-far-right-top {
-  transform: translate(370px, -120px) !important; /* Blake */
+  transform: translate(370px, -120px) !important; /* Muhozi */
 }
 
 .position-far-right-bottom {
-  transform: translate(370px, 120px) !important; /* Muhozi */
+  transform: translate(370px, 120px) !important; /* Blake */
 }
 
 /* Remove old position classes */
