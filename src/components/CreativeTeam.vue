@@ -193,7 +193,7 @@ const teamMembers = [
   },
   {
     id: 4,
-    name: 'Wesly So',
+    name: 'Wesley So',
     role: 'Graphic Designer',
     day_rate: 700,
     avatar: WESLEY,
@@ -451,7 +451,7 @@ const getOrgChartClass = (name) => {
     // Middle-right column (was Middle-right)
     case 'Yussef Haridy': return 'position-right-top'
     case 'Angelo Rosales': return 'position-right-middle'
-    case 'Wesly So': return 'position-right-bottom'
+    case 'Wesley So': return 'position-right-bottom'
     
     // Far Right column (was Far right)
     case 'Blake Bohls': return 'position-far-right-top'
@@ -513,7 +513,7 @@ const updateConnectionPositions = () => {
   const requiredMembers = [
     'Santiago Duque', 'Juan Arenas', 'Jeff Haskell', 'Juan Felipe Díaz Herrera',
     'Israel Riqueros', 'Sho Schrock Manabe', 'Ava Rikki', 'DJ Jung', 
-    'Clayton McCracken', 'Yussef Haridy', 'Angelo Rosales', 'Wesly So',
+    'Clayton McCracken', 'Yussef Haridy', 'Angelo Rosales', 'Wesley So',
     'Blake Bohls', 'Muhozi Nintunze'
   ];
   
@@ -581,9 +581,9 @@ const updateConnectionPositions = () => {
     // Other connections
     ['Ava Rikki', 'Yussef Haridy'],
     ['DJ Jung', 'Angelo Rosales'],
-    ['DJ Jung', 'Wesly So'],
+    ['DJ Jung', 'Wesley So'],
     ['Angelo Rosales', 'Blake Bohls'],
-    ['Muhozi Nintunze', 'Wesly So']
+    ['Muhozi Nintunze', 'Wesley So']
   ];
   
   // Draw connection lines
