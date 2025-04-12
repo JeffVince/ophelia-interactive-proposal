@@ -72,7 +72,14 @@
     <div class="website-modal-backdrop" v-if="showWebsiteModal" @click="closeWebsiteModal">
       <div class="website-modal-content" @click.stop>
         <button class="close-modal" @click="closeWebsiteModal">×</button>
-        <iframe :src="websiteUrl" frameborder="0"></iframe>
+        <iframe 
+          v-if="currentMember?.iframeConfig"
+          :src="websiteUrl"
+          :width="currentMember.iframeConfig.width"
+          :height="currentMember.iframeConfig.height"
+          :style="currentMember.iframeConfig.style"
+        ></iframe>
+        <iframe v-else :src="websiteUrl" frameborder="0"></iframe>
       </div>
     </div>
   </div>
@@ -92,14 +99,12 @@ import AURA from '../assets/avatars/AURA.png'
 import JUNG from '../assets/avatars/JUNG.webp'
 
 // Import SVG files as URLs
-
 import HousePostLogo from '../assets/avatars/HOUSEPOST.SVG'
 import CabinEditLogo from '../assets/avatars/CABINEDIT.SVG'
 import EthosLogo from '../assets/avatars/ETHOS.SVG'
 
 // Import team member avatars
 import ISRAELRIQUEROS from '../assets/portraits/ISRAELRIQUEROS.png'
-import AVARIKKI from '../assets/portraits/AVARIKKI.jpeg'
 import WESLEY from '../assets/portraits/WESLEY.png'
 import ANGELO from '../assets/portraits/ANGELO.png'
 import MUHOZI from '../assets/portraits/MUHOZI.png'
@@ -108,9 +113,14 @@ import YUSSEF from '../assets/portraits/YUSSEF.jpg'
 import CLAYTON from '../assets/portraits/CLAYTON.jpg'
 import BLAKE from '../assets/portraits/BLAKE.png'
 import SHO from '../assets/portraits/SHO.png'
-import JEFF from '../assets/portraits/JEFF.png'
 import JUAN from '../assets/portraits/JUAN.png'
 import DJUNG from '../assets/portraits/DJUNG.png'
+import LENA from '../assets/portraits/LENA.png'
+import JOSE from '../assets/portraits/JOSE.jpeg'
+import ZUHENG from '../assets/portraits/ZUHENG.jpeg'
+import ALEXANDRA from '../assets/portraits/ALEXANDRA.jpeg'
+import JOHN from '../assets/portraits/JOHN.jpeg'
+import OPHELIA_LOGO from '../assets/Logo.png'
 
 // Import the workflow icon and hybe profile
 import WORKFLOW from '../assets/workflow.png'
@@ -120,6 +130,7 @@ import HYBE from '../assets/portraits/hybe.jpeg'
 const showWebsiteModal = ref(false)
 const websiteUrl = ref('')
 const isOrgChartActive = ref(false)
+const currentMember = ref(null)
 
 // Add refs for team members to track positions
 const teamRefs = ref({})
@@ -181,23 +192,30 @@ const teamMembers = [
     role: 'Art Director',
     day_rate: 900,
     avatar: DJUNG,
-    portfolioUrl: 'https://davidjung.studio/about/'
+    portfolioUrl: 'studiojung.co?link_target=parent',
+    iframeConfig: {
+      width: '640px',
+      height: '480px',
+      style: 'border: 0'
+    }
   },
   {
     id: 6,
-    name: 'Ava Rikki',
-    role: 'Director / Photographer',
+    name: 'Ophelia Roster',
+    role: 'Directors + Photographers',
     day_rate: 900,
-    avatar: AVARIKKI,
-    portfolioUrl: 'https://avarikki.com'
+    avatar: SHO,
+    portfolioUrl: 'https://www.ophelia.company',
+    noOutline: true
   },
   {
-    id: 4,
-    name: 'Wesley So',
-    role: 'Graphic Designer',
-    day_rate: 700,
-    avatar: WESLEY,
-    portfolioUrl: 'https://sosostudio.net/'
+    id: 16,
+    name: 'Jose Felipe Varón',
+    role: 'Documentary/Reality TV Director',
+    day_rate: 900,
+    avatar: JOSE,
+    portfolioUrl: '#',
+    noOutline: true
   },
   {
     id: 5,
@@ -219,7 +237,7 @@ const teamMembers = [
   {
     id: 8,
     name: 'Yussef Haridy',
-    role: 'Video Director',
+    role: 'BTS Shooter',
     day_rate: 1000,
     avatar: YUSSEF,
     portfolioUrl: 'https://www.yussefharidy.com/motion'
@@ -242,12 +260,29 @@ const teamMembers = [
     noOutline: true
   },
   {
-    id: 12,
-    name: 'Sho Schrock Manabe',
-    role: 'Producer',
+    id: 4,
+    name: 'Wesley So',
+    role: 'Graphic Designer',
+    day_rate: 700,
+    avatar: WESLEY,
+    portfolioUrl: 'https://sosostudio.net/'
+  },
+  {
+    id: 17,
+    name: 'Lena Huang',
+    role: 'Motion Graphics Artist',
+    day_rate: 800,
+    avatar: LENA,
+    portfolioUrl: 'https://www.lenahuang.com/',
+    noOutline: true
+  },
+  {
+    id: 20,
+    name: 'John Burton',
+    role: 'Editor / Sound Designer',
     day_rate: 900,
-    avatar: SHO,
-    portfolioUrl: 'https://www.ophelia.company',
+    avatar: JOHN,
+    portfolioUrl: 'https://www.johnburton.me/',
     noOutline: true
   },
   {
@@ -260,12 +295,30 @@ const teamMembers = [
     noOutline: true
   },
   {
-    id: 13,
-    name: 'Jeff Haskell',
-    role: 'Executive Producer',
-    day_rate: 1200,
-    avatar: JEFF,
-    portfolioUrl: 'https://jeffreyvhaskell.com',
+    id: 19,
+    name: 'Alexandra Kern',
+    role: 'Post-Producer',
+    day_rate: 900,
+    avatar: ALEXANDRA,
+    portfolioUrl: '#',
+    noOutline: true
+  },
+  {
+    id: 12,
+    name: 'Sho Schrock Manabe',
+    role: 'Film Producer',
+    day_rate: 900,
+    avatar: SHO,
+    portfolioUrl: 'https://www.ophelia.company',
+    noOutline: true
+  },
+  {
+    id: 18,
+    name: 'Zuheng Yin',
+    role: 'Creative Producer',
+    day_rate: 900,
+    avatar: ZUHENG,
+    portfolioUrl: '#',
     noOutline: true
   }
 ]
@@ -401,6 +454,9 @@ const openPortfolioDirectly = (item) => {
     return;
   }
   
+  // Set the current member
+  currentMember.value = item;
+  
   // Determine the portfolio URL based on whether it's a team member or partner
   const portfolioUrl = item.portfolioUrl || item.portfolio;
   
@@ -412,6 +468,7 @@ const openPortfolioDirectly = (item) => {
 
 const closeWebsiteModal = () => {
   showWebsiteModal.value = false;
+  currentMember.value = null;
 }
 
 const isSvgComponent = (avatar) => {
@@ -435,26 +492,30 @@ const getOrgChartClass = (name) => {
     case 'Santiago Duque': return 'position-extreme-left-top'
     case 'Juan Arenas': return 'position-extreme-left-bottom'
     
-    // Far Left column (was Far Left)
-    case 'Jeff Haskell': return 'position-far-left-top'
+    // Far Left column
+    case 'Israel Riqueros': return 'position-far-left-middle'
     case 'Juan Felipe Díaz Herrera': return 'position-far-left-bottom'
     
-    // Middle-left column (was Middle-left)
-    case 'Israel Riqueros': return 'position-left-middle-top'
-    case 'Sho Schrock Manabe': return 'position-left-middle-bottom'
+    // Middle-left column
+    case 'Alexandra Kern': return 'position-left-middle-top-extra'
+    case 'Sho Schrock Manabe': return 'position-left-middle-top'
+    case 'Zuheng Yin': return 'position-left-middle-bottom'
     
-    // Middle column (was Middle)
-    case 'Ava Rikki': return 'position-middle-top'
+    // Middle column
+    case 'John Burton': return 'position-middle-top-extra'
+    case 'Ophelia Roster': return 'position-middle-top'
     case 'DJ Jung': return 'position-middle-center'
     case 'Clayton McCracken': return 'position-middle-bottom'
     
-    // Middle-right column (was Middle-right)
+    // Middle-right column
+    case 'Jose Felipe Varón': return 'position-right-top-extra'
     case 'Yussef Haridy': return 'position-right-top'
     case 'Angelo Rosales': return 'position-right-middle'
     case 'Wesley So': return 'position-right-bottom'
     
-    // Far Right column (was Far right)
+    // Far Right column
     case 'Muhozi Nintunze': return 'position-far-right-top'
+    case 'Lena Huang': return 'position-far-right-middle'
     case 'Blake Bohls': return 'position-far-right-bottom'
     
     default: return 'position-default'
@@ -511,10 +572,10 @@ const updateConnectionPositions = () => {
   
   // Check if we have all the required positions
   const requiredMembers = [
-    'Santiago Duque', 'Juan Arenas', 'Jeff Haskell', 'Juan Felipe Díaz Herrera',
-    'Israel Riqueros', 'Sho Schrock Manabe', 'Ava Rikki', 'DJ Jung', 
+    'Santiago Duque', 'Juan Arenas', 'Israel Riqueros', 'Juan Felipe Díaz Herrera',
+    'Sho Schrock Manabe', 'Ophelia Roster', 'DJ Jung', 
     'Clayton McCracken', 'Yussef Haridy', 'Angelo Rosales', 'Wesley So',
-    'Blake Bohls', 'Muhozi Nintunze'
+    'Blake Bohls', 'Muhozi Nintunze', 'Lena Huang'
   ];
   
   const missingMembers = requiredMembers.filter(member => !positions[member]);
@@ -525,28 +586,28 @@ const updateConnectionPositions = () => {
   
   // Merge node 1: between Santiago/Juan A. and Jeff/Juan D.
   // Use fallback positions if original positions are missing
-  const mergeNode1X = positions['Santiago Duque'] && positions['Jeff Haskell'] ? 
-    (positions['Santiago Duque'].x + positions['Jeff Haskell'].x) / 2 : 200;
+  const mergeNode1X = positions['Santiago Duque'] && positions['Israel Riqueros'] ? 
+    (positions['Santiago Duque'].x + positions['Israel Riqueros'].x) / 2 : 200;
   const mergeNode1Y = positions['Santiago Duque'] && positions['Juan Arenas'] ? 
     (positions['Santiago Duque'].y + positions['Juan Arenas'].y) / 2 : 225;
   
-  // Merge node 2: between Jeff/Juan D. and Israel/Sho
-  const mergeNode2X = positions['Jeff Haskell'] && positions['Israel Riqueros'] ? 
-    (positions['Jeff Haskell'].x + positions['Israel Riqueros'].x) / 2 : 300;
-  const mergeNode2Y = positions['Jeff Haskell'] && positions['Juan Felipe Díaz Herrera'] ? 
-    (positions['Jeff Haskell'].y + positions['Juan Felipe Díaz Herrera'].y) / 2 : 225;
+  // Merge node 2: between Israel/Juan and Alexandra/Sho
+  const mergeNode2X = positions['Israel Riqueros'] && positions['Sho Schrock Manabe'] ? 
+    (positions['Israel Riqueros'].x + positions['Sho Schrock Manabe'].x) / 2 : 300;
+  const mergeNode2Y = positions['Israel Riqueros'] && positions['Juan Felipe Díaz Herrera'] ? 
+    (positions['Israel Riqueros'].y + positions['Juan Felipe Díaz Herrera'].y) / 2 : 225;
   
-  // Merge node 3: between Israel/Sho and Ava/DJ/Clayton
-  const mergeNode3X = positions['Israel Riqueros'] && positions['Ava Rikki'] ? 
-    (positions['Israel Riqueros'].x + positions['Ava Rikki'].x) / 2 : 400;
-  const mergeNode3Y = positions['Israel Riqueros'] && positions['Sho Schrock Manabe'] ? 
-    (positions['Israel Riqueros'].y + positions['Sho Schrock Manabe'].y) / 2 : 200;
+  // Merge node 4: between Zuheng and DJ and Clayton
+  const mergeNode4X = positions['Zuheng Yin'] && positions['DJ Jung'] ? 
+    (positions['Zuheng Yin'].x + positions['DJ Jung'].x) / 2 : 400;
+  const mergeNode4Y = positions['DJ Jung'] && positions['Clayton McCracken'] ? 
+    (positions['DJ Jung'].y + positions['Clayton McCracken'].y) / 2 : 200;
   
   // Store merge node positions
   const mergeNodes = {
     'mergeNode1': { x: mergeNode1X, y: mergeNode1Y },
     'mergeNode2': { x: mergeNode2X, y: mergeNode2Y },
-    'mergeNode3': { x: mergeNode3X, y: mergeNode3Y }
+    'mergeNode4': { x: mergeNode4X, y: mergeNode4Y }
   };
   
   console.log('Calculated merge nodes:', JSON.stringify(mergeNodes));
@@ -557,32 +618,39 @@ const updateConnectionPositions = () => {
     ['Santiago Duque', 'mergeNode1'],
     ['Juan Arenas', 'mergeNode1'],
     
-    // Connections from merge node 1 to Jeff/Juan D.
-    ['mergeNode1', 'Jeff Haskell'],
+    // Connections from merge node 1 to Israel/Juan
+    ['mergeNode1', 'Israel Riqueros'],
     ['mergeNode1', 'Juan Felipe Díaz Herrera'],
     
     // Connections to merge node 2
-    ['Jeff Haskell', 'mergeNode2'],
+    ['Israel Riqueros', 'mergeNode2'],
     ['Juan Felipe Díaz Herrera', 'mergeNode2'],
     
-    // Connections from merge node 2 to Israel/Sho
-    ['mergeNode2', 'Israel Riqueros'],
+    // Connections from merge node 2 to Alexandra/Sho/Zuheng
+    ['mergeNode2', 'Alexandra Kern'],
     ['mergeNode2', 'Sho Schrock Manabe'],
+    ['mergeNode2', 'Zuheng Yin'],
     
-    // Connections to merge node 3
-    ['Israel Riqueros', 'mergeNode3'],
-    ['Sho Schrock Manabe', 'mergeNode3'],
+    // Connection between Alexandra and John
+    ['Alexandra Kern', 'John Burton'],
     
-    // Connections from merge node 3 to Ava/DJ/Clayton
-    ['mergeNode3', 'Ava Rikki'],
-    ['mergeNode3', 'DJ Jung'],
-    ['mergeNode3', 'Clayton McCracken'],
+    // Direct connections from Sho and Roster
+    ['Sho Schrock Manabe', 'Ophelia Roster'],
+    ['Ophelia Roster', 'Jose Felipe Varón'],
+    ['Ophelia Roster', 'Yussef Haridy'],
+    
+    // Connection from Zuheng to merge node 4
+    ['Zuheng Yin', 'mergeNode4'],
+    
+    // Connections from merge node 4 to DJ and Clayton
+    ['mergeNode4', 'DJ Jung'],
+    ['mergeNode4', 'Clayton McCracken'],
     
     // Other connections
-    ['Ava Rikki', 'Yussef Haridy'],
     ['DJ Jung', 'Angelo Rosales'],
     ['DJ Jung', 'Wesley So'],
     ['Angelo Rosales', 'Muhozi Nintunze'],
+    ['Angelo Rosales', 'Lena Huang'],
     ['Blake Bohls', 'Wesley So']
   ];
   
@@ -610,7 +678,7 @@ const updateConnectionPositions = () => {
       return;
     }
     
-    // Create the connection line
+    // Create the connection line (now all connections are straight lines)
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     line.setAttribute('d', `M ${fromPos.x} ${fromPos.y} L ${toPos.x} ${toPos.y}`);
     line.setAttribute('stroke', '#9d86ff');
@@ -986,13 +1054,12 @@ onBeforeUnmount(() => {
   border: none;
 }
 
-/* Remove ivory outline for specific team members - keeping as backup if the class approach fails */
+/* Remove ivory outline for specific team members */
 .team-member:has([alt*="Israel Riqueros"]) .member-avatar,
 .team-member:has([alt*="Sho Schrock Manabe"]) .member-avatar,
 .team-member:has([alt*="Angelos Rosales"]) .member-avatar,
 .team-member:has([alt*="Black Bohls"]) .member-avatar,
-.team-member:has([alt*="Juan Felipe Díaz Herrera"]) .member-avatar,
-.team-member:has([alt*="Jeff Haskell"]) .member-avatar {
+.team-member:has([alt*="Juan Felipe Díaz Herrera"]) .member-avatar {
   border: none;
 }
 
@@ -1463,59 +1530,77 @@ iframe {
   z-index: 10;
 }
 
-/* Column 1 (far left): Jeff, Juan */
+/* Column 1 (far left): Israel, Juan */
 .position-far-left-top {
-  transform: translate(-350px, -120px) !important; /* Jeff */
+  transform: translate(-350px, -170px) !important; /* Israel - moved up by 50px */
+}
+
+.position-far-left-middle {
+  transform: translate(-350px, -80px) !important; /* Israel - middle position */
 }
 
 .position-far-left-bottom {
-  transform: translate(-350px, 120px) !important; /* Juan */
-  z-index: 10;
+  transform: translate(-350px, 80px) !important; /* Juan - bottom position */
 }
 
-/* Column 2 (middle-left): Israel, Sho */
+/* Column 2 (middle-left): Alexandra, Sho, Zuheng */
+.position-left-middle-top-extra {
+  transform: translate(-170px, -130px) !important; /* Alexandra */
+}
+
 .position-left-middle-top {
-  transform: translate(-170px, -120px) !important; /* Israel */
+  transform: translate(-170px, 0px) !important; /* Sho */
 }
 
 .position-left-middle-bottom {
-  transform: translate(-170px, 120px) !important; /* Sho */
+  transform: translate(-170px, 150px) !important; /* Zuheng */
 }
 
-/* Column 3 (middle): Ava, DJ Jung, Clayton */
+/* Column 3 (middle): John, Ophelia Roster, DJ Jung, Clayton */
+.position-middle-top-extra {
+  transform: translate(50px, -190px) !important; /* John */
+}
+
 .position-middle-top {
-  transform: translate(20px, -150px) !important; /* Ava */
+  transform: translate(50px, -50px) !important; /* Ophelia Roster */
 }
 
 .position-middle-center {
-  transform: translate(20px, 0px) !important; /* DJ Jung */
+  transform: translate(50px, 100px) !important; /* DJ Jung */
 }
 
 .position-middle-bottom {
-  transform: translate(20px, 150px) !important; /* Clayton */
+  transform: translate(50px, 250px) !important; /* Clayton */
 }
 
-/* Column 4 (middle-right): Yussef, Angelo, Wesley */
+/* Column 4 (middle-right): Jose, Yussef, Angelo, Wesley */
+.position-right-top-extra {
+  transform: translate(230px, -140px) !important; /* Jose - new position above Yussef */
+}
+
 .position-right-top {
-  transform: translate(200px, -120px) !important; /* Yussef */
+  transform: translate(230px, 10px) !important; /* Yussef */
 }
 
 .position-right-middle {
-  transform: translate(200px, 0px) !important; /* Angelo */
+  transform: translate(230px, 140px) !important; /* Angelo */
 }
 
 .position-right-bottom {
-  transform: translate(200px, 120px) !important; /* Wesley */
-  z-index: 10;
+  transform: translate(230px, 270px) !important; /* Wesley */
 }
 
-/* Column 5 (far right): Muhozi, Blake */
+/* Column 5 (far right): Muhozi, Lena, Blake */
 .position-far-right-top {
-  transform: translate(370px, -120px) !important; /* Muhozi */
+  transform: translate(400px, 25px) !important; /* Muhozi - moved up */
+}
+
+.position-far-right-middle {
+  transform: translate(400px, 170px) !important; /* Lena - new middle position */
 }
 
 .position-far-right-bottom {
-  transform: translate(370px, 120px) !important; /* Blake */
+  transform: translate(400px, 320px) !important; /* Blake */
 }
 
 /* Remove old position classes */
