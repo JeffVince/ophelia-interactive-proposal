@@ -10,11 +10,11 @@
             <p>
               The Truvatos project represents to us at Ophelia & Company an exciting opportunity to venture into a creative frontier, to honor and give back to the Latin cultures that have shaped our identity, and to forge meaningful connections between diverse communities and cultures. It is clear from our past experience with Katseye that Hybe Corporation's methodologies result in profound cultural impact globally. And so we would be delighted to join you all in committing to this new adventure.           </p>
             <p>
-              We propose Israel Riqueros as our lead candidate for Creative Director due to his deep cultural insight, industry expertise, and artistic relevance to the project. His innovative approach—characterized by vivid storytelling, bold visual expressions, and cultural authenticity—aligns seamlessly with Truvatos’ creative ambitions. With Israel at the helm and art director DJ  Jung contributing valuable K-pop experience, we believe this combination offers a powerful and globally resonant foundation for success.
+              We propose Israel Riqueros as our lead candidate for Creative Director due to his deep cultural insight, industry expertise, and artistic relevance to the project. His innovative approach—characterized by vivid storytelling, bold visual expressions, and cultural authenticity—aligns seamlessly with Truvatos' creative ambitions. With Israel at the helm and art director DJ Jung contributing valuable K-pop experience, we believe this combination offers a powerful and globally resonant foundation for success.
             </p>
 
           <p>
-            Enclosed, you will find a proposal detailing the project’s scope, our creative team, timeline, and budget. Beyond creative direction, we have proactively identified additional opportunities inspired by our previous collaboration on Hybe's Dream Academy.          </p>
+            Enclosed, you will find a proposal detailing the project's scope, our creative team, timeline, and budget. Beyond creative direction, we have proactively identified additional opportunities inspired by our previous collaboration on Hybe's Dream Academy.          </p>
           
           <p>
             At Ophelia & Company, we specialize in bridging cultures through compelling storytelling and striking visuals. With our combined experience in Latin culture and K-pop, we are confident in our ability to help shape Truvatos into a vibrant, globally recognized brand. We look forward to the possibility of collaborating with you to bring this vision to life.
@@ -87,7 +87,7 @@ export default {
 
 .letter-content p {
   margin-bottom: 0.9rem;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   color: #f5f5f0;
   max-width: 100%;
