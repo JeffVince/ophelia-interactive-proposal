@@ -1,0 +1,1192 @@
+{
+    "phases": [
+      {
+        "number": 1,
+        "name": "Brand Foundation",
+        "displayName": "Brand Book",
+        "core_deliverables": {
+          "default_enabled": [
+            "Band Name & Overall Concept",
+            "Wordmarks + Treatments",
+            "Icon + Treatments",
+            "Type Pairings",
+            "Pantone Selections",
+            "Stickers and Bugs"
+          ]
+        },
+        "rounds": {
+          "R1": {
+            "name": "Discovery & Exploration",
+            "duration_days": 5,
+            "deliverables": [
+              "3 x Band Concepts",
+              "3 x Moodboards",
+              "3 - 5 x Band Names",
+              "Type Explorations",
+              "Wordmark Explorations",
+              "Icon Explorations"
+            ],
+            "tasks": [
+              "Initial Stakeholder Kickoff Meeting",
+              "Discovery & moodboarding",
+              "Cultural analysis & creative exploration",
+              "Preliminary names & sketches"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-04-21",
+            "events": [
+              {
+                "date": "2025-04-21",
+                "type": "start",
+                "description": "Cultural analysis & creative exploration",
+                "deliverables": ["Research documentation", "Initial concept sketches"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"]
+              },
+              {
+                "date": "2025-04-23",
+                "type": "check_in",
+                "description": "Moodboard refinement & Name exploration",
+                "deliverables": ["3 Directions", "Name options list"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-04-25",
+                "type": "review",
+                "description": "Finalize 3 distinct moodboards & Refine name/logo options",
+                "deliverables": ["3 distinct moodboards", "Refined name & logo options"],
+                "team_members": ["Art Director", "Creative Director", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R2": {
+            "name": "Development",
+            "duration_days": 5,
+            "deliverables": [
+              "Full Concept Development",
+              "Selected Moodboard Expansion",
+              "Initial Wordmark Explorations",
+              "Preliminary Type System",
+              "Color Palette Development"
+            ],
+            "tasks": [
+              "Initial Stakeholder Direction Meeting",
+              "Development of selected concepts",
+              "Exploration of visual system elements",
+              "Typography and color system creation",
+              "Initial motion studies",
+              "Stakeholder Progress Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-04-28",
+            "events": [
+              {
+                "date": "2025-04-28",
+                "type": "start",
+                "description": "Process stakeholder feedback & Plan R2 approach",
+                "deliverables": ["Feedback documentation", "Revision plan"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"]
+              },
+              {
+                "date": "2025-04-30",
+                "type": "check_in",
+                "description": "Logo refinement & Typography exploration",
+                "deliverables": ["Refined logo sketches", "Typography options"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-05-02",
+                "type": "review",
+                "description": "Final revisions & Preparation for stakeholder review",
+                "deliverables": ["Final R1 presentation deck"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R3": {
+            "name": "Refinement",
+            "duration_days": 5,
+            "deliverables": [
+              "Refined Wordmark Options",
+              "Finalized Type System",
+              "Complete Color Palette",
+              "Motion Exploration",
+              "Treatment Refinements"
+            ],
+            "tasks": [
+              "Initial Stakeholder Refinement Meeting",
+              "Refinement of selected direction",
+              "Development of visual assets",
+              "Creation of design system elements",
+              "Client presentation preparation",
+              "Stakeholder Pre-Final Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-05-05",
+            "events": [
+              {
+                "date": "2025-05-05",
+                "type": "start",
+                "description": "Name refinement & Logo development",
+                "deliverables": ["Updated name options", "Logo developments"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"]
+              },
+              {
+                "date": "2025-05-07",
+                "type": "check_in",
+                "description": "Logo refinement & Brand guidelines drafting",
+                "deliverables": ["Refined logo options", "Brand guidelines outline"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-05-09",
+                "type": "review",
+                "description": "Refine brand guidelines & Typography system",
+                "deliverables": ["Updated brand guidelines", "Typography system"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R4": {
+            "name": "Final Approval",
+            "duration_days": 5,
+            "deliverables": [
+              "Band Name",
+              "Wordmark",
+              "Moodboard",
+              "Wordmark and Type Exploration",
+              "Motion Exploration",
+              "Treatment Exploration",
+              "3-5 Name Options"
+            ],
+            "tasks": [
+              "Initial Stakeholder Final Review Meeting",
+              "Final revisions",
+              "Asset production",
+              "Delivery package preparation",
+              "Handoff and presentation",
+              "Stakeholder Final Approval Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-05-12",
+            "events": [
+              {
+                "date": "2025-05-12",
+                "type": "start",
+                "description": "Process stakeholder feedback & Plan final revisions",
+                "deliverables": ["Feedback documentation", "Final revision plan"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"]
+              },
+              {
+                "date": "2025-05-14",
+                "type": "check_in",
+                "description": "Finalize typography & Finalize color palette",
+                "deliverables": ["Final typography system", "Final color palette"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-05-16",
+                "type": "review",
+                "description": "Final revisions & Preparation for final presentation",
+                "deliverables": ["Final R2 presentation materials"],
+                "team_members": ["Art Director", "Creative Directors", "Graphic Designer", "Motion Designer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          }
+        },
+        "stakeholders": [
+          "Isaac Lee",
+          "Santiago Duque",
+          "Juan Arenas"
+        ]
+      },
+      {
+        "number": 2,
+        "name": "Brand Extensions",
+        "displayName": "Brand Activations",
+        "core_deliverables": {
+          "default_enabled": [
+            "3 x Music Video Treatments",
+            "Merch Designs",
+            "3 x Press Shoot Concepts",
+            "Social Media Templates"
+          ],
+          "default_disabled": [
+            "Motion Graphics Kit",
+            "Print Assets",
+            "Digital Still Assets",
+            "Animated Wordmark"
+          ]
+        },
+        "rounds": {
+          "R1": {
+            "name": "Development",
+            "duration_days": 5,
+            "deliverables": [
+              "Music Video Treatment Development",
+              "Merch Concept Sketches",
+              "Press Shoot Location Analysis",
+              "Social Media Content Structure",
+              "Initial Motion Studies"
+            ],
+            "tasks": [
+              "Initial Stakeholder Direction Meeting",
+              "Development of selected concepts",
+              "Exploration of visual system elements",
+              "Typography and color system creation",
+              "Initial motion studies",
+              "Stakeholder Progress Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              },
+              {
+                "role": "Merch Designer",
+                "day_rate": 575
+              },
+              {
+                "role": "Director / Photographer",
+                "day_rate": 675
+              }
+            ],
+            "start_date": "2025-05-19",
+            "events": [
+              {
+                "date": "2025-05-19",
+                "type": "start",
+                "description": "Development of selected brand extensions",
+                "deliverables": ["Selected concepts", "Development plan"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"]
+              },
+              {
+                "date": "2025-05-21",
+                "type": "check_in",
+                "description": "Development progress review",
+                "deliverables": ["WIP developments", "Technical specifications"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"]
+              },
+              {
+                "date": "2025-05-23",
+                "type": "review",
+                "description": "Review of developed brand extensions",
+                "deliverables": ["Developed concepts presentation"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R2": {
+            "name": "Refinement",
+            "duration_days": 5,
+            "deliverables": [
+              "Refined Music Video Treatments",
+              "Merch Design Mockups",
+              "Press Shoot Styling Concepts",
+              "Social Media Template Development",
+              "Motion Graphics Exploration"
+            ],
+            "tasks": [
+              "Initial Stakeholder Refinement Meeting",
+              "Refinement of selected direction",
+              "Development of visual assets",
+              "Creation of design system elements",
+              "Client presentation preparation",
+              "Stakeholder Pre-Final Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              },
+              {
+                "role": "Merch Designer",
+                "day_rate": 575
+              },
+              {
+                "role": "Director / Photographer",
+                "day_rate": 675
+              }
+            ],
+            "start_date": "2025-05-26",
+            "events": [
+              {
+                "date": "2025-05-26",
+                "type": "start",
+                "description": "Refinement of brand extensions",
+                "deliverables": ["Refinement strategy", "Feedback implementation plan"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"]
+              },
+              {
+                "date": "2025-05-28",
+                "type": "check_in",
+                "description": "Refinement progress review",
+                "deliverables": ["Refined elements", "Production considerations"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"]
+              },
+              {
+                "date": "2025-05-30",
+                "type": "review",
+                "description": "Review of refined brand extensions",
+                "deliverables": ["Refined concepts presentation"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R3": {
+            "name": "Final Approval",
+            "duration_days": 5,
+            "deliverables": [
+              "Final Music Video Treatment Documents",
+              "Production-Ready Merch Design Files",
+              "Final Press Shoot Production Book",
+              "Complete Social Media Asset Package",
+              "Final Motion Graphics Elements"
+            ],
+            "tasks": [
+              "Initial Stakeholder Final Review Meeting",
+              "Final revisions",
+              "Asset production",
+              "Delivery package preparation",
+              "Handoff and presentation",
+              "Stakeholder Final Approval Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              },
+              {
+                "role": "Merch Designer",
+                "day_rate": 575
+              },
+              {
+                "role": "Director / Photographer",
+                "day_rate": 675
+              }
+            ],
+            "start_date": "2025-06-02",
+            "events": [
+              {
+                "date": "2025-06-02",
+                "type": "start",
+                "description": "Final preparations for brand extensions",
+                "deliverables": ["Final revision plan", "Production timeline"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"]
+              },
+              {
+                "date": "2025-06-04",
+                "type": "check_in",
+                "description": "Final production progress check",
+                "deliverables": ["Production status report", "Quality control checklist"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"]
+              },
+              {
+                "date": "2025-06-06",
+                "type": "review",
+                "description": "Final approval of brand extensions",
+                "deliverables": ["Final deliverables presentation", "Complete asset package"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Merch Designer", "Director / Photographer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          }
+        },
+        "stakeholders": [
+          "Isaac Lee",
+          "Santiago Duque",
+          "Juan Arenas"
+        ]
+      },
+      {
+        "number": 3,
+        "name": "EP Brand Book",
+        "displayName": "EP Brand Book",
+        "core_deliverables": [
+          "EP Name & Identity",
+          "EP Visual System",
+          "EP Logo Package",
+          "EP Color Palette",
+          "EP Merchandise",
+          "EP Press Kit",
+          "EP Digital Assets"
+        ],
+        "rounds": {
+          "R1": {
+            "name": "Discovery & Exploration",
+            "duration_days": 5,
+            "deliverables": [
+              "EP name exploration document",
+              "EP visual identity moodboards",
+              "Preliminary EP logo sketches",
+              "EP color palette options"
+            ],
+            "tasks": [
+              "Initial Stakeholder Kickoff Meeting",
+              "Discovery & moodboarding",
+              "Cultural analysis & creative exploration",
+              "3 distinct moodboards",
+              "Preliminary name & logo sketches",
+              "Stakeholder Review & Feedback Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-06-09",
+            "events": [
+              {
+                "date": "2025-06-09",
+                "type": "start",
+                "description": "EP Brand Book discovery kickoff",
+                "deliverables": ["Research brief", "Discovery framework"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"]
+              },
+              {
+                "date": "2025-06-11",
+                "type": "check_in",
+                "description": "EP identity exploration review",
+                "deliverables": ["Identity explorations", "Naming options"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-06-13",
+                "type": "review",
+                "description": "EP Brand discovery presentation",
+                "deliverables": ["Discovery findings presentation", "Direction recommendations"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R2": {
+            "name": "Development",
+            "duration_days": 5,
+            "deliverables": [
+              "EP Name Development",
+              "EP Visual Identity Concepts",
+              "EP Logo Direction",
+              "EP Initial Color Systems"
+            ],
+            "tasks": [
+              "Initial Stakeholder Direction Meeting",
+              "Development of selected concepts",
+              "Exploration of visual system elements",
+              "Typography and color system creation",
+              "Initial motion studies",
+              "Stakeholder Progress Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-06-16",
+            "events": [
+              {
+                "date": "2025-06-16",
+                "type": "start",
+                "description": "EP Brand development kickoff",
+                "deliverables": ["Development plan", "Initial direction"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"]
+              },
+              {
+                "date": "2025-06-18",
+                "type": "check_in",
+                "description": "EP Brand development progress",
+                "deliverables": ["Identity development", "Visual system progress"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-06-20",
+                "type": "review",
+                "description": "EP Brand development review",
+                "deliverables": ["Developed concepts presentation"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R3": {
+            "name": "Refinement",
+            "duration_days": 5,
+            "deliverables": [
+              "Refined EP logo options",
+              "EP merchandise concepts",
+              "EP typography selections",
+              "EP Pantone color specifications"
+            ],
+            "tasks": [
+              "Initial Stakeholder Refinement Meeting",
+              "Refinement of selected direction",
+              "Development of visual assets",
+              "Creation of design system elements",
+              "Client presentation preparation",
+              "Stakeholder Pre-Final Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-06-23",
+            "events": [
+              {
+                "date": "2025-06-23",
+                "type": "start",
+                "description": "EP Brand refinement kickoff",
+                "deliverables": ["Refinement strategy", "Feedback implementation plan"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-06-25",
+                "type": "check_in",
+                "description": "EP Brand refinement progress",
+                "deliverables": ["Refined elements", "System specifications"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Santiago Duque", "Juan Arenas"]
+              },
+              {
+                "date": "2025-06-27",
+                "type": "review",
+                "description": "EP Brand refinement review",
+                "deliverables": ["Refined concepts presentation"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R4": {
+            "name": "Final Approval",
+            "duration_days": 5,
+            "deliverables": [
+              "Final EP Brand Book",
+              "EP merchandise production files",
+              "EP press kit templates",
+              "EP digital asset package"
+            ],
+            "tasks": [
+              "Initial Stakeholder Final Review Meeting",
+              "Final revisions",
+              "Asset production",
+              "Delivery package preparation",
+              "Handoff and presentation",
+              "Stakeholder Final Approval Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-06-30",
+            "events": [
+              {
+                "date": "2025-06-30",
+                "type": "start",
+                "description": "EP Brand finalization kickoff",
+                "deliverables": ["Finalization plan", "Production timeline"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"]
+              },
+              {
+                "date": "2025-07-02",
+                "type": "check_in",
+                "description": "EP Brand production progress",
+                "deliverables": ["Production status", "Quality control check"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"]
+              },
+              {
+                "date": "2025-07-04",
+                "type": "review",
+                "description": "EP Brand final approval",
+                "deliverables": ["Final brand book", "Complete asset package"],
+                "team_members": ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          }
+        },
+        "stakeholders": [
+          "Isaac Lee",
+          "Santiago Duque",
+          "Juan Arenas"
+        ]
+      },
+      {
+        "number": 4,
+        "name": "Music Video & Press Concepts",
+        "displayName": "EP Brand Activations",
+        "core_deliverables": [
+          "Music Video Treatment",
+          "Press Shoot Package",
+          "Styling Direction",
+          "Production Roadmap",
+          "Technical Specifications"
+        ],
+        "rounds": {
+          "R1": {
+            "name": "Development",
+            "duration_days": 5,
+            "deliverables": [
+              "Music Video Direction Development",
+              "Press Shoot Concept Development",
+              "Styling Direction Options",
+              "Initial Production Planning"
+            ],
+            "tasks": [
+              "Initial Stakeholder Direction Meeting",
+              "Development of selected concepts",
+              "Exploration of visual system elements",
+              "Typography and color system creation",
+              "Initial motion studies",
+              "Stakeholder Progress Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-07-14",
+            "events": [
+              {
+                "date": "2025-07-14",
+                "type": "start",
+                "description": "Concept development kickoff",
+                "deliverables": ["Development plan", "Selected direction"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"]
+              },
+              {
+                "date": "2025-07-16",
+                "type": "check_in",
+                "description": "Development progress review",
+                "deliverables": ["Developed concepts", "Production considerations"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"]
+              },
+              {
+                "date": "2025-07-18",
+                "type": "review",
+                "description": "Developed concepts review",
+                "deliverables": ["Developed treatment", "Production approach"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R2": {
+            "name": "Refinement",
+            "duration_days": 5,
+            "deliverables": [
+              "Refined music video treatment",
+              "Selected location documentation",
+              "Final styling direction",
+              "Production schedule draft"
+            ],
+            "tasks": [
+              "Initial Stakeholder Refinement Meeting",
+              "Refinement of selected direction",
+              "Development of visual assets",
+              "Creation of design system elements",
+              "Client presentation preparation",
+              "Stakeholder Pre-Final Review Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-07-21",
+            "events": [
+              {
+                "date": "2025-07-21",
+                "type": "start",
+                "description": "Concept refinement kickoff",
+                "deliverables": ["Refinement strategy", "Feedback implementation"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"]
+              },
+              {
+                "date": "2025-07-23",
+                "type": "check_in",
+                "description": "Refinement progress check",
+                "deliverables": ["Refined treatment", "Production elements"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"]
+              },
+              {
+                "date": "2025-07-25",
+                "type": "review",
+                "description": "Refined concepts review",
+                "deliverables": ["Final treatment draft", "Refined production plan"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          },
+          "R3": {
+            "name": "Final Approval",
+            "duration_days": 5,
+            "deliverables": [
+              "Final music video treatment document",
+              "Press shoot production book",
+              "Complete production roadmap",
+              "Technical specifications for all shoots"
+            ],
+            "tasks": [
+              "Initial Stakeholder Final Review Meeting",
+              "Final revisions",
+              "Asset production",
+              "Delivery package preparation",
+              "Handoff and presentation",
+              "Stakeholder Final Approval Meeting"
+            ],
+            "team": [
+              {
+                "role": "Creative Director",
+                "day_rate": 900
+              },
+              {
+                "role": "Art Director",
+                "day_rate": 775
+              },
+              {
+                "role": "Graphic Designer",
+                "day_rate": 600
+              },
+              {
+                "role": "Line Producer",
+                "day_rate": 675
+              },
+              {
+                "role": "Motion Designer",
+                "day_rate": 725
+              }
+            ],
+            "start_date": "2025-07-28",
+            "events": [
+              {
+                "date": "2025-07-28",
+                "type": "start",
+                "description": "Final treatment preparation",
+                "deliverables": ["Final revisions plan", "Production documentation"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"]
+              },
+              {
+                "date": "2025-07-30",
+                "type": "check_in",
+                "description": "Final documentation progress",
+                "deliverables": ["Treatment package", "Production specifications"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"]
+              },
+              {
+                "date": "2025-08-01",
+                "type": "review",
+                "description": "Final approval meeting",
+                "deliverables": ["Complete treatment package", "Final production roadmap"],
+                "team_members": ["Creative Director", "Art Director", "Line Producer", "Motion Designer"],
+                "stakeholders": ["Isaac Lee", "Santiago Duque", "Juan Arenas"]
+              }
+            ]
+          }
+        },
+        "stakeholders": [
+          "Isaac Lee",
+          "Santiago Duque",
+          "Juan Arenas"
+        ]
+      }
+    ],
+    "creativeTeam": {
+      "leadership": [
+        {
+          "name": "Israel Riqueros",
+          "role": "Creative Director",
+          "day_rate": 1100
+        },
+        {
+          "name": "DJ Jung",
+          "role": "Art Director",
+          "day_rate": 900
+        },
+        {
+          "name": "Juan Felipe Díaz Herrera",
+          "role": "Executive Producer",
+          "day_rate": 1200
+        }
+      ],
+      "designers": [
+        {
+          "name": "Wesley So",
+          "role": "Graphic Designer",
+          "day_rate": 700
+        },
+        {
+          "name": "Blake Bohls",
+          "role": "Merch Designer",
+          "day_rate": 800
+        },
+        {
+          "name": "Lena Huang",
+          "role": "Motion Designer",
+          "day_rate": 800
+        },
+        {
+          "name": "Muhozi Nintunze",
+          "role": "Product Designer",
+          "day_rate": 1000
+        }
+      ],
+      "production": [
+        {
+          "name": "Sho Schrock Manabe",
+          "role": "Line Producer",
+          "day_rate": 900
+        },
+        {
+          "name": "Alexandra Kern",
+          "role": "Post-Producer",
+          "day_rate": 900
+        },
+        {
+          "name": "Zuheng Yin",
+          "role": "Creative Producer",
+          "day_rate": 900
+        },
+        {
+          "name": "Ophelia Roster",
+          "role": "Director / Photographer",
+          "day_rate": 900
+        }
+      ],
+      "creatives": [
+        {
+          "name": "Angelo Rosales",
+          "role": "3D Artist",
+          "day_rate": 800
+        },
+        {
+          "name": "Jose Felipe Varón",
+          "role": "Documentary/Reality TV Director",
+          "day_rate": 900
+        },
+        {
+          "name": "Yussef Haridy",
+          "role": "BTS Shooter",
+          "day_rate": 1000
+        },
+        {
+          "name": "Clayton McCracken",
+          "role": "Experiential Designer",
+          "day_rate": 850
+        },
+        {
+          "name": "John Burton",
+          "role": "Editor / Sound Designer",
+          "day_rate": 900
+        }
+      ],
+      "stakeholders": [
+        {
+          "name": "Santiago Duque",
+          "role": "Hybe Corp"
+        },
+        {
+          "name": "Juan Arenas",
+          "role": "Hybe Corp"
+        },
+        {
+          "name": "Isaac Lee",
+          "role": "Hybe Corp"
+        }
+      ],
+      "orgChart": {
+        "positions": {
+          "extremeLeftTop": "Santiago Duque",
+          "extremeLeftBottom": "Juan Arenas",
+          "farLeftMiddle": "Israel Riqueros",
+          "farLeftBottom": "Juan Felipe Díaz Herrera",
+          "leftMiddleTopExtra": "Alexandra Kern",
+          "leftMiddleTop": "Sho Schrock Manabe",
+          "leftMiddleBottom": "Zuheng Yin",
+          "middleTopExtra": "John Burton",
+          "middleTop": "Ophelia Roster",
+          "middleCenter": "DJ Jung",
+          "middleBottom": "Clayton McCracken",
+          "rightTopExtra": "Jose Felipe Varón",
+          "rightTop": "Yussef Haridy",
+          "rightMiddle": "Angelo Rosales",
+          "rightBottom": "Wesley So",
+          "farRightTop": "Muhozi Nintunze",
+          "farRightMiddle": "Lena Huang",
+          "farRightBottom": "Blake Bohls"
+        },
+        "connections": [
+          ["Santiago Duque", "Israel Riqueros"],
+          ["Juan Arenas", "Israel Riqueros"],
+          ["Santiago Duque", "Juan Felipe Díaz Herrera"],
+          ["Juan Arenas", "Juan Felipe Díaz Herrera"],
+          ["Israel Riqueros", "Alexandra Kern"],
+          ["Israel Riqueros", "Sho Schrock Manabe"],
+          ["Israel Riqueros", "Zuheng Yin"],
+          ["Israel Riqueros", "DJ Jung"],
+          ["Juan Felipe Díaz Herrera", "Alexandra Kern"],
+          ["Juan Felipe Díaz Herrera", "Sho Schrock Manabe"],
+          ["Juan Felipe Díaz Herrera", "Zuheng Yin"],
+          ["Alexandra Kern", "John Burton"],
+          ["Sho Schrock Manabe", "Ophelia Roster"],
+          ["Ophelia Roster", "Jose Felipe Varón"],
+          ["Ophelia Roster", "Yussef Haridy"],
+          ["Zuheng Yin", "DJ Jung"],
+          ["Zuheng Yin", "Clayton McCracken"],
+          ["DJ Jung", "Angelo Rosales"],
+          ["DJ Jung", "Wesley So"],
+          ["Angelo Rosales", "Muhozi Nintunze"],
+          ["Angelo Rosales", "Lena Huang"],
+          ["Wesley So", "Blake Bohls"]
+        ]
+      }
+    }
+}

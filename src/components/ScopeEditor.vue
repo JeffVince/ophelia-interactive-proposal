@@ -3,11 +3,41 @@
     <div class="left-panel">
       <div class="phase-toggles">
         <h4>Project Scope</h4>
-        <div class="phases">
-          <div v-for="phase in process" :key="phase.name" class="phase">
+        
+        <!-- Required Phases -->
+        <div class="required-phases">
+          <div v-for="phase in getRequiredPhases()" :key="phase.name" class="phase">
             <div class="phase-toggle-header" @click="togglePhase(phase.name)">
               <div class="toggle-icon">{{ expandedPhases[phase.name] ? '−' : '+' }}</div>
               <div class="toggle-label">{{ getPhaseDisplayName(phase.name) }}</div>
+            </div>
+            <div v-if="expandedPhases[phase.name]" class="deliverable-toggles">
+              <div v-for="deliverable in getAllPhaseDeliverables(phase.name)" :key="deliverable" class="deliverable-item-simple">
+                {{ getDeliverableWithEmoji(deliverable) }}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Divider -->
+        <div v-if="getOptionalPhases().length > 0" class="phases-divider">
+          <div class="divider-line"></div>
+          <div class="optional-toggle" @click="toggleOptionalPhasesVisibility">
+            Optional Services {{ showOptionalPhases ? '▾' : '▸' }}
+          </div>
+          <div class="divider-line"></div>
+        </div>
+        
+        <!-- Optional Phases -->
+        <div v-if="showOptionalPhases" class="optional-phases">
+          <div v-for="phase in getOptionalPhases()" :key="phase.name" class="phase">
+            <div class="phase-toggle-header">
+              <div class="toggle-checkbox">
+                <input type="checkbox" :id="'phase-' + phase.name" :checked="phaseEnabled[phase.name]" @change="togglePhaseEnabled(phase.name)">
+                <label :for="'phase-' + phase.name"></label>
+              </div>
+              <div class="toggle-icon" @click="togglePhase(phase.name)">{{ expandedPhases[phase.name] ? '−' : '+' }}</div>
+              <div class="toggle-label" @click="togglePhase(phase.name)">{{ getPhaseDisplayName(phase.name) }}</div>
             </div>
             <div v-if="expandedPhases[phase.name]" class="deliverable-toggles">
               <div v-for="deliverable in getAllPhaseDeliverables(phase.name)" :key="deliverable" class="deliverable-item-simple">
@@ -126,6 +156,28 @@
                   </div>
                   
                   <div class="round-section">
+                    <h5>Deliverables</h5>
+                    <ul class="deliverable-list">
+                      <li v-for="(deliverable, i) in round.deliverables" :key="i">
+                        {{ deliverable }}
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div v-if="getRoundMeetings(round).length > 0" class="round-section">
+                    <h5>Stakeholder Meetings</h5>
+                    <div v-for="(meeting, i) in getRoundMeetings(round)" :key="i" class="stakeholder-review">
+                      <div class="review-date">{{ formatDate(meeting.date) }} - {{ meeting.type }}</div>
+                      <div v-if="meeting.description" class="review-description">{{ meeting.description }}</div>
+                      <div class="stakeholders">
+                        <span v-for="stakeholder in meeting.stakeholders" :key="stakeholder" class="stakeholder">
+                          {{ stakeholder }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="round-section">
                     <h5 class="section-heading" @click="openDeliverableModal(roundKey)">
                       See Sample {{ roundKey }} Here
                     </h5>
@@ -156,51 +208,13 @@
         </div>
         <div class="modal-content">
           <iframe 
-            v-if="currentRoundKey === 'R1'" 
-            src="https://docs.google.com/presentation/d/e/2PACX-1vSK0uTTSHeOpCGYjEtilu9CkLckLEeBN_3NkTBHknb1bZ-JlAIsEs2Rn6NEez1l3viDbXL_0TQmBiWR/embed?start=false&loop=false&delayms=3000" 
+            :src="getRoundIframeSrc(currentRoundKey)" 
             frameborder="0" 
             width="100%" 
             height="500" 
             allowfullscreen="true" 
             mozallowfullscreen="true" 
             webkitallowfullscreen="true"
-          ></iframe>
-          <iframe 
-            v-else-if="currentRoundKey === 'R2'" 
-            src="https://docs.google.com/presentation/d/e/2PACX-1vSpd7OawXhDm6f4vo5mkv-RTZ_-gk3aqqM3KDU_WfRS7pHkapkGFF8tK30dOzqwOP5XKnUoW59PH-gV/embed?start=false&loop=false&delayms=3000" 
-            frameborder="0" 
-            width="100%" 
-            height="500" 
-            allowfullscreen="true" 
-            mozallowfullscreen="true" 
-            webkitallowfullscreen="true"
-          ></iframe>
-          <iframe 
-            v-else-if="currentRoundKey === 'R3'" 
-            src="https://docs.google.com/presentation/d/e/2PACX-1vT3o4j2wilmouAU7KMOW8hhnQ3AvRX7D_1kfG9_WpdMJC5cb2z1SiPuvB5lejPBv5vzNKRB0Eefem0Z/embed?start=false&loop=false&delayms=3000" 
-            frameborder="0" 
-            width="100%" 
-            height="500" 
-            allowfullscreen="true" 
-            mozallowfullscreen="true" 
-            webkitallowfullscreen="true"
-          ></iframe>
-          <iframe 
-            v-else-if="currentRoundKey === 'R4'" 
-            src="https://docs.google.com/presentation/d/e/2PACX-1vQnkkcIy6s3amZvT8BTqf0rGjdY4dp17PXtSwtRXFVDC2dMETaiQsVUblM8aK6xi2CsSFFcNK7Nod_e/embed?start=false&loop=false&delayms=3000" 
-            frameborder="0" 
-            width="100%" 
-            height="500" 
-            allowfullscreen="true" 
-            mozallowfullscreen="true" 
-            webkitallowfullscreen="true"
-          ></iframe>
-          <iframe 
-            v-else
-            src="https://www.google.com" 
-            width="100%" 
-            height="500" 
-            frameborder="0"
           ></iframe>
         </div>
       </div>
@@ -209,14 +223,14 @@
 </template>
 
 <script>
-import { ref, computed, reactive, onMounted } from 'vue'
-import data from '../data/data.json'
+import { ref, computed, reactive, onMounted, watch, onBeforeUnmount } from 'vue'
+import DataService from '../services/DataService'
 
 export default {
   name: 'ScopeEditor',
   emits: ['cost-updated'],
   setup(props, { emit }) {
-    const process = ref(data.phases)
+    const process = ref([])
     const expandedRounds = reactive({})
     const phaseEnabled = reactive({})
     const deliverableEnabled = reactive({})
@@ -235,14 +249,6 @@ export default {
       'Music Video & Press Concepts': 'EP Brand Activations'
     }
     
-    // Map round names for display
-    const roundNameMap = {
-      'R1': 'Discovery & Exploration',
-      'R2': 'Development',
-      'R3': 'Refinement',
-      'R4': 'Final Approval'
-    }
-    
     // Initialize expanded phases state
     const expandedPhases = reactive({})
     
@@ -258,56 +264,196 @@ export default {
     // Add a ref to track the current round key
     const currentRoundKey = ref('')
     
-    onMounted(() => {
-      // Initialize phase toggles
-      process.value.forEach(phase => {
-        phaseEnabled[phase.name] = true
-        deliverableEnabled[phase.name] = {}
+    // Add a ref to track the visibility of optional phases
+    const showOptionalPhases = ref(false)
+    
+    // Define required phases and optional phases
+    const requiredPhaseNames = [
+      'Brand Foundation',
+      'Brand Extensions',
+      'EP Brand Book',
+      'Music Video & Press Concepts'
+    ]
+    
+    // Map iframe sources for each round
+    const roundIframeSrcMap = {
+      'R1': 'https://docs.google.com/presentation/d/e/2PACX-1vSK0uTTSHeOpCGYjEtilu9CkLckLEeBN_3NkTBHknb1bZ-JlAIsEs2Rn6NEez1l3viDbXL_0TQmBiWR/embed?start=false&loop=false&delayms=3000',
+      'R2': 'https://docs.google.com/presentation/d/e/2PACX-1vSpd7OawXhDm6f4vo5mkv-RTZ_-gk3aqqM3KDU_WfRS7pHkapkGFF8tK30dOzqwOP5XKnUoW59PH-gV/embed?start=false&loop=false&delayms=3000',
+      'R3': 'https://docs.google.com/presentation/d/e/2PACX-1vT3o4j2wilmouAU7KMOW8hhnQ3AvRX7D_1kfG9_WpdMJC5cb2z1SiPuvB5lejPBv5vzNKRB0Eefem0Z/embed?start=false&loop=false&delayms=3000',
+      'R4': 'https://docs.google.com/presentation/d/e/2PACX-1vQnkkcIy6s3amZvT8BTqf0rGjdY4dp17PXtSwtRXFVDC2dMETaiQsVUblM8aK6xi2CsSFFcNK7Nod_e/embed?start=false&loop=false&delayms=3000'
+    }
+    
+    onMounted(async () => {
+      try {
+        console.log("[ScopeEditor] Loading data from DataService...");
+        // Load data from the API through DataService
+        const data = await DataService.getData();
+        console.log("[ScopeEditor] Data loaded successfully:", data);
+        console.log("[ScopeEditor] Phases count:", data.phases?.length || 0);
         
-        // Enable all deliverables by default
-        if (Array.isArray(phase.core_deliverables)) {
-          // Handle array format
-          phase.core_deliverables.forEach(deliverable => {
-            deliverableEnabled[phase.name][deliverable] = true
-          })
-        } else {
-          // Handle object format - enable all deliverables
-          if (phase.core_deliverables.default_enabled) {
-            phase.core_deliverables.default_enabled.forEach(deliverable => {
-              deliverableEnabled[phase.name][deliverable] = true
-            })
-          }
-          if (phase.core_deliverables.default_disabled) {
-            phase.core_deliverables.default_disabled.forEach(deliverable => {
-              deliverableEnabled[phase.name][deliverable] = true
-            })
-          }
+        if (!data.phases || data.phases.length === 0) {
+          console.error("[ScopeEditor] No phases found in loaded data!");
+          return;
         }
-      })
+
+        process.value = data.phases || [];
+        console.log("[ScopeEditor] process.value set with phases:", process.value.length);
+        
+        // Initialize phase toggles
+        process.value.forEach(phase => {
+          console.log(`[ScopeEditor] Initializing phase: ${phase.name}, enabled: ${phase.enabled}`);
+          // Use the enabled property from the data file
+          phaseEnabled[phase.name] = phase.enabled;
+          deliverableEnabled[phase.name] = {};
+          
+          // Enable all deliverables by default
+          if (Array.isArray(phase.core_deliverables)) {
+            // Handle array format
+            phase.core_deliverables.forEach(deliverable => {
+              deliverableEnabled[phase.name][deliverable] = true;
+            });
+          } else {
+            // Handle object format - enable all deliverables
+            if (phase.core_deliverables?.default_enabled) {
+              phase.core_deliverables.default_enabled.forEach(deliverable => {
+                deliverableEnabled[phase.name][deliverable] = true;
+              });
+            }
+            if (phase.core_deliverables?.default_disabled) {
+              phase.core_deliverables.default_disabled.forEach(deliverable => {
+                deliverableEnabled[phase.name][deliverable] = true;
+              });
+            }
+          }
+        });
+        
+        // Initialize expanded rounds
+        process.value.forEach(phase => {
+          if (phase.rounds) {
+            Object.keys(phase.rounds).forEach(round => {
+              expandedRounds[round] = false;
+            });
+          }
+        });
+        
+        // Initialize all phases as collapsed
+        process.value.forEach(phase => {
+          expandedPhases[phase.name] = false;
+        });
+        
+        // Initial cost calculation
+        updateCost();
+        console.log("[ScopeEditor] Component initialization complete");
+      } catch (error) {
+        console.error('[ScopeEditor] Failed to load phases data:', error);
+      }
       
-      // Initialize expanded rounds
-      process.value.forEach(phase => {
-        if (phase.rounds) {
-          Object.keys(phase.rounds).forEach(round => {
-            expandedRounds[round] = false
-          })
-        }
-      })
-      
-      // Initialize all phases as collapsed
-      process.value.forEach(phase => {
-        expandedPhases[phase.name] = false
-      })
-      
-      // Initial cost calculation
-      updateCost()
+      // Subscribe to phase update events from other components
+      DataService.onUpdate('phase-update', handlePhaseUpdate);
     })
+    
+    // Clean up event listeners when component is unmounted
+    onBeforeUnmount(() => {
+      DataService.offUpdate('phase-update', handlePhaseUpdate);
+    });
+    
+    // Handle phase updates from other components
+    const handlePhaseUpdate = ({ phaseName, enabled }) => {
+      if (phaseName in phaseEnabled && phaseEnabled[phaseName] !== enabled) {
+        phaseEnabled[phaseName] = enabled;
+      }
+    };
+    
+    // Watch for changes to phaseEnabled and update via API
+    watch(phaseEnabled, async (newValues, oldValues) => {
+      console.log('[ScopeEditor] phaseEnabled changed:', newValues);
+      for (const phaseName in newValues) {
+        // Only make API call if value actually changed
+        if (oldValues[phaseName] !== newValues[phaseName]) {
+          console.log(`[ScopeEditor] Toggling phase '${phaseName}' to ${newValues[phaseName]}`);
+          try {
+            // Update phase enabled status via API and update local data
+            await DataService.updatePhaseEnabled(phaseName, newValues[phaseName]);
+            console.log(`[ScopeEditor] Phase '${phaseName}' toggled successfully`);
+            
+            // Update the state in the process.value array to keep UI in sync
+            const phaseToUpdate = process.value.find(p => p.name === phaseName);
+            if (phaseToUpdate) {
+              phaseToUpdate.enabled = newValues[phaseName];
+            }
+            
+            // Force a refresh on the data to ensure it's reflected in data.json
+            await DataService.refreshData();
+          } catch (error) {
+            console.error(`[ScopeEditor] Failed to update phase '${phaseName}':`, error);
+            // Revert the local state if API call failed
+            phaseEnabled[phaseName] = oldValues[phaseName] || false;
+          }
+        }
+      }
+      
+      // Recalculate cost when phases are enabled/disabled
+      updateCost();
+      
+      // Emit cost update to parent component
+      emit('cost-updated', costData.value);
+    }, { deep: true });
+    
+    // Add a direct method to toggle phase enabled status
+    const togglePhaseEnabled = async (phaseName) => {
+      console.log(`[ScopeEditor] Directly toggling phase '${phaseName}' enabled status`);
+      const currentEnabled = phaseEnabled[phaseName];
+      const newEnabled = !currentEnabled;
+      
+      try {
+        // Update the local reactive state first
+        phaseEnabled[phaseName] = newEnabled;
+        console.log(`[ScopeEditor] Local state for '${phaseName}' set to ${newEnabled}`);
+        
+        // Update the state in the process.value array to keep UI in sync
+        const phaseToUpdate = process.value.find(p => p.name === phaseName);
+        if (phaseToUpdate) {
+          console.log(`[ScopeEditor] Found phase in process array: '${phaseToUpdate.name}' (#${phaseToUpdate.number})`);
+          phaseToUpdate.enabled = newEnabled;
+          console.log(`[ScopeEditor] Updated process array phase.enabled to ${newEnabled}`);
+        } else {
+          console.error(`[ScopeEditor] Could not find phase '${phaseName}' in process array`);
+        }
+        
+        // Update via DataService
+        await DataService.updatePhaseEnabled(phaseName, newEnabled);
+        console.log(`[ScopeEditor] Successfully toggled phase '${phaseName}' via DataService`);
+        
+        // Force a refresh on the data to ensure it's reflected in data.json and other components
+        await DataService.refreshData();
+        console.log(`[ScopeEditor] Refreshed data to ensure consistency`);
+        
+        // Update cost
+        updateCost();
+      } catch (error) {
+        console.error(`[ScopeEditor] Failed to toggle phase '${phaseName}':`, error);
+        // Revert on failure
+        phaseEnabled[phaseName] = currentEnabled;
+        
+        // Update the phase in process array back to original state
+        const phaseToUpdate = process.value.find(p => p.name === phaseName);
+        if (phaseToUpdate) {
+          phaseToUpdate.enabled = currentEnabled;
+        }
+      }
+    };
     
     const filteredPhases = computed(() => {
-      return process.value.filter(phase => phaseEnabled[phase.name])
-    })
+      return process.value.filter(phase => phaseEnabled[phase.name]);
+    });
     
     const getPhaseDisplayName = (phase) => {
+      // First check if the phase has a displayName property in the data
+      const phaseData = process.value.find(p => p.name === phase)
+      if (phaseData && phaseData.displayName) {
+        return phaseData.displayName
+      }
+      // Fall back to the map if displayName not found directly in the data
       return phaseNameMap[phase] || phase
     }
     
@@ -316,7 +462,14 @@ export default {
     }
     
     const getRoundName = (round) => {
-      return roundNameMap[round] || round
+      // Look for the round name in all phases
+      for (const phase of process.value) {
+        if (phase.rounds && phase.rounds[round] && phase.rounds[round].name) {
+          return phase.rounds[round].name
+        }
+      }
+      // If no name is found, just return the round key
+      return round
     }
     
     const formatCurrency = (value) => {
@@ -348,25 +501,25 @@ export default {
         return phaseData.core_deliverables
       }
       
-      if (phaseData.core_deliverables.default_enabled) {
-        return [
-          ...phaseData.core_deliverables.default_enabled,
-          ...(phaseData.core_deliverables.default_disabled || [])
-        ]
+      if (phaseData.core_deliverables) {
+        const allDeliverables = []
+        if (phaseData.core_deliverables.default_enabled) {
+          allDeliverables.push(...phaseData.core_deliverables.default_enabled)
+        }
+        if (phaseData.core_deliverables.default_disabled) {
+          allDeliverables.push(...phaseData.core_deliverables.default_disabled)
+        }
+        return allDeliverables
       }
       return []
     }
     
     const getFilteredRoundDeliverables = (phase, round) => {
       const phaseData = process.value.find(p => p.name === phase)
-      if (!phaseData || !phaseEnabled[phase]) return []
+      if (!phaseData || !phaseEnabled[phase] || !phaseData.rounds[round]) return []
       
-      return phaseData.rounds[round].deliverables.filter(deliverable => {
-        // Check if any core deliverable that this round deliverable is related to is enabled
-        return Object.keys(deliverableEnabled[phase]).some(key => {
-          return deliverableEnabled[phase][key] && deliverable.toLowerCase().includes(key.toLowerCase())
-        })
-      })
+      // Return the actual deliverables array from the round data
+      return phaseData.rounds[round].deliverables || []
     }
     
     const getRoundTeam = (round, phaseName) => {
@@ -410,9 +563,7 @@ export default {
         }
       })
       
-      emit('cost-updated', {
-        total: totalCost
-      })
+      costData.value.total = totalCost
     }
     
     const togglePhase = (phase) => {
@@ -454,14 +605,21 @@ export default {
       }
     }
     
-    // Add new methods for phase summary
-    const getFirstRoundStartDate = (phase) => {
-      // If this is the Brand Foundation/Brand Book phase, ensure the date is April 21, 2025
-      if (phase.name === 'Brand Foundation') {
-        return new Date('2025-04-21')
-      }
+    const getUniqueTeamMembers = (phase) => {
+      const teamMembers = new Set()
       
-      // For other phases, find the earliest start date from all rounds
+      Object.values(phase.rounds).forEach(round => {
+        if (round.team && Array.isArray(round.team)) {
+          round.team.forEach(member => {
+            teamMembers.add(member.role || member)
+          })
+        }
+      })
+      
+      return Array.from(teamMembers)
+    }
+    
+    const getFirstRoundStartDate = (phase) => {
       let earliestDate = null
       
       Object.values(phase.rounds).forEach(round => {
@@ -509,14 +667,18 @@ export default {
     }
 
     const getRoundDurationDisplay = (durationDays) => {
-      // Always return 1 Week regardless of the actual duration stored in the data
-      return '1 Week'
+      // Convert duration days to a more human-readable format
+      if (durationDays >= 5) {
+        return `${Math.floor(durationDays / 5)} Week${durationDays >= 10 ? 's' : ''}`
+      } else {
+        return `${durationDays} Day${durationDays !== 1 ? 's' : ''}`
+      }
     }
     
     const countPhaseMeetings = (phase) => {
       let meetingCount = 0
       
-      // Count all 'review' and 'check_in' events in all rounds
+      // Count all events with type 'review' or 'check_in'
       Object.values(phase.rounds).forEach(round => {
         if (round.events && Array.isArray(round.events)) {
           meetingCount += round.events.filter(event => 
@@ -526,20 +688,6 @@ export default {
       })
       
       return meetingCount
-    }
-    
-    const getUniqueTeamMembers = (phase) => {
-      const teamMembers = new Set()
-      
-      Object.values(phase.rounds).forEach(round => {
-        if (round.team && Array.isArray(round.team)) {
-          round.team.forEach(member => {
-            teamMembers.add(member.role)
-          })
-        }
-      })
-      
-      return Array.from(teamMembers)
     }
     
     const getRoundMeetings = (round) => {
@@ -552,13 +700,14 @@ export default {
       ).map(event => ({
         date: event.date,
         type: event.type === 'review' ? 'Review' : 'Check-In',
+        description: event.description || '',
         stakeholders: event.stakeholders || []
       }))
     }
     
     const openDeliverableModal = (roundKey) => {
       const roundName = getRoundName(roundKey)
-      modalTitle.value = `Example ${roundKey}: ${roundName}`
+      modalTitle.value = `Example: ${roundName}`
       modalOpen.value = true
       
       // Store the current round key for use in template
@@ -570,6 +719,26 @@ export default {
     const closeModal = () => {
       modalOpen.value = false
       document.body.style.overflow = '' // Restore scrolling
+    }
+    
+    // Get optional phases (those not in the required list)
+    const getOptionalPhases = () => {
+      return process.value.filter(phase => !requiredPhaseNames.includes(phase.name))
+    }
+    
+    // Get required phases
+    const getRequiredPhases = () => {
+      return process.value.filter(phase => requiredPhaseNames.includes(phase.name))
+    }
+    
+    // Toggle the visibility of optional phases
+    const toggleOptionalPhasesVisibility = () => {
+      showOptionalPhases.value = !showOptionalPhases.value
+    }
+    
+    // Function to get the iframe source based on round key
+    const getRoundIframeSrc = (roundKey) => {
+      return roundIframeSrcMap[roundKey] || 'https://www.google.com'
     }
     
     return {
@@ -609,6 +778,12 @@ export default {
       openDeliverableModal,
       closeModal,
       currentRoundKey,
+      getRequiredPhases,
+      getOptionalPhases,
+      showOptionalPhases,
+      toggleOptionalPhasesVisibility,
+      getRoundIframeSrc,
+      togglePhaseEnabled,
     }
   }
 }
@@ -1239,5 +1414,80 @@ export default {
 
 .sample-deliverable-content iframe {
   flex: 1;
+}
+
+.phases-divider {
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(180, 180, 170, 0.2);
+}
+
+.optional-toggle {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #ccccc2;
+  font-weight: 500;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.optional-toggle:hover {
+  color: #fff;
+}
+
+.required-phases, .optional-phases {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toggle-checkbox {
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.toggle-checkbox label {
+  position: relative;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: #1c1c1c;
+  border: 1px solid rgba(180, 180, 170, 0.4);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-checkbox input[type="checkbox"]:checked + label:after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+.review-description {
+  color: #e6e6dc;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.8;
 }
 </style> 

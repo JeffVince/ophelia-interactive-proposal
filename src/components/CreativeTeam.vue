@@ -87,6 +87,7 @@
 
 <script setup>
 import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue'
+import projectData from '../data/data.json'
 
 // Import regular images
 import PLATANO from '../assets/avatars/PLATANO.png'
@@ -175,153 +176,90 @@ const PLACEHOLDER_PORTRAIT = `<svg width="120" height="120" viewBox="0 0 120 120
   <text x="60" y="110" font-family="Arial" font-size="10" fill="#aaa" text-anchor="middle">Photo Coming Soon</text>
 </svg>`
 
-// Team members data
-const teamMembers = [
-  {
-    id: 2,
-    name: 'Israel Riqueros',
-    role: 'Creative Director',
-    day_rate: 1100,
-    avatar: ISRAELRIQUEROS,
-    portfolioUrl: 'https://www.israelriqueros.com/',
-    noOutline: true
-  },
-  {
-    id: 3,
-    name: 'DJ Jung',
-    role: 'Art Director',
-    day_rate: 900,
-    avatar: DJUNG,
-    portfolioUrl: 'studiojung.co?link_target=parent',
-    iframeConfig: {
+// Create a mapping of avatar imports to use for team members
+const avatarMap = {
+  'Israel Riqueros': ISRAELRIQUEROS,
+  'DJ Jung': DJUNG,
+  'Ophelia Roster': SHO,
+  'Jose Felipe Varón': JOSE,
+  'Angelo Rosales': ANGELO,
+  'Muhozi Nintunze': MUHOZI,
+  'Yussef Haridy': YUSSEF,
+  'Clayton McCracken': CLAYTON,
+  'Blake Bohls': BLAKE,
+  'Wesley So': WESLEY,
+  'Lena Huang': LENA,
+  'John Burton': JOHN,
+  'Juan Felipe Díaz Herrera': JUAN,
+  'Alexandra Kern': ALEXANDRA,
+  'Sho Schrock Manabe': SHO,
+  'Zuheng Yin': ZUHENG
+}
+
+// Import team data from data.json and format it for the component
+const formatTeamData = () => {
+  // Create a flat array of all team members from the creativeTeam in data.json
+  const teamData = [
+    ...projectData.creativeTeam.leadership,
+    ...projectData.creativeTeam.designers,
+    ...projectData.creativeTeam.production,
+    ...projectData.creativeTeam.creatives
+  ]
+
+  // Format the team data and add the missing properties
+  return teamData.map((member, index) => ({
+    id: index + 1,
+    name: member.name,
+    role: member.role,
+    day_rate: member.day_rate,
+    avatar: avatarMap[member.name] || PLACEHOLDER_PORTRAIT,
+    portfolioUrl: getPortfolioUrl(member.name),
+    noOutline: getNoOutline(member.name),
+    iframeConfig: member.name === 'DJ Jung' ? {
       width: '640px',
       height: '480px',
       style: 'border: 0'
-    }
-  },
-  {
-    id: 6,
-    name: 'Ophelia Roster',
-    role: 'Directors + Photographers',
-    day_rate: 900,
-    avatar: SHO,
-    portfolioUrl: 'https://www.ophelia.company',
-    noOutline: true
-  },
-  {
-    id: 16,
-    name: 'Jose Felipe Varón',
-    role: 'Documentary/Reality TV Director',
-    day_rate: 900,
-    avatar: JOSE,
-    portfolioUrl: '#',
-    noOutline: true
-  },
-  {
-    id: 5,
-    name: 'Angelo Rosales',
-    role: '3D Artist',
-    day_rate: 800,
-    avatar: ANGELO,
-    portfolioUrl: 'https://www.ophelia.company',
-    noOutline: true
-  },
-  {
-    id: 7,
-    name: 'Muhozi Nintunze',
-    role: 'Product Designer',
-    day_rate: 1000,
-    avatar: MUHOZI,
-    portfolioUrl: MUHOZI_PDF
-  },
-  {
-    id: 8,
-    name: 'Yussef Haridy',
-    role: 'BTS Shooter',
-    day_rate: 1000,
-    avatar: YUSSEF,
-    portfolioUrl: 'https://www.yussefharidy.com/motion'
-  },
-  {
-    id: 9,
-    name: 'Clayton McCracken',
-    role: 'Experiential Designer',
-    day_rate: 850,
-    avatar: CLAYTON,
-    portfolioUrl: 'https://c180n.tv/'
-  },
-  {
-    id: 10,
-    name: 'Blake Bohls',
-    role: 'Merch Designer',
-    day_rate: 800,
-    avatar: BLAKE,
-    portfolioUrl: 'https://www.ophelia.company',
-    noOutline: true
-  },
-  {
-    id: 4,
-    name: 'Wesley So',
-    role: 'Graphic Designer',
-    day_rate: 700,
-    avatar: WESLEY,
-    portfolioUrl: 'https://sosostudio.net/'
-  },
-  {
-    id: 17,
-    name: 'Lena Huang',
-    role: 'Motion Graphics Artist',
-    day_rate: 800,
-    avatar: LENA,
-    portfolioUrl: 'https://www.lenahuang.com/',
-    noOutline: true
-  },
-  {
-    id: 20,
-    name: 'John Burton',
-    role: 'Editor / Sound Designer',
-    day_rate: 900,
-    avatar: JOHN,
-    portfolioUrl: 'https://www.johnburton.me/',
-    noOutline: true
-  },
-  {
-    id: 11,
-    name: 'Juan Felipe Díaz Herrera',
-    role: 'Executive Producer',
-    day_rate: 1200,
-    avatar: JUAN,
-    portfolioUrl: 'https://www.ophelia.company',
-    noOutline: true
-  },
-  {
-    id: 19,
-    name: 'Alexandra Kern',
-    role: 'Post-Producer',
-    day_rate: 900,
-    avatar: ALEXANDRA,
-    portfolioUrl: '#',
-    noOutline: true
-  },
-  {
-    id: 12,
-    name: 'Sho Schrock Manabe',
-    role: 'Film Producer',
-    day_rate: 900,
-    avatar: SHO,
-    portfolioUrl: 'https://www.ophelia.company',
-    noOutline: true
-  },
-  {
-    id: 18,
-    name: 'Zuheng Yin',
-    role: 'Creative Producer',
-    day_rate: 900,
-    avatar: ZUHENG,
-    portfolioUrl: '#',
-    noOutline: true
+    } : undefined
+  }))
+}
+
+// Helper functions for team member properties
+const getPortfolioUrl = (name) => {
+  const portfolioUrls = {
+    'Israel Riqueros': 'https://www.israelriqueros.com/',
+    'DJ Jung': 'studiojung.co?link_target=parent',
+    'Juan Felipe Díaz Herrera': 'https://www.ophelia.company',
+    'Wesley So': 'https://sosostudio.net/',
+    'Muhozi Nintunze': MUHOZI_PDF,
+    'Yussef Haridy': 'https://www.yussefharidy.com/motion',
+    'Clayton McCracken': 'https://c180n.tv/',
+    'Blake Bohls': 'https://www.ophelia.company',
+    'Ophelia Roster': 'https://www.ophelia.company',
+    'Angelo Rosales': 'https://www.ophelia.company',
+    'Lena Huang': 'https://www.lenahuang.com/',
+    'John Burton': 'https://www.johnburton.me/',
+    'Sho Schrock Manabe': 'https://www.ophelia.company'
   }
-]
+  return portfolioUrls[name] || '#'
+}
+
+const getNoOutline = (name) => {
+  const noOutlineMembers = [
+    'Israel Riqueros',
+    'Juan Felipe Díaz Herrera',
+    'Blake Bohls',
+    'Angelo Rosales',
+    'Lena Huang',
+    'John Burton',
+    'Jose Felipe Varón',
+    'Sho Schrock Manabe',
+    'Ophelia Roster'
+  ]
+  return noOutlineMembers.includes(name)
+}
+
+// Team members data from data.json
+const teamMembers = formatTeamData()
 
 // Team members that only appear in org chart view
 const orgChartOnlyMembers = [
@@ -634,8 +572,10 @@ const updateConnectionPositions = () => {
     // Connection between Alexandra and John
     ['Alexandra Kern', 'John Burton'],
     
-    // Direct connections from Sho and Roster
+    // Direct connections from Sho to Ophelia Roster
     ['Sho Schrock Manabe', 'Ophelia Roster'],
+    
+    // Direct connections from Ophelia Roster to Jose and Yussef
     ['Ophelia Roster', 'Jose Felipe Varón'],
     ['Ophelia Roster', 'Yussef Haridy'],
     
@@ -651,7 +591,7 @@ const updateConnectionPositions = () => {
     ['DJ Jung', 'Wesley So'],
     ['Angelo Rosales', 'Muhozi Nintunze'],
     ['Angelo Rosales', 'Lena Huang'],
-    ['Blake Bohls', 'Wesley So']
+    ['Wesley So', 'Blake Bohls']
   ];
   
   // Draw connection lines

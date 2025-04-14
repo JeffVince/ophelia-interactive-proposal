@@ -1,0 +1,1824 @@
+<template>
+  <div class="timeline-container">
+    <!-- Left side panel with expandable phase summaries -->
+    <div class="left-controls">
+      <!-- Timeline Legend Panel -->
+      <div class="legend-panel">
+        <div class="glass-overlay"></div>
+        <div class="panel-inner">
+          <div class="legend-header">
+            <h3>Timeline Legend</h3>
+          </div>
+          
+          <div class="legend-body">
+            <div class="legend-section compact">
+      <div class="legend-item">
+                <div class="legend-icon client-meeting"></div>
+        <span>Client Meeting</span>
+              </div>
+      </div>
+      
+            <div class="legend-section">
+              <h4 class="legend-section-title">Project Phases</h4>
+              
+              <div class="phase-group">
+                <div class="phase-title" @click="togglePhaseDetails(1)">
+                  <span>Phase 1 - Brand Book</span>
+                  <span class="toggle-icon">{{ showPhaseDetails[1] ? '−' : '+' }}</span>
+          </div>
+                
+                <div v-if="showPhaseDetails[1]" class="phase-details">
+                  <div class="legend-item">
+                    <div class="legend-icon phase-1 round-1"></div>
+                    <span>Discovery & Exploration</span>
+            </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-1 round-2"></div>
+                    <span>Development</span>
+          </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-1 round-3"></div>
+                    <span>Refinement</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-1 round-4"></div>
+                    <span>Final Approval</span>
+                  </div>
+        </div>
+      </div>
+      
+              <div class="phase-group">
+                <div class="phase-title" @click="togglePhaseDetails(2)">
+                  <span>Phase 2 - Brand Activations</span>
+                  <span class="toggle-icon">{{ showPhaseDetails[2] ? '−' : '+' }}</span>
+                </div>
+                
+                <div v-if="showPhaseDetails[2]" class="phase-details">
+                  <div class="legend-item">
+                    <div class="legend-icon phase-2 round-1"></div>
+                    <span>Development</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-2 round-2"></div>
+                    <span>Refinement</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-2 round-3"></div>
+                    <span>Final Approval</span>
+                  </div>
+            </div>
+          </div>
+          
+              <div class="phase-group">
+                <div class="phase-title" @click="togglePhaseDetails(3)">
+                  <span>Phase 3 - EP Brand Book</span>
+                  <span class="toggle-icon">{{ showPhaseDetails[3] ? '−' : '+' }}</span>
+                </div>
+                
+                <div v-if="showPhaseDetails[3]" class="phase-details">
+                  <div class="legend-item">
+                    <div class="legend-icon phase-3 round-1"></div>
+                    <span>Discovery & Exploration</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-3 round-2"></div>
+                    <span>Development</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-3 round-3"></div>
+                    <span>Refinement</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-3 round-4"></div>
+                    <span>Final Approval</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="phase-group">
+                <div class="phase-title" @click="togglePhaseDetails(4)">
+                  <span>Phase 4 - EP Brand Activations</span>
+                  <span class="toggle-icon">{{ showPhaseDetails[4] ? '−' : '+' }}</span>
+                </div>
+                
+                <div v-if="showPhaseDetails[4]" class="phase-details">
+                  <div class="legend-item">
+                    <div class="legend-icon phase-4 round-1"></div>
+                    <span>Development</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-4 round-2"></div>
+                    <span>Refinement</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-icon phase-4 round-3"></div>
+                    <span>Final Approval</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="legend-section">
+              <h4 class="legend-section-title">Phase Information</h4>
+              
+              <div v-for="(phase, index) in phases" :key="index" class="phase-info" v-show="expandedPhaseInfo === index + 1">
+                <div class="info-section">
+                  <h5>Stakeholders</h5>
+                  <ul>
+                    <li v-for="person in phase.stakeholders" :key="person">{{ person }}</li>
+                </ul>
+              </div>
+              
+                <div class="info-section">
+                  <h5>Team Members</h5>
+                  <ul>
+                    <li v-for="role in phase.teamRoles" :key="role">{{ role }}</li>
+                </ul>
+              </div>
+              
+                <div class="info-section">
+                  <h5>Stakeholder Meetings</h5>
+                  <ul>
+                    <li v-for="meeting in phase.meetings" :key="meeting.date">
+                      {{ meeting.type }} - {{ formatMeetingDate(meeting.date) }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+              <div v-if="!expandedPhaseInfo" class="phase-selector">
+                <div 
+                  v-for="n in 4" 
+                  :key="n"
+                  class="phase-select-btn"
+                  :class="{ active: expandedPhaseInfo === n }"
+                  @click="expandedPhaseInfo = n"
+                >
+                  Phase {{ n }}
+                </div>
+              </div>
+              
+              <div v-if="expandedPhaseInfo" class="phase-info-controls">
+                <button class="back-btn" @click="expandedPhaseInfo = null">Back to Phases</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar container with adjusted width -->
+    <div class="calendar-container">
+      <!-- FullCalendar Component -->
+      <FullCalendar :options="calendarOptions" />
+    </div>
+
+    <!-- Detail Side Panel / Modal for Event Drilldown -->
+    <div v-if="selectedEvent" class="details-panel">
+      <div class="glass-overlay"></div>
+      <div class="panel-inner">
+        <div class="details-header" 
+          :class="{ 
+            'phase-1-header': selectedEvent.extendedProps.phaseNumber === 1,
+            'phase-2-header': selectedEvent.extendedProps.phaseNumber === 2,
+            'phase-3-header': selectedEvent.extendedProps.phaseNumber === 3,
+            'phase-4-header': selectedEvent.extendedProps.phaseNumber === 4
+          }">
+        <button class="close-btn" @click="selectedEvent = null">×</button>
+      </div>
+
+      <div class="details-body">
+          <!-- Event Overview Section -->
+          <div class="event-overview"
+            :class="{
+              'phase-1-overview': selectedEvent.extendedProps.phaseNumber === 1,
+              'phase-2-overview': selectedEvent.extendedProps.phaseNumber === 2,
+              'phase-3-overview': selectedEvent.extendedProps.phaseNumber === 3,
+              'phase-4-overview': selectedEvent.extendedProps.phaseNumber === 4
+            }">
+            <div class="event-date">
+              <div class="date-day">{{ formatDateDay(selectedEvent.start) }}</div>
+              <div class="date-month">{{ formatDateMonth(selectedEvent.start) }}</div>
+              <div class="date-year">{{ formatDateYear(selectedEvent.start) }}</div>
+            </div>
+            
+            <div class="event-meta">
+              <h2 class="event-title">{{ getDetailPanelTitle(selectedEvent) }}</h2>
+              <div class="event-tags">
+                <span v-if="selectedEvent.extendedProps.phase">{{ selectedEvent.extendedProps.phase }}</span>
+                <span v-if="selectedEvent.extendedProps.round">{{ selectedEvent.extendedProps.round }}</span>
+                <span v-if="selectedEvent.extendedProps.meetingType">{{ selectedEvent.extendedProps.meetingType }}</span>
+              </div>
+            </div>
+          </div>
+        
+        <template v-if="selectedEvent.extendedProps.isMilestone">
+            <!-- Meeting Agenda section -->
+            <div v-if="selectedEvent.extendedProps.agenda" class="panel-section">
+              <h3 class="section-title">Meeting Agenda</h3>
+              <div class="agenda-content">{{ selectedEvent.extendedProps.agenda }}</div>
+            </div>
+            
+            <!-- Team Members section -->
+            <div v-if="selectedEvent.extendedProps.opheliaTeam && selectedEvent.extendedProps.opheliaTeam.length" class="panel-section">
+              <h3 class="section-title">Ophelia Team</h3>
+              <div class="team-grid">
+                <div 
+                  v-for="member in selectedEvent.extendedProps.opheliaTeam" 
+                  :key="member" 
+                  class="team-member"
+                  :class="getRoleColorClass(member.split(' (')[1]?.replace(')', ''))"
+                >
+                  <div class="member-info">
+                    <div class="member-name">{{ member.split(' (')[0] }}</div>
+                    <div class="member-role">{{ member.split(' (')[1]?.replace(')', '') }}</div>
+                  </div>
+                  <div class="member-accent"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Stakeholders section -->
+            <div v-if="selectedEvent.extendedProps.stakeholders && selectedEvent.extendedProps.stakeholders.length" class="panel-section">
+              <h3 class="section-title">Stakeholders</h3>
+              <div class="stakeholder-grid">
+                <div 
+                  v-for="(person, index) in selectedEvent.extendedProps.stakeholders" 
+                  :key="person" 
+                  class="stakeholder-item"
+                  :class="`stakeholder-variant-${index % 3}`"
+                >
+                  {{ person }}
+                </div>
+              </div>
+            </div>
+        </template>
+        
+        <template v-else>
+            <!-- Phase event template -->
+            <div class="panel-section">
+              <h3 class="section-title">Deliverables</h3>
+              <ul class="styled-list">
+            <li v-for="item in selectedEvent.extendedProps.deliverables" :key="item">{{ item }}</li>
+          </ul>
+            </div>
+
+            <div class="panel-section">
+              <h3 class="section-title">Tasks</h3>
+              <ul class="styled-list">
+            <li v-for="task in selectedEvent.extendedProps.tasks" :key="task">{{ task }}</li>
+          </ul>
+            </div>
+
+            <div class="panel-section">
+              <h3 class="section-title">Team Roles</h3>
+              <ul class="styled-list">
+            <li v-for="member in selectedEvent.extendedProps.team" :key="member.role">
+              {{ member.role }}
+            </li>
+          </ul>
+            </div>
+            
+            <!-- Team Members section -->
+            <div v-if="selectedEvent.extendedProps.opheliaTeam && selectedEvent.extendedProps.opheliaTeam.length" class="panel-section">
+              <h3 class="section-title">Ophelia Team</h3>
+              <div class="team-grid">
+                <div 
+                  v-for="member in selectedEvent.extendedProps.opheliaTeam" 
+                  :key="member" 
+                  class="team-member"
+                  :class="getRoleColorClass(member.split(' (')[1]?.replace(')', ''))"
+                >
+                  <div class="member-info">
+                    <div class="member-name">{{ member.split(' (')[0] }}</div>
+                    <div class="member-role">{{ member.split(' (')[1]?.replace(')', '') }}</div>
+                  </div>
+                  <div class="member-accent"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Stakeholders section -->
+            <div v-if="selectedEvent.extendedProps.stakeholders && selectedEvent.extendedProps.stakeholders.length" class="panel-section">
+              <h3 class="section-title">Stakeholders</h3>
+              <div class="stakeholder-grid">
+                <div 
+                  v-for="(person, index) in selectedEvent.extendedProps.stakeholders" 
+                  :key="person" 
+                  class="stakeholder-item"
+                  :class="`stakeholder-variant-${index % 3}`"
+                >
+                  {{ person }}
+                </div>
+              </div>
+            </div>
+        </template>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import multiMonthPlugin from '@fullcalendar/multimonth'
+import timelineData from '../data/data.json'
+
+export default {
+  name: 'ProjectTimeline',
+  components: { FullCalendar },
+  data() {
+    // Initialize phase states and expanded states
+    const states = {}
+    const expandedPhases = {}
+    
+    // Default start date for first phase
+    const defaultStartDate = '2025-04-21'
+    
+    timelineData.phases.forEach(ph => {
+      states[ph.number] = 'ON' // All phases visible by default
+      expandedPhases[ph.number] = false // All phases collapsed by default
+    })
+    
+    return {
+      timelineData,
+      phaseStates: states,
+      expandedPhases,
+      selectedEvent: null,
+      defaultStartDate,
+      calendarOptions: {
+        plugins: [dayGridPlugin, interactionPlugin, multiMonthPlugin],
+        initialView: 'quarter',
+        multiMonthMaxColumns: 2,
+        views: {
+          quarter: {
+            type: 'multiMonth',
+            duration: { months: 3 }
+          }
+        },
+        initialDate: defaultStartDate,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'quarter,dayGridMonth,dayGridWeek,dayGridDay'
+        },
+        editable: false,
+        eventClick: this.handleEventClick,
+        firstDay: 1,
+        events: [],
+        dayMaxEvents: 6, // Show more events instead of "+more" link
+        eventTimeFormat: {
+          hour: 'numeric',
+          minute: '2-digit',
+          meridiem: 'short'
+        },
+        dayMaxEventRows: 6, // Show up to 6 rows of events before showing "more"
+        moreLinkClick: 'popover', // Show a popover with all events when clicking "+more"
+        moreLinkClassNames: 'custom-more-link',
+        eventDisplay: 'block', // Display as blocks for better visibility
+        eventContent: function(arg) {
+          // Custom event rendering
+          const titleEl = document.createElement('div')
+          
+          // Swap the label approach
+          if (arg.event.extendedProps.isPhaseBanner) {
+            // For phase events, show the full description
+            const description = arg.event.extendedProps.tasks && arg.event.extendedProps.tasks.length ? 
+                                arg.event.extendedProps.tasks[0] : '';
+            titleEl.innerHTML = description;
+          } else if (arg.event.extendedProps.isMilestone) {
+            // For meeting events, show just the round (R1, R2, etc.)
+            const round = arg.event.extendedProps.round || '';
+            titleEl.innerHTML = round;
+          }
+          
+          titleEl.className = 'custom-event-title'
+          
+          const innerWrapEl = document.createElement('div')
+          innerWrapEl.className = 'custom-event-inner'
+          innerWrapEl.appendChild(titleEl)
+          
+          // Add badge for meetings
+          if (arg.event.extendedProps.isMilestone) {
+            const badgeEl = document.createElement('span')
+            badgeEl.className = 'custom-event-badge'
+            badgeEl.textContent = arg.event.title // Show "Check-In" or "Review" as the badge
+            innerWrapEl.appendChild(badgeEl)
+          }
+          
+          const wrapperEl = document.createElement('div')
+          wrapperEl.className = 'custom-event-wrapper'
+          wrapperEl.appendChild(innerWrapEl)
+          
+          return { domNodes: [wrapperEl] }
+        }
+      },
+      showPhaseDetails: {
+        1: true,
+        2: false,
+        3: false,
+        4: false
+      },
+      expandedPhaseInfo: null,
+      phases: [
+        {
+          name: "Brand Book",
+          stakeholders: ["Isaac Lee", "Santiago Duque", "Juan Arenas"],
+          teamRoles: ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Motion Designer"],
+          meetings: [
+            { type: "Check-In", date: "2025-04-22" },
+            { type: "Review", date: "2025-04-24" },
+            { type: "Check-In", date: "2025-04-29" },
+            { type: "Review", date: "2025-05-01" }
+          ]
+        },
+        {
+          name: "Brand Activations",
+          stakeholders: ["Isaac Lee", "Santiago Duque", "Juan Arenas"],
+          teamRoles: ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+          meetings: [
+            { type: "Check-In", date: "2025-05-06" },
+            { type: "Review", date: "2025-05-08" }
+          ]
+        },
+        {
+          name: "EP Brand Book",
+          stakeholders: ["Isaac Lee", "Santiago Duque"],
+          teamRoles: ["Creative Director", "Art Director", "Graphic Designer", "Line Producer", "Motion Designer"],
+          meetings: [
+            { type: "Check-In", date: "2025-05-13" },
+            { type: "Review", date: "2025-05-15" }
+          ]
+        },
+        {
+          name: "EP Brand Activations",
+          stakeholders: ["Isaac Lee", "Santiago Duque", "Juan Arenas"],
+          teamRoles: ["Creative Director", "Art Director", "Graphic Designer", "Line Producer"],
+          meetings: [
+            { type: "Check-In", date: "2025-05-20" },
+            { type: "Review", date: "2025-05-22" }
+          ]
+        }
+      ],
+    }
+  },
+  computed: {
+    // Compute events from timelineData + phaseStates
+    generatedEvents() {
+      const events = [];
+      const processedEventKeys = new Set(); // Track processed events
+      const processedDates = new Set(); // Track processed date ranges to avoid duplicates
+      
+      // Sort phases by number
+      const sortedPhases = [...this.timelineData.phases].sort((a, b) => a.number - b.number);
+      
+      // First pass: Create week-spanning phase events
+      for (const phase of sortedPhases) {
+        // Skip if phase is turned off
+        if (this.phaseStates[phase.number] === 'OFF') continue;
+        
+        // Process each round in the phase
+        for (const [roundKey, round] of Object.entries(phase.rounds)) {
+          // Skip if round doesn't have events
+          if (!round.events || !round.events.length) continue;
+          
+          // Find all start events to create week spans
+          // For phases 3 and 4, ensure we're finding the right events
+          const startEvents = round.events.filter(e => {
+            return e.type === 'start' && e.date;
+          });
+          
+          if (startEvents.length === 0) {
+            console.warn(`No start events found for phase ${phase.number}, round ${roundKey}`);
+            
+            // As a fallback, use the first event date if no start event is found
+            const firstEvent = round.events.sort((a, b) => new Date(a.date) - new Date(b.date))[0];
+            if (firstEvent) {
+              const firstDate = new Date(firstEvent.date);
+              // Make sure we haven't already processed this date range
+              const weekStart = this.getWeekStart(firstDate);
+              const dateKey = `${weekStart.toISOString().slice(0, 10)}-${phase.number}-${roundKey}`;
+              
+              if (!processedDates.has(dateKey)) {
+                processedDates.add(dateKey);
+                
+                const endDate = new Date(weekStart);
+                const dayOfWeek = weekStart.getDay();
+                const daysUntilSaturday = dayOfWeek === 6 ? 0 : dayOfWeek === 0 ? 6 : 6 - dayOfWeek;
+                endDate.setDate(weekStart.getDate() + daysUntilSaturday);
+                
+                // Create a synthetic start event
+                events.push({
+                  id: `phase-${phase.number}-${roundKey}-week-${weekStart.toISOString().slice(0, 10)}`,
+                  title: firstEvent.description || `${phase.name} ${roundKey}`,
+                  start: weekStart.toISOString().slice(0, 10),
+                  end: endDate.toISOString().slice(0, 10),
+                  allDay: true,
+                  classNames: [`phase-${phase.number}`, `round-${roundKey.toLowerCase()}`, 'phase-event'],
+                  extendedProps: {
+                    phaseNumber: phase.number,
+                    round: roundKey,
+                    phase: phase.name,
+                    isPhaseBanner: true,
+                    fullTitle: `Phase ${phase.number} – ${roundKey}: ${firstEvent.description || ''}`,
+                    deliverables: firstEvent.deliverables || [],
+                    tasks: [firstEvent.description || ''],
+                    team: firstEvent.team_members ? firstEvent.team_members.map(member => ({ role: member })) : [],
+                    stakeholders: firstEvent.stakeholders || phase.stakeholders || [],
+                    opheliaTeam: this.generateTeamMembers(firstEvent.team_members)
+                  }
+                });
+              }
+              
+              continue;
+            }
+          }
+          
+          for (const event of startEvents) {
+            const startDate = new Date(event.date);
+            const endDate = new Date(startDate);
+            
+            // Calculate end date (Saturday)
+            const dayOfWeek = startDate.getDay();
+            const daysUntilSaturday = dayOfWeek === 6 ? 0 : dayOfWeek === 0 ? 6 : 6 - dayOfWeek;
+            endDate.setDate(startDate.getDate() + daysUntilSaturday);
+            
+            // Create a unique key for this week span
+            const weekKey = `${phase.number}-${roundKey}-week-${startDate.toISOString().slice(0, 10)}`;
+            
+            // Skip if already processed
+            if (processedEventKeys.has(weekKey)) continue;
+            processedEventKeys.add(weekKey);
+            
+            // Add the week-spanning event with the full description as title
+            events.push({
+              id: weekKey,
+              title: event.description, // Use the full description as title
+              start: event.date,
+              end: endDate.toISOString().split('T')[0],
+              allDay: true,
+              classNames: [`phase-${phase.number}`, `round-${roundKey.toLowerCase()}`, 'phase-event'],
+              extendedProps: {
+                phaseNumber: phase.number,
+                round: roundKey,
+                phase: phase.name,
+                isPhaseBanner: true,
+                fullTitle: `Phase ${phase.number} – ${roundKey}: ${event.description}`,
+                deliverables: event.deliverables || [],
+                tasks: [event.description],
+                team: event.team_members ? event.team_members.map(member => ({ role: member })) : [],
+                stakeholders: event.stakeholders || phase.stakeholders || [],
+                opheliaTeam: this.generateTeamMembers(event.team_members)
+              }
+            });
+          }
+        }
+      }
+      
+      // Second pass: Add meeting events
+      for (const phase of sortedPhases) {
+        // Skip if phase is turned off
+        if (this.phaseStates[phase.number] === 'OFF') continue;
+        
+        // Process each round in the phase
+        for (const [roundKey, round] of Object.entries(phase.rounds)) {
+          // Skip if round doesn't have events
+          if (!round.events || !round.events.length) continue;
+          
+          // Find all meeting events
+          const meetingEvents = round.events.filter(e => 
+            (e.type === 'check_in' || e.type === 'review') && e.date
+          );
+          
+          for (const event of meetingEvents) {
+            const isReview = event.type === 'review';
+            
+            // Create a unique key for this meeting
+            const meetingKey = `meeting-${phase.number}-${roundKey}-${event.type}-${event.date}`;
+            
+            // Skip if already processed
+            if (processedEventKeys.has(meetingKey)) continue;
+            processedEventKeys.add(meetingKey);
+            
+            // Generate meeting agenda
+            let agenda = '';
+            if (isReview) {
+              agenda = `Welcome and project status overview for ${phase.displayName} ${roundKey}. We'll review progress on ${round.name.toLowerCase()} tasks.`;
+            } else {
+              agenda = `Mid-week check-in to discuss ${phase.displayName} ${roundKey} progress. We'll review current developments in ${round.name.toLowerCase()}.`;
+            }
+            
+            // Add meeting event with just the round as title
+            events.push({
+              id: meetingKey,
+              title: isReview ? 'Review' : 'Check-In',
+              start: event.date,
+              allDay: true,
+              classNames: ['meeting-event', `phase-${phase.number}-meeting`],
+              extendedProps: {
+                isMilestone: true,
+                phase: phase.name,
+                phaseNumber: phase.number,
+                round: roundKey,
+                meetingType: isReview ? "Review" : "Check-In",
+                deliverables: event.deliverables || [],
+                tasks: [event.description],
+                team: event.team_members ? event.team_members.map(member => ({ role: member })) : [],
+                stakeholders: event.stakeholders || phase.stakeholders || [],
+                agenda: agenda,
+                opheliaTeam: this.generateTeamMembers(event.team_members)
+              }
+            });
+          }
+        }
+      }
+      
+      return events;
+    },
+  },
+  watch: {
+    // Update calendar events when generated events change
+    generatedEvents: {
+      handler(newEvents) {
+        this.calendarOptions.events = newEvents;
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  methods: {
+    // Toggle expanded state of a phase
+    togglePhaseDetails(phaseNum) {
+      this.showPhaseDetails[phaseNum] = !this.showPhaseDetails[phaseNum];
+    },
+    
+    // Handle calendar event click
+    handleEventClick(info) {
+      // Check if we already have this event selected to avoid duplicates
+      if (this.selectedEvent && 
+          this.selectedEvent.id === info.event.id) {
+        return;
+      }
+      this.selectedEvent = info.event;
+    },
+    
+    // Format date for display
+    formatDate(date) {
+      const d = new Date(date);
+      return d.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    },
+    
+    // Get all meetings (reviews, check-ins) for a phase
+    getPhaseMeetings(phase) {
+      const meetings = [];
+      
+      // Collect all meetings from all rounds
+      Object.values(phase.rounds || {}).forEach(round => {
+        if (round.events && round.events.length) {
+          const roundMeetings = round.events.filter(event => 
+            event.type === 'review' || event.type === 'check_in'
+          );
+          
+          roundMeetings.forEach(meeting => {
+            meetings.push({
+              type: meeting.type === 'review' ? 'Review' : 'Check-In',
+              date: meeting.date,
+              stakeholders: meeting.stakeholders || []
+            });
+          });
+        }
+      });
+      
+      // Sort meetings by date
+      return meetings.sort((a, b) => new Date(a.date) - new Date(b.date));
+    },
+    
+    // Get unique team members across all rounds in a phase
+    getUniqueTeamMembers(phase) {
+      const members = new Set();
+      
+      // Collect team members from all rounds
+      Object.values(phase.rounds || {}).forEach(round => {
+        if (round.team && round.team.length) {
+          round.team.forEach(member => {
+            members.add(member.role);
+          });
+        }
+      });
+      
+      return Array.from(members);
+    },
+    
+    // Add new date format methods
+    formatDateDay(date) {
+      const d = new Date(date);
+      return d.getDate();
+    },
+    
+    formatDateMonth(date) {
+      const d = new Date(date);
+      return d.toLocaleDateString('en-US', { month: 'long' });
+    },
+    
+    formatDateYear(date) {
+      const d = new Date(date);
+      return d.toLocaleDateString('en-US', { year: 'numeric' });
+    },
+    
+    // Add this method to determine role-based color classes
+    getRoleColorClass(role) {
+      if (!role) return '';
+      
+      if (role.includes('Creative Director')) {
+        return 'role-creative-director';
+      } else if (role.includes('Art Director')) {
+        return 'role-art-director';
+      } else if (role.includes('Executive Producer') || role.includes('Line Producer')) {
+        return 'role-producer';
+      } else if (role.includes('Motion Designer')) {
+        return 'role-motion';
+      } else if (role.includes('Graphic Designer')) {
+        return 'role-graphic';
+      } else if (role.includes('Director / Photographer')) {
+        return 'role-director';
+      } else if (role.includes('Merch Designer')) {
+        return 'role-merch';
+      } else {
+        return 'role-other';
+      }
+    },
+    
+    formatMeetingDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    },
+    
+    // Helper to generate a week key (year-weeknum) for grouping events
+    getWeekKey(date) {
+      const d = new Date(date);
+      d.setHours(0, 0, 0, 0);
+      // Thursday in current week decides the year.
+      d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
+      // January 4 is always in week 1.
+      const week1 = new Date(d.getFullYear(), 0, 4);
+      // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+      const weekNum = 1 + Math.round(((d.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+      return `${d.getFullYear()}-${weekNum}`;
+    },
+    
+    // Helper to generate team members list
+    generateTeamMembers(teamMemberRoles) {
+      if (!teamMemberRoles || !teamMemberRoles.length) return [];
+      
+      const opheliaTeam = [];
+      
+      // Get all team members from creative team data
+      const allTeamMembers = [
+        ...(this.timelineData.creativeTeam?.leadership || []),
+        ...(this.timelineData.creativeTeam?.designers || []),
+        ...(this.timelineData.creativeTeam?.production || []),
+        ...(this.timelineData.creativeTeam?.creatives || [])
+      ];
+      
+      // For each team member listed in the event
+      teamMemberRoles.forEach(teamMemberRole => {
+        // Handle the specific case of "Creative Directors" -> "Creative Director"
+        const normalizedRole = teamMemberRole === "Creative Directors" ? "Creative Director" : teamMemberRole;
+        
+        // Find the exact team member in the creative team data
+        const foundMember = allTeamMembers.find(member => 
+          member.role === normalizedRole
+        );
+        
+        if (foundMember) {
+          opheliaTeam.push(`${foundMember.name} (${foundMember.role})`);
+        } else {
+          // Fallback if just the role is provided without a specific person
+          // Use the normalized role to ensure "Creative Director" is displayed correctly
+          opheliaTeam.push(normalizedRole);
+        }
+      });
+      
+      return opheliaTeam;
+    },
+    
+    // Get the appropriate title for the details panel
+    getDetailPanelTitle(event) {
+      if (event.extendedProps.isMilestone) {
+        // For milestone/meeting events, show the phase and round info
+        const phaseNumber = event.extendedProps.phaseNumber;
+        const round = event.extendedProps.round;
+        
+        // Find the matching phase
+        const phase = this.timelineData.phases.find(p => p.number === phaseNumber);
+        if (phase && phase.rounds && phase.rounds[round]) {
+          // Find the first start event to get its description
+          const startEvent = phase.rounds[round].events.find(e => e.type === 'start');
+          if (startEvent && startEvent.description) {
+            return startEvent.description;
+          }
+        }
+        
+        // Fallback to phase and round if we can't find the description
+        return `Phase ${phaseNumber} - ${round}`;
+      }
+      
+      // For non-meeting events, just use the event title
+      return event.title;
+    },
+
+    // Add this method to explicitly clean up all events before generating new ones
+    // This ensures no stale or duplicate events remain
+    mounted() {
+      // Force a complete refresh of events to ensure all phases display correctly
+      this.refreshEvents();
+    },
+
+    // Add the refreshEvents method
+    refreshEvents() {
+      // Clear all calendar events
+      this.calendarOptions.events = [];
+      
+      // Force re-computation of events
+      this.$nextTick(() => {
+        this.calendarOptions.events = this.generatedEvents;
+      });
+    },
+
+    // Get the Monday of the week containing the given date
+    getWeekStart(date) {
+      const d = new Date(date);
+      const day = d.getDay(); // 0 is Sunday, 1 is Monday
+      
+      // Calculate days to subtract to get to Monday
+      const daysToSubtract = day === 0 ? 6 : day - 1;
+      
+      // Create a new date that is the Monday of this week
+      const monday = new Date(d);
+      monday.setDate(d.getDate() - daysToSubtract);
+      monday.setHours(0, 0, 0, 0);
+      
+      return monday;
+    },
+  }
+}
+</script>
+
+<style scoped>
+/* Main Layout Styles */
+.timeline-container {
+  position: relative;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  min-height: calc(100vh - 120px);
+  height: calc(100vh - 120px);
+  width: 100%;
+  max-width: 100%;
+  background-color: #0a0a0a;
+  overflow: hidden;
+}
+
+.left-controls {
+  width: 280px;
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-container {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  background-color: #111111;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.calendar-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 70% 30%, rgba(40, 40, 40, 0.2), rgba(0, 0, 0, 0.05));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Premium Legend Panel Styles */
+.legend-panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  color: #ffffff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  overflow: hidden;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-panel .glass-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 70% 40%, rgba(40, 40, 40, 0.2), rgba(0, 0, 0, 0.05));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.legend-panel .panel-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #111;
+}
+
+.legend-panel .panel-inner::-webkit-scrollbar {
+  width: 6px;
+}
+
+.legend-panel .panel-inner::-webkit-scrollbar-track {
+  background-color: #111;
+}
+
+.legend-panel .panel-inner::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 3px;
+}
+
+.legend-header {
+  padding: 12px 16px;
+  background-color: #0a0a0a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.legend-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.legend-body {
+  padding: 12px 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.legend-section {
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+
+.legend-section.compact {
+  margin-bottom: 12px;
+}
+
+.legend-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 12px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.phase-group {
+  margin-bottom: 8px;
+}
+
+.phase-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 6px 8px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.phase-title:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.toggle-icon {
+  font-weight: 600;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.phase-details {
+  padding: 4px 0 4px 12px;
+  margin-top: 4px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 3px 0;
+}
+
+.legend-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.legend-icon.client-meeting {
+  background-color: #f0f0e6;
+  border: 1px solid #d6d6ce;
+}
+
+/* Phase icons */
+.legend-icon.phase-1.round-1 { background-color: #4c78b0; }
+.legend-icon.phase-1.round-2 { background-color: #3a5d8c; }
+.legend-icon.phase-1.round-3 { background-color: #294369; }
+.legend-icon.phase-1.round-4 { background-color: #1a2c46; }
+
+.legend-icon.phase-2.round-1 { background-color: #41a58e; }
+.legend-icon.phase-2.round-2 { background-color: #328370; }
+.legend-icon.phase-2.round-3 { background-color: #246152; }
+
+.legend-icon.phase-3.round-1 { background-color: #c5678d; }
+.legend-icon.phase-3.round-2 { background-color: #a84e70; }
+.legend-icon.phase-3.round-3 { background-color: #8c3755; }
+.legend-icon.phase-3.round-4 { background-color: #6e243f; }
+
+.legend-icon.phase-4.round-1 { background-color: #d8c478; }
+.legend-icon.phase-4.round-2 { background-color: #bba55e; }
+.legend-icon.phase-4.round-3 { background-color: #9e8845; }
+
+/* Phase Information Section */
+.phase-info {
+  margin-top: 8px;
+}
+
+.phase-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.phase-select-btn {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.phase-select-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.phase-select-btn.active {
+  background-color: rgba(157, 134, 255, 0.2);
+  color: #ffffff;
+}
+
+.phase-info-controls {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.back-btn {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.info-section {
+  margin-bottom: 12px;
+}
+
+.info-section h5 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-section li {
+  position: relative;
+  padding: 3px 0 3px 16px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.info-section li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Detail panel */
+.details-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 450px;
+  height: 100%;
+  background-color: #111111;
+  overflow: hidden;
+  z-index: 1000;
+  color: #ffffff;
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+.details-panel .glass-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 40%, rgba(40, 40, 40, 0.2), rgba(0, 0, 0, 0.05));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.details-panel .panel-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.details-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #0a0a0a;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.phase-1-header::after,
+.phase-2-header::after,
+.phase-3-header::after,
+.phase-4-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 3px;
+  z-index: 2;
+}
+
+.phase-1-header::after { background-color: #4c78b0; }
+.phase-2-header::after { background-color: #41a58e; }
+.phase-3-header::after { background-color: #c5678d; }
+.phase-4-header::after { background-color: #d8c478; }
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  line-height: 1;
+  cursor: pointer;
+  color: #ffffff;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.details-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #111;
+}
+
+.details-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.details-body::-webkit-scrollbar-track {
+  background-color: #111;
+}
+
+.details-body::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 3px;
+}
+
+/* Event Overview Section */
+.event-overview {
+  display: flex;
+  padding: 24px 20px;
+  position: relative;
+  background: linear-gradient(to bottom, #141414, #0c0c0c);
+  overflow: hidden;
+}
+
+.event-overview::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.phase-1-overview { border-left: 3px solid #4c78b0; }
+.phase-2-overview { border-left: 3px solid #41a58e; }
+.phase-3-overview { border-left: 3px solid #c5678d; }
+.phase-4-overview { border-left: 3px solid #d8c478; }
+
+.event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+  min-width: 70px;
+}
+
+.date-day {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+  background: linear-gradient(to bottom, #ffffff, #aaaaaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.date-month {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.date-year {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+
+.event-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.event-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.event-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.event-tags span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.7);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Panel Sections */
+.panel-section {
+  padding: 24px 20px;
+  position: relative;
+}
+
+.panel-section:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+
+.section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 16px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Agenda Section */
+.agenda-content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.agenda-content::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.05);
+  font-family: Georgia, serif;
+}
+
+/* Team Members Grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.team-member {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+  display: flex;
+}
+
+.team-member:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.member-info {
+  padding: 14px;
+  flex: 1;
+  z-index: 1;
+}
+
+.member-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.member-role {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.member-accent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background-color: currentColor;
+  opacity: 0.2;
+  transform-origin: right center;
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* Role Colors */
+.role-creative-director {
+  color: #8667f0;
+}
+
+.role-art-director {
+  color: #3c9fff;
+}
+
+.role-producer {
+  color: #20bcbd;
+}
+
+.role-motion {
+  color: #ff66cc;
+}
+
+.role-graphic {
+  color: #10b894;
+}
+
+.role-director {
+  color: #ff9f43;
+}
+
+.role-merch {
+  color: #ff7675;
+}
+
+.role-other {
+  color: #a3a1bf;
+}
+
+/* Stakeholders Grid */
+.stakeholder-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stakeholder-item {
+  padding: 12px 14px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.stakeholder-variant-0 {
+  border-left: 2px solid rgba(255, 212, 59, 0.7);
+}
+
+.stakeholder-variant-1 {
+  border-left: 2px solid rgba(229, 194, 40, 0.7);
+}
+
+.stakeholder-variant-2 {
+  border-left: 2px solid rgba(202, 170, 20, 0.7);
+}
+
+/* Styled Lists */
+.styled-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.styled-list li {
+  position: relative;
+  padding: 6px 0 6px 20px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+}
+
+.styled-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Calendar theme adjustments */
+:deep(.fc) {
+  background-color: transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  border: none !important;
+  height: 100% !important;
+  min-height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+:deep(.fc-theme-standard td), 
+:deep(.fc-theme-standard th) {
+  border-color: #0c0c0c !important;
+}
+
+:deep(.fc-theme-standard .fc-scrollgrid) {
+  border: none !important;
+}
+
+:deep(.fc-view) {
+  width: 100% !important;
+}
+
+:deep(.fc-view-harness) {
+  width: 100% !important;
+  background-color: transparent;
+  overflow: auto;
+  flex: 1;
+}
+
+:deep(.fc th) {
+  background-color: #0a0a0a;
+  color: rgba(255, 255, 255, 0.8);
+  border-color: #0c0c0c !important;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+:deep(.fc td) {
+  border-color: #0c0c0c !important;
+  height: 65px !important;
+  vertical-align: top !important;
+}
+
+:deep(.fc-day) {
+  background-color: #141414 !important;
+}
+
+:deep(.fc-day-today) {
+  background-color: rgba(157, 134, 255, 0.08) !important;
+}
+
+:deep(.fc-day-other) {
+  background-color: #111111 !important;
+  opacity: 1 !important;
+}
+
+:deep(.fc-col-header-cell) {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+:deep(.fc-header-toolbar) {
+  background-color: #0a0a0a;
+  padding: 12px 16px;
+  border-bottom: 1px solid #0c0c0c !important;
+}
+
+:deep(.fc-daygrid-day-number) {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 8px;
+  font-size: 0.85rem;
+}
+
+:deep(.fc-daygrid-day-top) {
+  justify-content: flex-start;
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
+/* Clear layout for 2-row event display */
+:deep(.fc-daygrid-day-events) {
+  display: grid !important;
+  grid-template-rows: 25px 25px !important;
+  grid-gap: 3px !important;
+  min-height: 55px !important;
+  padding-top: 2px !important;
+}
+
+/* Fix multi-day events to always show in row 1 */
+:deep(.fc-event.phase-event) {
+  background-color: #1a1a1a !important;
+  height: 23px !important;
+  margin: 0 !important;
+  grid-row: 1 !important;
+  border-width: 0 !important;
+  border-left-width: 3px !important;
+  z-index: 1 !important;
+}
+
+/* Fix meeting events to always show in row 2 */
+:deep(.fc-event.meeting-event) {
+  background-color: #0c0c0c !important;
+  height: 23px !important;
+  margin: 0 !important;
+  grid-row: 2 !important;
+  border-width: 0 !important;
+  border-left-width: 3px !important;
+  z-index: 2 !important;
+}
+
+/* Custom event title for the grid layout */
+:deep(.custom-event-title) {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+:deep(.custom-event-badge) {
+  font-size: 0.7rem;
+  padding: 1px 3px;
+  border-radius: 3px;
+  font-weight: 400;
+  margin-left: 2px;
+  background-color: rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+}
+
+:deep(.custom-event-wrapper) {
+  width: 100%;
+  height: 100%;
+  min-height: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+:deep(.custom-event-inner) {
+  padding: 3px 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 20px;
+  height: 100%;
+}
+
+/* Phase color styling */
+:deep(.fc-event.phase-1) {
+  border-left-color: #4c78b0 !important;
+  color: #fff !important;
+}
+
+:deep(.fc-event.phase-2) {
+  border-left-color: #41a58e !important;
+  color: #fff !important;
+}
+
+:deep(.fc-event.phase-3) {
+  border-left-color: #c5678d !important;
+  color: #fff !important;
+}
+
+:deep(.fc-event.phase-4) {
+  border-left-color: #d8c478 !important;
+  color: #fff !important;
+}
+
+:deep(.fc-event.phase-1-meeting) { border-left-color: #4c78b0 !important; }
+:deep(.fc-event.phase-2-meeting) { border-left-color: #41a58e !important; }
+:deep(.fc-event.phase-3-meeting) { border-left-color: #c5678d !important; }
+:deep(.fc-event.phase-4-meeting) { border-left-color: #d8c478 !important; }
+
+/* Remove overflow hidden to prevent multi-day event clipping */
+:deep(.fc-daygrid-event-harness) {
+  margin: 0 !important;
+}
+
+:deep(.fc-daygrid-block-event .fc-event-time), 
+:deep(.fc-daygrid-block-event .fc-event-title) {
+  padding: 0 !important;
+}
+
+:deep(.fc-daygrid-day-frame) {
+  min-height: 65px !important;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .timeline-container {
+    flex-direction: column;
+  }
+  
+  .left-controls {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .event-overview {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .event-date {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+}
+
+/* Make sure all CSS classes are correctly defined */
+:deep(.fc-event.phase-3), 
+:deep(.fc-event.phase-4) {
+  /* Ensure these have the same styles as phase-1 and phase-2 */
+  background-color: #1a1a1a !important;
+  height: 23px !important;
+  margin: 0 !important;
+  grid-row: 1 !important;
+  border-width: 0 !important; 
+  border-left-width: 3px !important;
+  z-index: 1 !important;
+}
+
+:deep(.fc-event.phase-3-meeting),
+:deep(.fc-event.phase-4-meeting) {
+  /* Ensure meeting events for phase 3 and 4 have correct styles */
+  background-color: #0c0c0c !important;
+  height: 23px !important;
+  margin: 0 !important;
+  grid-row: 2 !important;
+  border-width: 0 !important;
+  border-left-width: 3px !important;
+  z-index: 2 !important;
+}
+</style> 

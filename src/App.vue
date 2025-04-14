@@ -6,6 +6,8 @@ import CreativeTeam from './components/CreativeTeam.vue'
 import ProjectTimeline from './components/ProjectTimeline.vue'
 import BudgetDashboard from './components/BudgetDashboard.vue'
 import PasswordProtect from './components/PasswordProtect.vue'
+import AdminPage from './components/AdminPage.vue'
+import ApiTest from './ApiTest.vue'
 
 export default {
   name: 'App',
@@ -15,11 +17,15 @@ export default {
     CreativeTeam,
     ProjectTimeline,
     BudgetDashboard,
-    PasswordProtect
+    PasswordProtect,
+    AdminPage,
+    ApiTest
   },
   setup() {
-    const activeSection = ref('overview') // 'overview', 'scope', 'team', 'timeline', or 'budget'
+    const activeSection = ref('overview') // 'overview', 'scope', 'team', 'timeline', 'budget', or 'admin'
     const isAuthenticated = ref(false)
+    const showDebug = ref(false)
+    const isLocalhost = ref(false)
     
     onMounted(() => {
       // Check if user is already authenticated
@@ -27,6 +33,10 @@ export default {
       if (authStatus === 'true') {
         isAuthenticated.value = true
       }
+      
+      // Check if the domain is localhost
+      isLocalhost.value = window.location.hostname === 'localhost'
+      showDebug.value = isLocalhost.value
     })
     
     const handleAuthentication = (status) => {
@@ -37,11 +47,18 @@ export default {
       // Handle cost updates if needed
     }
     
+    const toggleDebug = () => {
+      showDebug.value = !showDebug.value
+    }
+    
     return {
       activeSection,
       isAuthenticated,
       handleAuthentication,
-      handleCostUpdate
+      handleCostUpdate,
+      showDebug,
+      toggleDebug,
+      isLocalhost
     }
   }
 }
@@ -93,6 +110,20 @@ export default {
             >
               Budget
             </button>
+            <button 
+              v-if="isLocalhost"
+              :class="['nav-button', { active: activeSection === 'admin' }]"
+              @click="activeSection = 'admin'"
+            >
+              Admin
+            </button>
+            <button
+              v-if="isLocalhost"
+              class="debug-button"
+              @click="toggleDebug"
+            >
+              {{ showDebug ? 'Hide Debug' : 'Debug API' }}
+            </button>
           </nav>
         </div>
       </header>
@@ -112,11 +143,15 @@ export default {
           </section>
           
           <section v-if="activeSection === 'timeline'" class="section">
-            <ProjectTimeline />
+            <ProjectTimeline :key="activeSection === 'timeline' ? Date.now() : 'timeline'" />
           </section>
           
           <section v-if="activeSection === 'budget'" class="section">
             <BudgetDashboard />
+          </section>
+          
+          <section v-if="activeSection === 'admin' && isLocalhost" class="section">
+            <AdminPage />
           </section>
         </div>
       </main>
@@ -125,6 +160,8 @@ export default {
         <p>© 2025 Ophelia & Company. All rights reserved.</p>
       </footer>
     </div>
+    
+    <ApiTest v-if="showDebug && isLocalhost" class="debug-panel" />
   </div>
 </template>
 
@@ -317,5 +354,18 @@ footer {
     padding: 0.6rem 0.5rem;
     font-size: 0.9rem;
   }
+}
+
+/* Add Debug Panel Styles */
+.debug-button {
+  background-color: #444;
+  font-size: 0.8rem;
+  margin-left: 1rem;
+}
+
+.debug-panel {
+  margin: 1rem;
+  border: 1px solid #333;
+  border-radius: 8px;
 }
 </style>

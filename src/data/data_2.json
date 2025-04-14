@@ -4,7 +4,6 @@
       "number": 1,
       "name": "Brand Foundation",
       "displayName": "Brand Book",
-      "enabled": true,
       "core_deliverables": {
         "default_enabled": [
           "Band Name & Overall Concept",
@@ -17,7 +16,7 @@
       },
       "rounds": {
         "R1": {
-          "name": "Pre Production",
+          "name": "Discovery & Exploration",
           "duration_days": 5,
           "deliverables": [
             "3 x Band Concepts",
@@ -114,7 +113,7 @@
           ]
         },
         "R2": {
-          "name": "Production",
+          "name": "Development",
           "duration_days": 5,
           "deliverables": [
             "Full Concept Development",
@@ -211,7 +210,7 @@
           ]
         },
         "R3": {
-          "name": "Post Production",
+          "name": "Refinement",
           "duration_days": 5,
           "deliverables": [
             "Refined Wordmark Options",
@@ -309,7 +308,7 @@
           ]
         },
         "R4": {
-          "name": "Delivery",
+          "name": "Final Approval",
           "duration_days": 5,
           "deliverables": [
             "Band Name",
@@ -418,7 +417,6 @@
       "number": 2,
       "name": "Brand Extensions",
       "displayName": "Brand Activations",
-      "enabled": true,
       "core_deliverables": {
         "default_enabled": [
           "3 x Music Video Treatments",
@@ -435,7 +433,7 @@
       },
       "rounds": {
         "R1": {
-          "name": "Pre Production",
+          "name": "Development",
           "duration_days": 5,
           "deliverables": [
             "Music Video Treatment Development",
@@ -542,7 +540,7 @@
           ]
         },
         "R2": {
-          "name": "Production",
+          "name": "Refinement",
           "duration_days": 5,
           "deliverables": [
             "Refined Music Video Treatments",
@@ -649,7 +647,7 @@
           ]
         },
         "R3": {
-          "name": "Post Production",
+          "name": "Final Approval",
           "duration_days": 5,
           "deliverables": [
             "Final Music Video Treatment Documents",
@@ -755,43 +753,6 @@
               ]
             }
           ]
-        },
-        "R4": {
-          "name": "Delivery",
-          "duration_days": 5,
-          "deliverables": [
-            "Final Approval",
-            "Asset Packaging",
-            "YouTube Upload Coordination"
-          ],
-          "tasks": [
-            "Final Approval",
-            "Asset Packaging",
-            "YouTube Upload Coordination"
-          ],
-          "team": [],
-          "start_date": "2025-06-08",
-          "events": [
-            {
-              "date": "2025-06-08",
-              "type": "start",
-              "description": "Delivery kickoff",
-              "deliverables": [
-                "Final Approval",
-                "Asset Packaging",
-                "YouTube Upload Coordination"
-              ],
-              "team_members": [
-                "Post-Producer",
-                "Creative Producer"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
-            }
-          ]
         }
       },
       "stakeholders": [
@@ -804,7 +765,6 @@
       "number": 3,
       "name": "EP Brand Book",
       "displayName": "EP Brand Book",
-      "enabled": true,
       "core_deliverables": [
         "EP Name & Identity",
         "EP Visual System",
@@ -816,7 +776,7 @@
       ],
       "rounds": {
         "R1": {
-          "name": "Pre Production",
+          "name": "Discovery & Exploration",
           "duration_days": 5,
           "deliverables": [
             "EP name exploration document",
@@ -913,7 +873,7 @@
           ]
         },
         "R2": {
-          "name": "Production",
+          "name": "Development",
           "duration_days": 5,
           "deliverables": [
             "EP Name Development",
@@ -1212,7 +1172,6 @@
       "number": 4,
       "name": "Music Video & Press Concepts",
       "displayName": "EP Brand Activations",
-      "enabled": true,
       "core_deliverables": [
         "Music Video Treatment",
         "Press Shoot Package",
@@ -1511,7 +1470,6 @@
       "number": 5,
       "name": "Music Video Production",
       "displayName": "Music Video Production",
-      "enabled": true,
       "core_deliverables": [
         "3 Final Music Videos",
         "Production Roadmap & Call Sheets",
@@ -1520,28 +1478,30 @@
       ],
       "rounds": {
         "R1": {
-          "name": "Pre Production",
+          "name": "Development",
           "duration_days": 5,
-          "deliverables": [
-            "Concept Approval",
-            "Location Scouting & Casting",
-            "Storyboard & Shotlist Development",
-            "Budget & Schedule Approval"
-          ],
-          "tasks": [
-            "Concept Approval",
-            "Location Scouting & Casting",
-            "Storyboard & Shotlist Development",
-            "Budget & Schedule Approval"
-          ],
+          "deliverables": [],
+          "tasks": [],
           "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
             {
               "role": "Art Director",
               "day_rate": 775
             },
             {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
               "role": "Line Producer",
               "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
             }
           ],
           "start_date": "2025-08-04",
@@ -1549,108 +1509,13 @@
             {
               "date": "2025-08-04",
               "type": "start",
-              "description": "Pre-Production kickoff",
-              "deliverables": [
-                "Concept Approval",
-                "Location Scouting & Casting",
-                "Storyboard & Shotlist Development",
-                "Budget & Schedule Approval"
-              ],
+              "description": "Development kickoff",
+              "deliverables": [],
               "team_members": [
-                "Director / Photographer",
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
                 "Line Producer",
-                "Creative Producer",
-                "Art Director"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
-            }
-          ]
-        },
-        "R2": {
-          "name": "Production",
-          "duration_days": 5,
-          "deliverables": [
-            "Filming on Location",
-            "Daily Reviews & Adjustments",
-            "Logistics Management"
-          ],
-          "tasks": [
-            "Filming on Location",
-            "Daily Reviews & Adjustments",
-            "Logistics Management"
-          ],
-          "team": [
-            {
-              "role": "Art Director",
-              "day_rate": 775
-            },
-            {
-              "role": "Line Producer",
-              "day_rate": 675
-            }
-          ],
-          "start_date": "2025-08-11",
-          "events": [
-            {
-              "date": "2025-08-11",
-              "type": "start",
-              "description": "Production kickoff",
-              "deliverables": [
-                "Filming on Location",
-                "Daily Reviews & Adjustments",
-                "Logistics Management"
-              ],
-              "team_members": [
-                "Director / Photographer",
-                "Line Producer",
-                "BTS Shooter",
-                "Art Director"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
-            }
-          ]
-        },
-        "R3": {
-          "name": "Post Production",
-          "duration_days": 5,
-          "deliverables": [
-            "Editing Rough Cuts",
-            "Color Grading & VFX",
-            "Sound Mixing"
-          ],
-          "tasks": [
-            "Editing Rough Cuts",
-            "Color Grading & VFX",
-            "Sound Mixing"
-          ],
-          "team": [
-            {
-              "role": "Motion Designer",
-              "day_rate": 725
-            }
-          ],
-          "start_date": "2025-08-18",
-          "events": [
-            {
-              "date": "2025-08-18",
-              "type": "start",
-              "description": "Post-Production kickoff",
-              "deliverables": [
-                "Editing Rough Cuts",
-                "Color Grading & VFX",
-                "Sound Mixing"
-              ],
-              "team_members": [
-                "Post-Producer",
-                "Editor / Sound Designer",
                 "Motion Designer"
               ],
               "stakeholders": [
@@ -1661,40 +1526,95 @@
             }
           ]
         },
-        "R4": {
-          "name": "Delivery",
+        "R2": {
+          "name": "Refinement",
           "duration_days": 5,
-          "deliverables": [
-            "Final Cut Approval",
-            "Master Delivery",
-            "Asset Archiving"
-          ],
-          "tasks": [
-            "Final Cut Approval",
-            "Master Delivery",
-            "Asset Archiving"
-          ],
+          "deliverables": [],
+          "tasks": [],
           "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
             {
               "role": "Line Producer",
               "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
             }
           ],
-          "start_date": "2025-08-25",
+          "start_date": "2025-08-11",
           "events": [
             {
-              "date": "2025-08-25",
+              "date": "2025-08-11",
               "type": "start",
-              "description": "Delivery kickoff",
-              "deliverables": [
-                "Final Cut Approval",
-                "Master Delivery",
-                "Asset Archiving"
-              ],
+              "description": "Refinement kickoff",
+              "deliverables": [],
               "team_members": [
-                "Post-Producer",
-                "Creative Producer",
-                "Line Producer"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
+              ],
+              "stakeholders": [
+                "Isaac Lee",
+                "Santiago Duque",
+                "Juan Arenas"
+              ]
+            }
+          ]
+        },
+        "R3": {
+          "name": "Final Approval",
+          "duration_days": 5,
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
+          ],
+          "start_date": "2025-08-18",
+          "events": [
+            {
+              "date": "2025-08-18",
+              "type": "start",
+              "description": "Final Approval kickoff",
+              "deliverables": [],
+              "team_members": [
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -1715,7 +1635,6 @@
       "number": 6,
       "name": "Behind-the-Scenes Production",
       "displayName": "Behind-the-Scenes Production",
-      "enabled": true,
       "core_deliverables": [
         "Bootcamp Documentary Shorts",
         "Daily Vlogs & Diaries",
@@ -1724,22 +1643,30 @@
       ],
       "rounds": {
         "R1": {
-          "name": "Pre Production",
+          "name": "Development",
           "duration_days": 5,
-          "deliverables": [
-            "BTS Concept & Strategy",
-            "Equipment & Team Setup",
-            "Coordination with Main Production"
-          ],
-          "tasks": [
-            "BTS Concept & Strategy",
-            "Equipment & Team Setup",
-            "Coordination with Main Production"
-          ],
+          "deliverables": [],
+          "tasks": [],
           "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
             {
               "role": "Line Producer",
               "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
             }
           ],
           "start_date": "2025-08-25",
@@ -1747,16 +1674,14 @@
             {
               "date": "2025-08-25",
               "type": "start",
-              "description": "Pre-Production kickoff",
-              "deliverables": [
-                "BTS Concept & Strategy",
-                "Equipment & Team Setup",
-                "Coordination with Main Production"
-              ],
+              "description": "Development kickoff",
+              "deliverables": [],
               "team_members": [
-                "BTS Shooter",
-                "Documentary/Reality TV Director",
-                "Line Producer"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -1767,33 +1692,45 @@
           ]
         },
         "R2": {
-          "name": "Production",
+          "name": "Refinement",
           "duration_days": 5,
-          "deliverables": [
-            "On-site Filming",
-            "Daily Footage Review",
-            "Interviews and Highlights Capture"
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
           ],
-          "tasks": [
-            "On-site Filming",
-            "Daily Footage Review",
-            "Interviews and Highlights Capture"
-          ],
-          "team": [],
           "start_date": "2025-09-01",
           "events": [
             {
               "date": "2025-09-01",
               "type": "start",
-              "description": "Production kickoff",
-              "deliverables": [
-                "On-site Filming",
-                "Daily Footage Review",
-                "Interviews and Highlights Capture"
-              ],
+              "description": "Refinement kickoff",
+              "deliverables": [],
               "team_members": [
-                "BTS Shooter",
-                "Documentary/Reality TV Director"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -1804,70 +1741,45 @@
           ]
         },
         "R3": {
-          "name": "Post Production",
+          "name": "Final Approval",
           "duration_days": 5,
-          "deliverables": [
-            "Daily Edits",
-            "Social Cutdowns",
-            "Long-form Editing"
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
           ],
-          "tasks": [
-            "Daily Edits",
-            "Social Cutdowns",
-            "Long-form Editing"
-          ],
-          "team": [],
           "start_date": "2025-09-08",
           "events": [
             {
               "date": "2025-09-08",
               "type": "start",
-              "description": "Post-Production kickoff",
-              "deliverables": [
-                "Daily Edits",
-                "Social Cutdowns",
-                "Long-form Editing"
-              ],
+              "description": "Final Approval kickoff",
+              "deliverables": [],
               "team_members": [
-                "Post-Producer",
-                "Editor / Sound Designer"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
-            }
-          ]
-        },
-        "R4": {
-          "name": "Delivery",
-          "duration_days": 5,
-          "deliverables": [
-            "Final Asset Delivery",
-            "Client Review & Adjustments",
-            "Asset Distribution"
-          ],
-          "tasks": [
-            "Final Asset Delivery",
-            "Client Review & Adjustments",
-            "Asset Distribution"
-          ],
-          "team": [],
-          "start_date": "2025-09-15",
-          "events": [
-            {
-              "date": "2025-09-15",
-              "type": "start",
-              "description": "Delivery kickoff",
-              "deliverables": [
-                "Final Asset Delivery",
-                "Client Review & Adjustments",
-                "Asset Distribution"
-              ],
-              "team_members": [
-                "Post-Producer",
-                "Creative Producer"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -1888,7 +1800,6 @@
       "number": 7,
       "name": "Social Media Content Creation",
       "displayName": "Social Media Content Creation",
-      "enabled": true,
       "core_deliverables": [
         "Daily Social Posts & Stories",
         "Short-form Video Packages",
@@ -2054,44 +1965,38 @@
       "number": 8,
       "name": "YouTube Premiere Production",
       "displayName": "YouTube Premiere Production",
-      "enabled": true,
       "core_deliverables": [
-        "Series Format & Show Bible",
-        "Episode Rundowns & Scripts",
-        "Contestant Packages & Challenges",
-        "Weekly Episode Deliveries",
-        "Graphics Package & Show Identity",
-        "Social Media Content Suite"
+        "Mission Announcements Packages",
+        "Elimination Announcements Packages",
+        "Host & Talent Scripts",
+        "Production Rundowns"
       ],
       "rounds": {
         "R1": {
-          "name": "Series Development",
-          "duration_days": 10,
-          "deliverables": [
-            "Show Format & Bible",
-            "Talent Casting Brief",
-            "Production Schedule",
-            "Visual Identity Concept"
-          ],
-          "tasks": [
-            "Develop show format and rules",
-            "Create episode structure templates",
-            "Establish production timeline",
-            "Build show identity framework",
-            "Prepare casting brief for talent"
-          ],
+          "name": "Development",
+          "duration_days": 5,
+          "deliverables": [],
+          "tasks": [],
           "team": [
             {
-              "role": "Creative Producer",
+              "role": "Creative Director",
               "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
             },
             {
               "role": "Line Producer",
               "day_rate": 675
             },
             {
-              "role": "Art Director",
-              "day_rate": 775
+              "role": "Motion Designer",
+              "day_rate": 725
             }
           ],
           "start_date": "2025-10-06",
@@ -2099,33 +2004,14 @@
             {
               "date": "2025-10-06",
               "type": "start",
-              "description": "Series Development Kickoff",
-              "deliverables": [
-                "Initial format framework"
-              ],
+              "description": "Development kickoff",
+              "deliverables": [],
               "team_members": [
-                "Creative Producer",
-                "Motion Designer",
-                "Art Director"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
-            },
-            {
-              "date": "2025-10-13",
-              "type": "review",
-              "description": "Format & Series Identity Review",
-              "deliverables": [
-                "Show Format & Bible",
-                "Visual Identity Concept"
-              ],
-              "team_members": [
-                "Creative Producer",
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
                 "Line Producer",
-                "Art Director"
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -2136,75 +2022,45 @@
           ]
         },
         "R2": {
-          "name": "Pre-Production & Planning",
-          "duration_days": 15,
-          "deliverables": [
-            "Episode 1-3 Scripts & Rundowns",
-            "Challenge Design Documentation",
-            "Weekly Production Schedule",
-            "Talent Prep Materials"
-          ],
-          "tasks": [
-            "Script episodes 1-3",
-            "Design initial contestant challenges",
-            "Coordinate talent schedules",
-            "Scout & secure locations",
-            "Prepare production equipment lists",
-            "Create shot lists and coverage plans"
-          ],
+          "name": "Refinement",
+          "duration_days": 5,
+          "deliverables": [],
+          "tasks": [],
           "team": [
             {
-              "role": "Creative Producer",
+              "role": "Creative Director",
               "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
             },
             {
               "role": "Line Producer",
               "day_rate": 675
             },
             {
-              "role": "Director / Photographer",
-              "day_rate": 850
-            },
-            {
-              "role": "Production Coordinator",
-              "day_rate": 450
+              "role": "Motion Designer",
+              "day_rate": 725
             }
           ],
-          "start_date": "2025-10-20",
+          "start_date": "2025-10-13",
           "events": [
             {
-              "date": "2025-10-20",
+              "date": "2025-10-13",
               "type": "start",
-              "description": "Pre-Production Kickoff",
-              "deliverables": [
-                "Initial script drafts",
-                "Production timeline"
-              ],
+              "description": "Refinement kickoff",
+              "deliverables": [],
               "team_members": [
-                "Creative Producer",
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
                 "Line Producer",
-                "Director / Photographer",
-                "Production Coordinator"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque"
-              ]
-            },
-            {
-              "date": "2025-10-31",
-              "type": "review",
-              "description": "Pre-Production Review",
-              "deliverables": [
-                "Finalized scripts for episodes 1-3",
-                "Challenge designs",
-                "Production schedules"
-              ],
-              "team_members": [
-                "Creative Producer",
-                "Line Producer",
-                "Director / Photographer",
-                "Production Coordinator"
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -2215,235 +2071,44 @@
           ]
         },
         "R3": {
-          "name": "Production Cycle",
-          "duration_days": 20,
-          "deliverables": [
-            "Weekly Episode Shoots",
-            "Daily Footage Reviews",
-            "Challenge Executions",
-            "Contestant Interviews"
-          ],
-          "tasks": [
-            "Execute weekly episode shoots",
-            "Manage on-set production",
-            "Direct talent and contestants",
-            "Capture challenge footage",
-            "Film contestant confessionals",
-            "Log and organize daily footage",
-            "Prepare notes for post-production"
-          ],
+          "name": "Final Approval",
+          "duration_days": 5,
+          "deliverables": [],
+          "tasks": [],
           "team": [
             {
-              "role": "Creative Producer",
+              "role": "Creative Director",
               "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
             },
             {
               "role": "Line Producer",
               "day_rate": 675
             },
             {
-              "role": "Director / Photographer",
-              "day_rate": 850
-            },
-            {
-              "role": "Camera Operator",
-              "day_rate": 600
-            },
-            {
-              "role": "Sound Recordist",
-              "day_rate": 550
-            },
-            {
-              "role": "Production Coordinator",
-              "day_rate": 450
-            }
-          ],
-          "start_date": "2025-11-04",
-          "events": [
-            {
-              "date": "2025-11-04",
-              "type": "start",
-              "description": "Production Cycle Begins",
-              "deliverables": [
-                "Episode 1 production plan"
-              ],
-              "team_members": [
-                "Creative Producer",
-                "Line Producer",
-                "Director / Photographer",
-                "Camera Operator",
-                "Sound Recordist",
-                "Production Coordinator"
-              ],
-              "stakeholders": [
-                "Isaac Lee"
-              ]
-            },
-            {
-              "date": "2025-11-15",
-              "type": "check_in",
-              "description": "Mid-Production Review",
-              "deliverables": [
-                "First episode rough footage review",
-                "Production progress report"
-              ],
-              "team_members": [
-                "Creative Producer",
-                "Line Producer",
-                "Director / Photographer"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque"
-              ]
-            }
-          ]
-        },
-        "R4": {
-          "name": "Post-Production Pipeline",
-          "duration_days": 25,
-          "deliverables": [
-            "Weekly Episode Rough Cuts",
-            "Graphics Implementation",
-            "Music & Sound Design",
-            "Color Correction"
-          ],
-          "tasks": [
-            "Establish post-production workflow",
-            "Edit weekly episode rough cuts",
-            "Create graphics package implementation",
-            "Develop show audio identity",
-            "Implement sound design",
-            "Apply color grading",
-            "Integrate feedback cycles"
-          ],
-          "team": [
-            {
-              "role": "Post-Producer",
-              "day_rate": 775
-            },
-            {
-              "role": "Editor / Sound Designer",
-              "day_rate": 725
-            },
-            {
-              "role": "Assistant Editor",
-              "day_rate": 450
-            },
-            {
               "role": "Motion Designer",
               "day_rate": 725
             }
           ],
-          "start_date": "2025-11-11",
+          "start_date": "2025-10-20",
           "events": [
             {
-              "date": "2025-11-11",
+              "date": "2025-10-20",
               "type": "start",
-              "description": "Post-Production Pipeline Launch",
-              "deliverables": [
-                "Post workflow document",
-                "Asset management system"
-              ],
+              "description": "Final Approval kickoff",
+              "deliverables": [],
               "team_members": [
-                "Post-Producer",
-                "Editor / Sound Designer",
-                "Assistant Editor",
-                "Motion Designer"
-              ],
-              "stakeholders": [
-                "Santiago Duque"
-              ]
-            },
-            {
-              "date": "2025-11-25",
-              "type": "review",
-              "description": "First Episode Review Session",
-              "deliverables": [
-                "Episode 1 rough cut",
-                "Graphics package implementation"
-              ],
-              "team_members": [
-                "Post-Producer",
-                "Editor / Sound Designer",
-                "Motion Designer"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
-            }
-          ]
-        },
-        "R5": {
-          "name": "Finishing & Delivery",
-          "duration_days": 15,
-          "deliverables": [
-            "Final Episode Masters",
-            "Social Media Clips",
-            "Promotional Teasers",
-            "Technical Deliverables Package"
-          ],
-          "tasks": [
-            "Finalize episodes for delivery",
-            "Create promotional clips",
-            "Prepare social media content",
-            "Generate closed captions",
-            "Create international versions",
-            "Package for YouTube platform",
-            "Deliver technical masters",
-            "Coordinate upload schedules"
-          ],
-          "team": [
-            {
-              "role": "Post-Producer",
-              "day_rate": 775
-            },
-            {
-              "role": "Delivery Manager",
-              "day_rate": 550
-            },
-            {
-              "role": "Editor / Sound Designer",
-              "day_rate": 725
-            },
-            {
-              "role": "Motion Designer",
-              "day_rate": 725
-            }
-          ],
-          "start_date": "2025-12-01",
-          "events": [
-            {
-              "date": "2025-12-01",
-              "type": "start",
-              "description": "Finishing & Delivery Kickoff",
-              "deliverables": [
-                "Delivery specifications document",
-                "Release schedule"
-              ],
-              "team_members": [
-                "Post-Producer",
-                "Delivery Manager"
-              ],
-              "stakeholders": [
-                "Santiago Duque"
-              ]
-            },
-            {
-              "date": "2025-12-10",
-              "type": "review",
-              "description": "Final Delivery Review",
-              "deliverables": [
-                "Episode 1 final master",
-                "Social media package",
-                "Promotional assets"
-              ],
-              "team_members": [
-                "Post-Producer",
-                "Delivery Manager",
-                "Editor / Sound Designer",
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
                 "Motion Designer"
               ],
               "stakeholders": [
@@ -2463,46 +2128,55 @@
     },
     {
       "number": 9,
-      "name": "Documentary Production",
-      "displayName": "Documentary Production",
-      "enabled": true,
+      "name": "YouTube Premiere Post-Production",
+      "displayName": "YouTube Premiere Post",
       "core_deliverables": [
-        "Feature-Length Documentary",
-        "Contestant Hometown Profiles",
-        "Final Bootcamp-to-Debut Journey Film",
-        "Promotional Trailer & Clips"
+        "Final Premiere Episode Edits",
+        "Teaser Trailers",
+        "Graphics & Lower-thirds Packages",
+        "Color Grade & Sound Mix Packages"
       ],
       "rounds": {
         "R1": {
-          "name": "Pre Production",
+          "name": "Development",
           "duration_days": 5,
-          "deliverables": [
-            "Story Development",
-            "Interview & Location Planning"
-          ],
-          "tasks": [
-            "Story Development",
-            "Interview & Location Planning"
-          ],
+          "deliverables": [],
+          "tasks": [],
           "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
             {
               "role": "Line Producer",
               "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
             }
           ],
-          "start_date": "2025-11-17",
+          "start_date": "2025-10-27",
           "events": [
             {
-              "date": "2025-11-17",
+              "date": "2025-10-27",
               "type": "start",
-              "description": "Pre-Production kickoff",
-              "deliverables": [
-                "Story Development",
-                "Interview & Location Planning"
-              ],
+              "description": "Development kickoff",
+              "deliverables": [],
               "team_members": [
-                "Documentary/Reality TV Director",
-                "Line Producer"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -2513,33 +2187,45 @@
           ]
         },
         "R2": {
-          "name": "Production",
+          "name": "Refinement",
           "duration_days": 5,
-          "deliverables": [
-            "Principal Photography",
-            "Travel Coordination",
-            "Daily Logs & Interviews"
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
           ],
-          "tasks": [
-            "Principal Photography",
-            "Travel Coordination",
-            "Daily Logs & Interviews"
-          ],
-          "team": [],
-          "start_date": "2025-11-24",
+          "start_date": "2025-11-03",
           "events": [
             {
-              "date": "2025-11-24",
+              "date": "2025-11-03",
               "type": "start",
-              "description": "Production kickoff",
-              "deliverables": [
-                "Principal Photography",
-                "Travel Coordination",
-                "Daily Logs & Interviews"
-              ],
+              "description": "Refinement kickoff",
+              "deliverables": [],
               "team_members": [
-                "Documentary/Reality TV Director",
-                "BTS Shooter"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -2550,67 +2236,45 @@
           ]
         },
         "R3": {
-          "name": "Post Production",
+          "name": "Final Approval",
           "duration_days": 5,
-          "deliverables": [
-            "Rough Cut Assembly",
-            "Story Editing",
-            "Color Grading & Sound Mixing"
-          ],
-          "tasks": [
-            "Rough Cut Assembly",
-            "Story Editing",
-            "Color Grading & Sound Mixing"
-          ],
-          "team": [],
-          "start_date": "2025-12-01",
-          "events": [
+          "deliverables": [],
+          "tasks": [],
+          "team": [
             {
-              "date": "2025-12-01",
-              "type": "start",
-              "description": "Post-Production kickoff",
-              "deliverables": [
-                "Rough Cut Assembly",
-                "Story Editing",
-                "Color Grading & Sound Mixing"
-              ],
-              "team_members": [
-                "Editor / Sound Designer",
-                "Post-Producer"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
             }
-          ]
-        },
-        "R4": {
-          "name": "Delivery",
-          "duration_days": 5,
-          "deliverables": [
-            "Final Film Review",
-            "Promotional Clips Delivery"
           ],
-          "tasks": [
-            "Final Film Review",
-            "Promotional Clips Delivery"
-          ],
-          "team": [],
-          "start_date": "2025-12-08",
+          "start_date": "2025-11-10",
           "events": [
             {
-              "date": "2025-12-08",
+              "date": "2025-11-10",
               "type": "start",
-              "description": "Delivery kickoff",
-              "deliverables": [
-                "Final Film Review",
-                "Promotional Clips Delivery"
-              ],
+              "description": "Final Approval kickoff",
+              "deliverables": [],
               "team_members": [
-                "Post-Producer",
-                "Creative Producer"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -2629,42 +2293,55 @@
     },
     {
       "number": 10,
-      "name": "Stage & Visual Production",
-      "displayName": "Stage & Visual Production",
-      "enabled": true,
+      "name": "Documentary Production",
+      "displayName": "Bootcamp Documentary",
       "core_deliverables": [
-        "Stage Concept Design",
-        "Performance Visuals & Animations",
-        "Technical Specifications for Venues",
-        "Rehearsal & Technical Run-through Plans"
+        "Feature-Length Documentary",
+        "Contestant Hometown Profiles",
+        "Final Bootcamp-to-Debut Journey Film",
+        "Promotional Trailer & Clips"
       ],
       "rounds": {
         "R1": {
-          "name": "Pre Production",
+          "name": "Development",
           "duration_days": 5,
-          "deliverables": [
-            "Concept Sketches & Approvals",
-            "Technical Specifications"
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
           ],
-          "tasks": [
-            "Concept Sketches & Approvals",
-            "Technical Specifications"
-          ],
-          "team": [],
-          "start_date": "2025-12-08",
+          "start_date": "2025-11-17",
           "events": [
             {
-              "date": "2025-12-08",
+              "date": "2025-11-17",
               "type": "start",
-              "description": "Pre-Production kickoff",
-              "deliverables": [
-                "Concept Sketches & Approvals",
-                "Technical Specifications"
-              ],
+              "description": "Development kickoff",
+              "deliverables": [],
               "team_members": [
-                "Experiential Designer",
-                "3D Artist",
-                "Product Designer"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -2675,35 +2352,44 @@
           ]
         },
         "R2": {
-          "name": "Production",
+          "name": "Refinement",
           "duration_days": 5,
-          "deliverables": [
-            "Asset Creation",
-            "Stage Design Construction"
-          ],
-          "tasks": [
-            "Asset Creation",
-            "Stage Design Construction"
-          ],
+          "deliverables": [],
+          "tasks": [],
           "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
             {
               "role": "Motion Designer",
               "day_rate": 725
             }
           ],
-          "start_date": "2025-12-15",
+          "start_date": "2025-11-24",
           "events": [
             {
-              "date": "2025-12-15",
+              "date": "2025-11-24",
               "type": "start",
-              "description": "Production kickoff",
-              "deliverables": [
-                "Asset Creation",
-                "Stage Design Construction"
-              ],
+              "description": "Refinement kickoff",
+              "deliverables": [],
               "team_members": [
-                "Experiential Designer",
-                "3D Artist",
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
                 "Motion Designer"
               ],
               "stakeholders": [
@@ -2715,20 +2401,191 @@
           ]
         },
         "R3": {
-          "name": "Post Production",
+          "name": "Final Approval",
           "duration_days": 5,
-          "deliverables": [
-            "Rehearsals with Visuals",
-            "Technical Adjustments"
-          ],
-          "tasks": [
-            "Rehearsals with Visuals",
-            "Technical Adjustments"
-          ],
+          "deliverables": [],
+          "tasks": [],
           "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
             {
               "role": "Art Director",
               "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
+          ],
+          "start_date": "2025-12-01",
+          "events": [
+            {
+              "date": "2025-12-01",
+              "type": "start",
+              "description": "Final Approval kickoff",
+              "deliverables": [],
+              "team_members": [
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
+              ],
+              "stakeholders": [
+                "Isaac Lee",
+                "Santiago Duque",
+                "Juan Arenas"
+              ]
+            }
+          ]
+        }
+      },
+      "stakeholders": [
+        "Isaac Lee",
+        "Santiago Duque",
+        "Juan Arenas"
+      ]
+    },
+    {
+      "number": 11,
+      "name": "Stage & Visual Production",
+      "displayName": "Stage & Visual Production",
+      "core_deliverables": [
+        "Stage Concept Design",
+        "Performance Visuals & Animations",
+        "Technical Specifications for Venues",
+        "Rehearsal & Technical Run-through Plans"
+      ],
+      "rounds": {
+        "R1": {
+          "name": "Development",
+          "duration_days": 5,
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
+          ],
+          "start_date": "2025-12-08",
+          "events": [
+            {
+              "date": "2025-12-08",
+              "type": "start",
+              "description": "Development kickoff",
+              "deliverables": [],
+              "team_members": [
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
+              ],
+              "stakeholders": [
+                "Isaac Lee",
+                "Santiago Duque",
+                "Juan Arenas"
+              ]
+            }
+          ]
+        },
+        "R2": {
+          "name": "Refinement",
+          "duration_days": 5,
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
+            },
+            {
+              "role": "Motion Designer",
+              "day_rate": 725
+            }
+          ],
+          "start_date": "2025-12-15",
+          "events": [
+            {
+              "date": "2025-12-15",
+              "type": "start",
+              "description": "Refinement kickoff",
+              "deliverables": [],
+              "team_members": [
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
+              ],
+              "stakeholders": [
+                "Isaac Lee",
+                "Santiago Duque",
+                "Juan Arenas"
+              ]
+            }
+          ]
+        },
+        "R3": {
+          "name": "Final Approval",
+          "duration_days": 5,
+          "deliverables": [],
+          "tasks": [],
+          "team": [
+            {
+              "role": "Creative Director",
+              "day_rate": 900
+            },
+            {
+              "role": "Art Director",
+              "day_rate": 775
+            },
+            {
+              "role": "Graphic Designer",
+              "day_rate": 600
+            },
+            {
+              "role": "Line Producer",
+              "day_rate": 675
             },
             {
               "role": "Motion Designer",
@@ -2740,49 +2597,14 @@
             {
               "date": "2025-12-22",
               "type": "start",
-              "description": "Integration kickoff",
-              "deliverables": [
-                "Rehearsals with Visuals",
-                "Technical Adjustments"
-              ],
+              "description": "Final Approval kickoff",
+              "deliverables": [],
               "team_members": [
-                "Experiential Designer",
-                "Motion Designer",
-                "Art Director"
-              ],
-              "stakeholders": [
-                "Isaac Lee",
-                "Santiago Duque",
-                "Juan Arenas"
-              ]
-            }
-          ]
-        },
-        "R4": {
-          "name": "Delivery",
-          "duration_days": 5,
-          "deliverables": [
-            "Live Performance Setup",
-            "Final Adjustments & Support"
-          ],
-          "tasks": [
-            "Live Performance Setup",
-            "Final Adjustments & Support"
-          ],
-          "team": [],
-          "start_date": "2025-12-29",
-          "events": [
-            {
-              "date": "2025-12-29",
-              "type": "start",
-              "description": "Delivery kickoff",
-              "deliverables": [
-                "Live Performance Setup",
-                "Final Adjustments & Support"
-              ],
-              "team_members": [
-                "Experiential Designer",
-                "Creative Producer"
+                "Creative Director",
+                "Art Director",
+                "Graphic Designer",
+                "Line Producer",
+                "Motion Designer"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -2813,7 +2635,7 @@
         "day_rate": 900
       },
       {
-        "name": "Juan Felipe Díaz Herrera",
+        "name": "Juan Felipe D\u00edaz Herrera",
         "role": "Executive Producer",
         "day_rate": 1200
       }
@@ -2869,7 +2691,7 @@
         "day_rate": 800
       },
       {
-        "name": "Jose Felipe Varón",
+        "name": "Jose Felipe Var\u00f3n",
         "role": "Documentary/Reality TV Director",
         "day_rate": 900
       },
@@ -2908,7 +2730,7 @@
         "extremeLeftTop": "Santiago Duque",
         "extremeLeftBottom": "Juan Arenas",
         "farLeftMiddle": "Israel Riqueros",
-        "farLeftBottom": "Juan Felipe Díaz Herrera",
+        "farLeftBottom": "Juan Felipe D\u00edaz Herrera",
         "leftMiddleTopExtra": "Alexandra Kern",
         "leftMiddleTop": "Sho Schrock Manabe",
         "leftMiddleBottom": "Zuheng Yin",
@@ -2916,7 +2738,7 @@
         "middleTop": "Ophelia Roster",
         "middleCenter": "DJ Jung",
         "middleBottom": "Clayton McCracken",
-        "rightTopExtra": "Jose Felipe Varón",
+        "rightTopExtra": "Jose Felipe Var\u00f3n",
         "rightTop": "Yussef Haridy",
         "rightMiddle": "Angelo Rosales",
         "rightBottom": "Wesley So",
@@ -2935,11 +2757,11 @@
         ],
         [
           "Santiago Duque",
-          "Juan Felipe Díaz Herrera"
+          "Juan Felipe D\u00edaz Herrera"
         ],
         [
           "Juan Arenas",
-          "Juan Felipe Díaz Herrera"
+          "Juan Felipe D\u00edaz Herrera"
         ],
         [
           "Israel Riqueros",
@@ -2958,15 +2780,15 @@
           "DJ Jung"
         ],
         [
-          "Juan Felipe Díaz Herrera",
+          "Juan Felipe D\u00edaz Herrera",
           "Alexandra Kern"
         ],
         [
-          "Juan Felipe Díaz Herrera",
+          "Juan Felipe D\u00edaz Herrera",
           "Sho Schrock Manabe"
         ],
         [
-          "Juan Felipe Díaz Herrera",
+          "Juan Felipe D\u00edaz Herrera",
           "Zuheng Yin"
         ],
         [
@@ -2979,7 +2801,7 @@
         ],
         [
           "Ophelia Roster",
-          "Jose Felipe Varón"
+          "Jose Felipe Var\u00f3n"
         ],
         [
           "Ophelia Roster",
