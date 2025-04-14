@@ -1270,6 +1270,9 @@ const WEBHOOK_UUID = getWebhookUuid();
 const LANGFLOW_URL = "http://localhost:7860";
 const FLOW_UUID = "a5492bd0-a2b9-4e25-9de6-24e5fede1dda"; // Update with the actual Flow UUID from your curl command
 
+// Add this constant for the API key
+const API_KEY = "sk-WpXrIiZbvjNyCCjYjy-_FXpErYJeUjkiDwMP7flCkx4"; //
+
 export default {
   name: 'AdminPage',
   setup() {
@@ -1577,18 +1580,29 @@ export default {
           if (modalId.value !== -1) {
             // Update existing phase
             jsonData.value.phases[modalId.value] = updatedPhase
+            // Log to confirm the update
+            console.log(`Updated phase ${modalId.value}:`, jsonData.value.phases[modalId.value]);
           } else {
             // Add new phase
             jsonData.value.phases.push(updatedPhase)
+            console.log(`Added new phase:`, updatedPhase);
           }
           
           statusMessage.value = 'Phase JSON updated successfully!'
           setTimeout(() => { statusMessage.value = '' }, 2000)
           
+          // Save changes to server
+          saveData().then(() => {
+            console.log("Changes saved to server after modal edit");
+          }).catch(err => {
+            console.error("Error saving changes to server:", err);
+          });
+          
           closeModal()
           return
         } catch (error) {
           phaseJsonError.value = `Error saving: ${error.message}`
+          console.error("JSON parsing error:", error);
           return
         }
       }
@@ -1842,6 +1856,13 @@ export default {
       }
       
       closeModal()
+      
+      // Save changes to server after closing modal
+      saveData().then(() => {
+        console.log("Changes saved to server after form edit");
+      }).catch(err => {
+        console.error("Error saving changes to server:", err);
+      });
     }
     
     const saveFormData = (type) => {
@@ -1885,10 +1906,34 @@ export default {
           }
         } catch (apiError) {
           console.warn('API not available for saving:', apiError)
-          statusMessage.value = 'Changes saved in memory only. API not available for permanent storage.'
           
-          // Update originalData for in-memory reset functionality
-          originalData.value = JSON.parse(JSON.stringify(jsonData.value))
+          // When API is not available, try a direct file download instead
+          try {
+            // Create a download link to save the file directly
+            const jsonContent = JSON.stringify(jsonData.value, null, 2)
+            const blob = new Blob([jsonContent], { type: 'application/json' })
+            const url = URL.createObjectURL(blob)
+            
+            const downloadLink = document.createElement('a')
+            downloadLink.href = url
+            downloadLink.download = 'data.json'
+            
+            // Append to the document, click it, and remove it
+            document.body.appendChild(downloadLink)
+            downloadLink.click()
+            document.body.removeChild(downloadLink)
+            
+            // Clean up the URL object
+            URL.revokeObjectURL(url)
+            
+            statusMessage.value = 'API not available. File downloaded as data.json - please place it in the correct directory!'
+            
+            // Also update originalData for in-memory reset functionality
+            originalData.value = JSON.parse(JSON.stringify(jsonData.value))
+          } catch (downloadError) {
+            console.error('Error creating download file:', downloadError)
+            statusMessage.value = 'Error saving data: API unavailable and download failed. Changes are only in memory.'
+          }
         }
       } catch (error) {
         console.error('Error saving data:', error)
@@ -1896,10 +1941,12 @@ export default {
       } finally {
         isSaving.value = false
         setTimeout(() => {
-          if (statusMessage.value.includes('success') || statusMessage.value.includes('memory only')) {
+          if (statusMessage.value.includes('success') || 
+              statusMessage.value.includes('downloaded') || 
+              statusMessage.value.includes('memory only')) {
             statusMessage.value = ''
           }
-        }, 3000)
+        }, 5000) // Give more time for the user to read the message
       }
     }
     
@@ -1939,9 +1986,20 @@ export default {
         const parsedJson = JSON.parse(rawJsonText.value)
         jsonData.value = parsedJson
         statusMessage.value = 'Raw JSON saved successfully!'
+        console.log("Raw JSON parsed and saved to data model:", parsedJson);
+        
+        // Save changes to server
+        saveData().then(() => {
+          console.log("Raw JSON saved to server successfully");
+        }).catch(err => {
+          console.error("Error saving raw JSON to server:", err);
+          statusMessage.value = 'Changes saved in memory only. Server error: ' + err.message;
+        });
+        
         showRawJsonEditor.value = false
       } catch (error) {
-        jsonError.value = 'Error saving raw JSON'
+        console.error("Error saving raw JSON:", error);
+        jsonError.value = 'Error saving raw JSON: ' + error.message
       }
     }
 
@@ -2013,11 +2071,14 @@ export default {
             if (section === 'phases') {
               // Replace the entire phase object with the edited JSON
               jsonData.value.phases[index] = parsedJson
+              console.log(`Updated full phase JSON at index ${index}:`, parsedJson);
             } else if (section === 'creativeTeam') {
-              if (parent) {
-                jsonData.value.creativeTeam[parent] = parsedJson
+              if (path.parent) {
+                jsonData.value.creativeTeam[path.parent] = parsedJson
+                console.log(`Updated creativeTeam.${path.parent} JSON:`, parsedJson);
               } else {
                 jsonData.value.creativeTeam = parsedJson
+                console.log(`Updated entire creativeTeam JSON:`, parsedJson);
               }
             }
             
@@ -2027,11 +2088,25 @@ export default {
               statusMessage.value = ''
             }, 2000)
             
+            // Save changes to server
+            saveData().then(() => {
+              console.log("Changes saved to server after full JSON edit");
+            }).catch(err => {
+              console.error("Error saving changes to server:", err);
+            });
+            
             closeFieldEditor()
             return // Exit early since we've handled the update
           } else {
             // We're just editing the specific field (original behavior)
-            fieldEditor.value.value = JSON.parse(fieldEditor.value.jsonText)
+            try {
+              fieldEditor.value.value = JSON.parse(fieldEditor.value.jsonText)
+              console.log("Parsed field JSON successfully:", fieldEditor.value.value);
+            } catch (parseError) {
+              console.error("Error parsing field JSON:", parseError);
+              fieldEditor.value.jsonError = `JSON parse error: ${parseError.message}`;
+              return; // Don't proceed if parsing fails
+            }
           }
         }
         
@@ -2044,19 +2119,30 @@ export default {
           if (section === 'phases') {
             if (parent === 'core_deliverables') {
               jsonData.value.phases[index].core_deliverables[field] = value
+              console.log(`Updated phases[${index}].core_deliverables.${field}:`, value);
             } else if (parent.startsWith('rounds.')) {
               const roundKey = parent.split('.')[1]
               jsonData.value.phases[index].rounds[roundKey][field] = value
+              console.log(`Updated phases[${index}].rounds.${roundKey}.${field}:`, value);
             }
           } else if (section === 'creativeTeam') {
             jsonData.value.creativeTeam[parent][index][field] = value
+            console.log(`Updated creativeTeam.${parent}[${index}].${field}:`, value);
           }
         } else {
           // Handle top-level fields
           if (section === 'phases') {
             jsonData.value.phases[index][field] = value
+            console.log(`Updated phases[${index}].${field}:`, value);
           } else if (section === 'creativeTeam') {
             jsonData.value.creativeTeam[field] = value
+            console.log(`Updated creativeTeam.${field}:`, value);
+          } else if (section === 'budgetSettings') {
+            if (!jsonData.value.budgetSettings) {
+              jsonData.value.budgetSettings = {};
+            }
+            jsonData.value.budgetSettings[field] = value
+            console.log(`Updated budgetSettings.${field}:`, value);
           }
         }
         
@@ -2065,8 +2151,16 @@ export default {
           statusMessage.value = ''
         }, 2000)
         
+        // Save changes to server after field edit
+        saveData().then(() => {
+          console.log("Changes saved to server after field edit");
+        }).catch(err => {
+          console.error("Error saving changes to server:", err);
+        });
+        
         closeFieldEditor()
       } catch (error) {
+        console.error("Error in saveFieldEditor:", error);
         fieldEditor.value.jsonError = `Error saving: ${error.message}`
       }
     }
@@ -2198,99 +2292,52 @@ export default {
         // Update the UI to show processing
         statusMessage.value = "Sending request to AI service...";
         
-        // Create payload with proper format for Langflow
+        // Format input as a string containing the prompt and the JSON
+        const jsonStr = JSON.stringify(jsonData);
+        const inputValue = `${fieldEditor.value.aiPrompt}\n\nJSON DATA:\n${jsonStr}`;
+        
+        // Create payload with new format using string input
         const payload = {
-          "user_prompt": fieldEditor.value.aiPrompt,
-          "json_snippet": jsonData,
-          "full_json": jsonData,
+          "input_value": inputValue,
+          "input_type": "chat",
+          "output_type": "chat",
           "session_id": "user_edit_" + Date.now()
         };
         
-        // Format options as shown in the example
+        // Format options with the new headers
         const options = {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'x-api-key': API_KEY
           },
           body: JSON.stringify(payload)
         };
         
         console.log("Sending AI edit request with payload:", payload);
-        const response = await fetch(`${LANGFLOW_URL}/api/v1/webhook/${FLOW_UUID}`, options);
+        // Use the new endpoint format
+        const response = await fetch(`${LANGFLOW_URL}/api/v1/run/${FLOW_UUID}`, options);
         
         if (!response.ok) {
           throw new Error(`API error: ${response.status} ${response.statusText}`);
         }
         
-        const initialResult = await response.json();
-        console.log("Received initial response from Langflow:", initialResult);
+        const result = await response.json();
+        console.log("Received response from AI service:", result);
         
-        // Check if we need to poll for results
-        if (initialResult.status === "in progress" || initialResult.message === "Task started in the background") {
-          statusMessage.value = "Processing your AI request...";
-          
-          // Poll for results
-          let resultData = null;
-          let attempts = 0;
-          const maxAttempts = 30;
-          const sessionId = payload.session_id;
-          
-          while (attempts < maxAttempts) {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds between polls
-            
-            try {
-              // We need proper headers for Langflow's webhook API
-              const pollResponse = await fetch(`${LANGFLOW_URL}/api/v1/webhook/${FLOW_UUID}?session_id=${sessionId}`, {
-                method: 'GET',
-                headers: { 
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  'X-Session-ID': sessionId
-                }
-              });
-              
-              if (pollResponse.ok) {
-                const responseText = await pollResponse.text();
-                console.log("Raw poll response:", responseText);
-                
-                // Try to parse the response as JSON
-                try {
-                  const pollResult = JSON.parse(responseText);
-                  console.log("Poll result:", pollResult);
-                  
-                  // Check if we have a result and it's not still processing
-                  if (pollResult && typeof pollResult === 'object' && pollResult.status !== "in_progress") {
-                    resultData = pollResult;
-                    break;
-                  }
-                } catch (jsonError) {
-                  console.error("Error parsing response as JSON:", jsonError);
-                  // Continue polling
-                }
-              } else {
-                console.error(`Poll response not OK: ${pollResponse.status} ${pollResponse.statusText}`);
-              }
-            } catch (pollError) {
-              console.error("Error polling for results:", pollError);
-            }
-            
-            attempts++;
-          }
-          
-          if (!resultData) {
-            throw new Error("Timed out waiting for AI results");
-          }
-          
-          // Process the result
-          console.log("Final AI result:", resultData);
-          processAiResult(resultData);
-        } else {
-          // We already have our result
-          processAiResult(initialResult);
-        }
+        // Process the result
+        processAiResult(result);
         
         // Show success message
         statusMessage.value = 'AI edits applied successfully!';
+        
+        // Save changes to server after applying AI edits
+        await saveData().catch(err => {
+          console.error("Error saving AI edits to server:", err);
+          statusMessage.value = 'AI edits applied but not saved to server: ' + err.message;
+        });
+        
         setTimeout(() => { statusMessage.value = ''; }, 3000);
         
         // Clear error and processing state
@@ -2304,59 +2351,133 @@ export default {
       }
     };
     
-    // Helper function to process AI results
+    // Update the processAiResult function
     const processAiResult = (result) => {
-      // Process the result based on whether it's a string or object
-      let processedResult;
-      
       console.log("Processing AI result:", result);
       
-      // Check if the result contains the data directly or in a result property
-      if (result.json_delta) {
-        processedResult = result.json_delta;
-      } else if (result.result) {
-        processedResult = result.result;
-      } else if (typeof result === 'string') {
-        // If the result is a string, try to parse it as JSON
-        try {
-          processedResult = JSON.parse(result);
-        } catch (e) {
-          // If it's not valid JSON, check if it's a text response from the LLM
-          // that contains a JSON object within it (common with AI responses)
-          try {
-            const jsonMatch = result.match(/```json\s*([\s\S]*?)\s*```/) || 
-                          result.match(/```\s*([\s\S]*?)\s*```/) ||
-                          result.match(/{[\s\S]*?}/);
-                          
-            if (jsonMatch && jsonMatch[1]) {
-              processedResult = JSON.parse(jsonMatch[1]);
+      let processedResult;
+      
+      try {
+        // Check for the specific nested structure
+        if (result && result.outputs && Array.isArray(result.outputs) && result.outputs.length > 0) {
+          const firstOutput = result.outputs[0];
+          
+          if (firstOutput.outputs && Array.isArray(firstOutput.outputs) && firstOutput.outputs.length > 0) {
+            const innerOutput = firstOutput.outputs[0];
+            
+            if (innerOutput.outputs && innerOutput.outputs.message && innerOutput.outputs.message.message) {
+              // This is the direct path to the message containing JSON
+              const jsonText = innerOutput.outputs.message.message;
+              console.log("Found jsonText in nested structure:", jsonText);
+              
+              // Extract the JSON from the markdown code block
+              const jsonMatch = jsonText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+              if (jsonMatch && jsonMatch[1]) {
+                console.log("Extracted JSON from markdown: ", jsonMatch[1]);
+                processedResult = JSON.parse(jsonMatch[1]);
+              } else {
+                throw new Error("JSON code block not found in message");
+              }
             } else {
-              throw new Error("Could not extract JSON from response");
+              console.log("Could not find outputs.message.message path, trying alternative paths");
+              
+              // Try to find JSON in any text content in the response
+              const jsonContent = findJsonInResponse(firstOutput);
+              if (jsonContent) {
+                processedResult = jsonContent;
+              } else {
+                throw new Error("Could not find JSON content in the response");
+              }
             }
-          } catch (extractErr) {
-            fieldEditor.value.aiError = 'Could not parse AI response as JSON. Please try a different prompt.';
-            fieldEditor.value.isAiProcessing = false;
-            return;
+          } else {
+            console.log("Could not find nested outputs array, trying direct path");
+            
+            // Try looking for message or text fields directly
+            if (firstOutput.outputs && typeof firstOutput.outputs === 'object') {
+              // Check if the outputs object has a message field
+              if (firstOutput.outputs.message && typeof firstOutput.outputs.message.message === 'string') {
+                const jsonText = firstOutput.outputs.message.message;
+                console.log("Found message text:", jsonText);
+                
+                const jsonMatch = jsonText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+                if (jsonMatch && jsonMatch[1]) {
+                  processedResult = JSON.parse(jsonMatch[1]);
+                } else {
+                  throw new Error("JSON code block not found in message");
+                }
+              } else {
+                throw new Error("Could not find message.message field");
+              }
+            } else {
+              throw new Error("Unexpected response structure");
+            }
+          }
+        } else {
+          // Fallback to previous handling
+          console.log("Falling back to alternative JSON extraction");
+          
+          if (result && result.output_value) {
+            let outputValue = result.output_value;
+            
+            // If outputValue is an object, look for text fields
+            if (typeof outputValue === 'object') {
+              if (outputValue.outputs) {
+                outputValue = outputValue.outputs;
+              }
+              
+              // If we found a text field, try to extract JSON from it
+              if (typeof outputValue === 'string') {
+                const jsonMatch = outputValue.match(/```(?:json)?\s*([\s\S]*?)\s*```/) || 
+                              outputValue.match(/{[\s\S]*?}/);
+                
+                if (jsonMatch) {
+                  const jsonContent = jsonMatch[0].startsWith('{') ? jsonMatch[0] : jsonMatch[1];
+                  processedResult = JSON.parse(jsonContent);
+                } else {
+                  throw new Error("No JSON found in text");
+                }
+              } else if (typeof outputValue === 'object') {
+                processedResult = outputValue;
+              }
+            } else if (typeof outputValue === 'string') {
+              // Try parsing as JSON or extracting JSON from string
+              try {
+                processedResult = JSON.parse(outputValue);
+              } catch (e) {
+                const jsonMatch = outputValue.match(/```(?:json)?\s*([\s\S]*?)\s*```/) || 
+                             outputValue.match(/{[\s\S]*?}/);
+                
+                if (jsonMatch) {
+                  const jsonContent = jsonMatch[0].startsWith('{') ? jsonMatch[0] : jsonMatch[1];
+                  processedResult = JSON.parse(jsonContent);
+                } else {
+                  throw new Error("No JSON found in output_value text");
+                }
+              }
+            }
+          } else {
+            throw new Error("Could not find usable data in response");
           }
         }
-      } else {
-        // Otherwise, use the object as is
-        processedResult = result;
-      }
-      
-      console.log("Processed result:", processedResult);
-      
-      // Update the field editor with the result
-      if (fieldEditor.value.jsonView) {
-        if (fieldEditor.value.fullJsonView) {
-          fieldEditor.value.fullJsonText = JSON.stringify(processedResult, null, 2);
+        
+        console.log("Final processed result:", processedResult);
+        
+        // Update the field editor with the processed result
+        if (fieldEditor.value.jsonView) {
+          if (fieldEditor.value.fullJsonView) {
+            fieldEditor.value.fullJsonText = JSON.stringify(processedResult, null, 2);
+          } else {
+            fieldEditor.value.jsonText = JSON.stringify(processedResult, null, 2);
+            fieldEditor.value.value = processedResult;
+          }
         } else {
-          fieldEditor.value.jsonText = JSON.stringify(processedResult, null, 2);
           fieldEditor.value.value = processedResult;
+          fieldEditor.value.jsonText = JSON.stringify(processedResult, null, 2);
         }
-      } else {
-        fieldEditor.value.value = processedResult;
-        fieldEditor.value.jsonText = JSON.stringify(processedResult, null, 2);
+      } catch (error) {
+        console.error("Error processing AI result:", error);
+        fieldEditor.value.aiError = `Error processing response: ${error.message}`;
+        fieldEditor.value.isAiProcessing = false;
       }
     };
 
@@ -2399,179 +2520,124 @@ export default {
       }
     }
     
-    // Replace the applyPhaseAiEdit function
-    const applyPhaseAiEdit = async () => {
-      if (!phaseAiPrompt.value.trim()) {
-        phaseAiError.value = 'Please enter a prompt';
-        return;
-      }
-      
-      try {
-        phaseAiProcessing.value = true;
-        phaseAiError.value = '';
-        
-        // Parse the phase JSON text to a JSON object
-        let phaseData;
-        try {
-          phaseData = JSON.parse(phaseJsonText.value);
-        } catch (e) {
-          phaseAiError.value = 'Invalid JSON format in the editor';
-          phaseAiProcessing.value = false;
-          return;
-        }
-        
-        // Update the UI to show processing
-        statusMessage.value = "Sending request to AI service...";
-        
-        // Create payload with proper format for Langflow
-        const payload = {
-          "user_prompt": phaseAiPrompt.value,
-          "json_snippet": phaseData,
-          "full_json": phaseData,
-          "session_id": "user_phase_" + Date.now()
-        };
-        
-        // Format options for the request
-        const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        };
-        
-        console.log("Sending phase AI edit request with payload:", payload);
-        const response = await fetch(`${LANGFLOW_URL}/api/v1/webhook/${FLOW_UUID}`, options);
-        
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status} ${response.statusText}`);
-        }
-        
-        const initialResult = await response.json();
-        console.log("Received initial response from Langflow:", initialResult);
-        
-        // Check if we need to poll for results
-        if (initialResult.status === "in progress" || initialResult.message === "Task started in the background") {
-          statusMessage.value = "Processing your AI request...";
-          
-          // Poll for results
-          let resultData = null;
-          let attempts = 0;
-          const maxAttempts = 30;
-          const sessionId = payload.session_id;
-          
-          while (attempts < maxAttempts) {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds between polls
-            
-            try {
-              // We need proper headers for Langflow's webhook API
-              const pollResponse = await fetch(`${LANGFLOW_URL}/api/v1/webhook/${FLOW_UUID}?session_id=${sessionId}`, {
-                method: 'GET',
-                headers: { 
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  'X-Session-ID': sessionId
-                }
-              });
-              
-              if (pollResponse.ok) {
-                const responseText = await pollResponse.text();
-                console.log("Raw poll response:", responseText);
-                
-                // Try to parse the response as JSON
-                try {
-                  const pollResult = JSON.parse(responseText);
-                  console.log("Poll result:", pollResult);
-                  
-                  // Check if we have a result and it's not still processing
-                  if (pollResult && typeof pollResult === 'object' && pollResult.status !== "in_progress") {
-                    resultData = pollResult;
-                    break;
-                  }
-                } catch (jsonError) {
-                  console.error("Error parsing response as JSON:", jsonError);
-                  // Continue polling
-                }
-              } else {
-                console.error(`Poll response not OK: ${pollResponse.status} ${pollResponse.statusText}`);
-              }
-            } catch (pollError) {
-              console.error("Error polling for results:", pollError);
-            }
-            
-            attempts++;
-          }
-          
-          if (!resultData) {
-            throw new Error("Timed out waiting for AI results");
-          }
-          
-          // Process the result
-          processPhaseAiResult(resultData);
-        } else {
-          // We already have our result
-          processPhaseAiResult(initialResult);
-        }
-        
-        // Show success message
-        statusMessage.value = 'AI edits applied successfully!';
-        setTimeout(() => { statusMessage.value = ''; }, 3000);
-        
-        // Clear error and processing state
-        phaseAiProcessing.value = false;
-        phaseAiError.value = '';
-      } catch (error) {
-        console.error("AI edit error:", error);
-        phaseAiError.value = `Error: ${error.message}`;
-        phaseAiProcessing.value = false;
-        statusMessage.value = '';
-      }
-    };
-    
     // Helper function to process Phase AI results
     const processPhaseAiResult = (result) => {
-      // Process the result based on whether it's a string or object
-      let processedResult;
-      
       console.log("Processing Phase AI result:", result);
       
-      // Check if the result contains the data directly or in a result property
-      if (result.json_delta) {
-        processedResult = result.json_delta;
-      } else if (result.result) {
-        processedResult = result.result;
-      } else if (typeof result === 'string') {
-        // If the result is a string, try to parse it as JSON
-        try {
-          processedResult = JSON.parse(result);
-        } catch (e) {
-          // If it's not valid JSON, check if it's a text response from the LLM
-          // that contains a JSON object within it (common with AI responses)
-          try {
-            const jsonMatch = result.match(/```json\s*([\s\S]*?)\s*```/) || 
-                          result.match(/```\s*([\s\S]*?)\s*```/) ||
-                          result.match(/{[\s\S]*?}/);
-                          
-            if (jsonMatch && jsonMatch[1]) {
-              processedResult = JSON.parse(jsonMatch[1]);
+      let processedResult;
+      
+      try {
+        // Check for the specific nested structure
+        if (result && result.outputs && Array.isArray(result.outputs) && result.outputs.length > 0) {
+          const firstOutput = result.outputs[0];
+          
+          if (firstOutput.outputs && Array.isArray(firstOutput.outputs) && firstOutput.outputs.length > 0) {
+            const innerOutput = firstOutput.outputs[0];
+            
+            if (innerOutput.outputs && innerOutput.outputs.message && innerOutput.outputs.message.message) {
+              // This is the direct path to the message containing JSON
+              const jsonText = innerOutput.outputs.message.message;
+              console.log("Found jsonText in nested structure:", jsonText);
+              
+              // Extract the JSON from the markdown code block
+              const jsonMatch = jsonText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+              if (jsonMatch && jsonMatch[1]) {
+                console.log("Extracted JSON from markdown: ", jsonMatch[1]);
+                processedResult = JSON.parse(jsonMatch[1]);
+              } else {
+                throw new Error("JSON code block not found in message");
+              }
             } else {
-              throw new Error("Could not extract JSON from response");
+              console.log("Could not find outputs.message.message path, trying alternative paths");
+              
+              // Try to find JSON in any text content in the response
+              const jsonContent = findJsonInResponse(firstOutput);
+              if (jsonContent) {
+                processedResult = jsonContent;
+              } else {
+                throw new Error("Could not find JSON content in the response");
+              }
             }
-          } catch (extractErr) {
-            phaseAiError.value = 'Could not parse AI response as JSON. Please try a different prompt.';
-            phaseAiProcessing.value = false;
-            return;
+          } else {
+            console.log("Could not find nested outputs array, trying direct path");
+            
+            // Try looking for message or text fields directly
+            if (firstOutput.outputs && typeof firstOutput.outputs === 'object') {
+              // Check if the outputs object has a message field
+              if (firstOutput.outputs.message && typeof firstOutput.outputs.message.message === 'string') {
+                const jsonText = firstOutput.outputs.message.message;
+                console.log("Found message text:", jsonText);
+                
+                const jsonMatch = jsonText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+                if (jsonMatch && jsonMatch[1]) {
+                  processedResult = JSON.parse(jsonMatch[1]);
+                } else {
+                  throw new Error("JSON code block not found in message");
+                }
+              } else {
+                throw new Error("Could not find message.message field");
+              }
+            } else {
+              throw new Error("Unexpected response structure");
+            }
+          }
+        } else {
+          // Fallback to previous handling
+          console.log("Falling back to alternative JSON extraction");
+          
+          if (result && result.output_value) {
+            let outputValue = result.output_value;
+            
+            // If outputValue is an object, look for text fields
+            if (typeof outputValue === 'object') {
+              if (outputValue.outputs) {
+                outputValue = outputValue.outputs;
+              }
+              
+              // If we found a text field, try to extract JSON from it
+              if (typeof outputValue === 'string') {
+                const jsonMatch = outputValue.match(/```(?:json)?\s*([\s\S]*?)\s*```/) || 
+                              outputValue.match(/{[\s\S]*?}/);
+                
+                if (jsonMatch) {
+                  const jsonContent = jsonMatch[0].startsWith('{') ? jsonMatch[0] : jsonMatch[1];
+                  processedResult = JSON.parse(jsonContent);
+                } else {
+                  throw new Error("No JSON found in text");
+                }
+              } else if (typeof outputValue === 'object') {
+                processedResult = outputValue;
+              }
+            } else if (typeof outputValue === 'string') {
+              // Try parsing as JSON or extracting JSON from string
+              try {
+                processedResult = JSON.parse(outputValue);
+              } catch (e) {
+                const jsonMatch = outputValue.match(/```(?:json)?\s*([\s\S]*?)\s*```/) || 
+                             outputValue.match(/{[\s\S]*?}/);
+                
+                if (jsonMatch) {
+                  const jsonContent = jsonMatch[0].startsWith('{') ? jsonMatch[0] : jsonMatch[1];
+                  processedResult = JSON.parse(jsonContent);
+                } else {
+                  throw new Error("No JSON found in output_value text");
+                }
+              }
+            }
+          } else {
+            throw new Error("Could not find usable data in response");
           }
         }
-      } else {
-        // Otherwise, use the object as is
-        processedResult = result;
+        
+        console.log("Final processed phase result:", processedResult);
+        
+        // Update the phase JSON text with the processed result
+        phaseJsonText.value = JSON.stringify(processedResult, null, 2);
+      } catch (error) {
+        console.error("Error processing Phase AI result:", error);
+        phaseAiError.value = `Error processing response: ${error.message}`;
+        phaseAiProcessing.value = false;
       }
-      
-      console.log("Processed phase result:", processedResult);
-      
-      // Update the phase JSON text
-      phaseJsonText.value = JSON.stringify(processedResult, null, 2);
     };
 
     // Helper function to get assignment info for team members
@@ -2948,12 +3014,12 @@ export default {
     // Update the testWebhook function to use the Langflow format
     const testWebhook = async () => {
       try {
-        statusMessage.value = 'Testing webhook connection...';
-        console.log("Testing webhook at:", `${LANGFLOW_URL}/api/v1/run/${FLOW_UUID}`);
+        statusMessage.value = 'Testing API connection...';
+        console.log("Testing API at:", `${LANGFLOW_URL}/api/v1/run/${FLOW_UUID}`);
         
         // Show testing modal
         Swal.fire({
-          title: 'Testing Webhook',
+          title: 'Testing API Connection',
           html: `<div>Sending request to Langflow endpoint:</div>
                  <div style="font-family:monospace;margin:8px 0;word-break:break-all;font-size:0.8em;">${LANGFLOW_URL}/api/v1/run/${FLOW_UUID}</div>`,
           icon: 'info',
@@ -2967,35 +3033,38 @@ export default {
         // Create a test JSON object
         const testJson = {
           name: "Test Object",
-          type: "webhook_test",
+          type: "api_test",
           properties: {
             description: "This is a test JSON object",
             timestamp: new Date().toISOString()
           }
         };
         
-        // Create payload with prompt and JSON data as a nested object
+        // Format input as a string for the test
+        const jsonStr = JSON.stringify(testJson);
+        const inputValue = `This is a test API call. Please analyze the attached JSON:\n\n${jsonStr}`;
+        
+        // Create payload with the new format using string input
         const payload = {
-          "input_value": {
-            prompt: "This is a test webhook call. Please analyze the attached JSON.",
-            json_data: testJson
-          },
+          "input_value": inputValue,
+          "input_type": "chat",
           "output_type": "chat",
-          "input_type": "text",
-          "session_id": "test_webhook_" + Date.now()
+          "session_id": "test_api_" + Date.now()
         };
         
-        // Format options as shown in the example
+        // Format options with the new headers
         const options = {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'x-api-key': API_KEY
           },
           body: JSON.stringify(payload)
         };
         
-        // Send request using fetch as per the example
-        console.log("Sending webhook test request with payload:", payload);
+        // Send request using fetch with new format
+        console.log("Sending API test request with payload:", payload);
         const response = await fetch(`${LANGFLOW_URL}/api/v1/run/${FLOW_UUID}`, options);
         
         if (!response.ok) {
@@ -3004,46 +3073,179 @@ export default {
         
         const result = await response.json();
         
-        console.log("Received response from Langflow:", result);
+        console.log("Received response from API:", result);
         
         // Close loading dialog
         Swal.close();
         
         // Show success message with response data
         Swal.fire({
-          title: 'Webhook Test Successful',
+          title: 'API Test Successful',
           html: `<div>Response received:</div>
                  <pre style="text-align:left;background:#f5f5f5;padding:10px;margin-top:10px;max-height:300px;overflow:auto">${JSON.stringify(result, null, 2)}</pre>`,
           icon: 'success'
         });
         
-        statusMessage.value = 'Webhook test successful!';
+        statusMessage.value = 'API test successful!';
         setTimeout(() => { statusMessage.value = ''; }, 3000);
         
       } catch (error) {
-        console.error("Webhook test error:", error);
+        console.error("API test error:", error);
         
         // Close any open Swal
         Swal.close();
         
         // More informative error dialog
         Swal.fire({
-          title: 'Webhook Test Failed',
+          title: 'API Test Failed',
           html: `<div style="color:#d32f2f;">${error.message}</div>
                  <div style="margin-top:15px;font-size:0.9em;">
                    <p><strong>Troubleshooting:</strong></p>
                    <ul style="text-align:left;margin-top:5px">
-                     <li>Make sure the webhook server is running at: <code>${LANGFLOW_URL}</code></li>
-                     <li>Check that the webhook UUID is correct: <code>${FLOW_UUID}</code></li>
-                     <li>Verify the webhook endpoint path: <code>/api/v1/run/[UUID]</code></li>
+                     <li>Make sure the API server is running at: <code>${LANGFLOW_URL}</code></li>
+                     <li>Check that the flow ID is correct: <code>${FLOW_UUID}</code></li>
+                     <li>Verify your API key is valid</li>
                      <li>Check the server console for any errors</li>
                    </ul>
                  </div>`,
           icon: 'error'
         });
         
-        statusMessage.value = `Webhook test failed: ${error.message}`;
+        statusMessage.value = `API test failed: ${error.message}`;
       }
+    };
+
+    // Add the missing applyPhaseAiEdit function
+    const applyPhaseAiEdit = async () => {
+      if (!phaseAiPrompt.value.trim()) {
+        phaseAiError.value = 'Please enter a prompt';
+        return;
+      }
+      
+      try {
+        phaseAiProcessing.value = true;
+        phaseAiError.value = '';
+        
+        // Parse the phase JSON text to a JSON object
+        let phaseData;
+        try {
+          phaseData = JSON.parse(phaseJsonText.value);
+        } catch (e) {
+          phaseAiError.value = 'Invalid JSON format in the editor';
+          phaseAiProcessing.value = false;
+          return;
+        }
+        
+        // Update the UI to show processing
+        statusMessage.value = "Sending request to AI service...";
+        
+        // Format input as a string containing the prompt and the JSON
+        const jsonStr = JSON.stringify(phaseData);
+        const inputValue = `${phaseAiPrompt.value}\n\nJSON DATA:\n${jsonStr}`;
+        
+        // Create payload with the new format using string input
+        const payload = {
+          "input_value": inputValue,
+          "input_type": "chat",
+          "output_type": "chat",
+          "session_id": "user_phase_" + Date.now()
+        };
+        
+        // Format options with the new headers
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'x-api-key': API_KEY
+          },
+          body: JSON.stringify(payload)
+        };
+        
+        console.log("Sending phase AI edit request with payload:", payload);
+        // Use the new endpoint format
+        const response = await fetch(`${LANGFLOW_URL}/api/v1/run/${FLOW_UUID}`, options);
+        
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status} ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        console.log("Received response from AI service:", result);
+        
+        // Process the result
+        processPhaseAiResult(result);
+        
+        // Show success message
+        statusMessage.value = 'AI edits applied successfully!';
+        
+        // Save changes to server after applying phase AI edits
+        await saveData().catch(err => {
+          console.error("Error saving phase AI edits to server:", err);
+          statusMessage.value = 'Phase AI edits applied but not saved to server: ' + err.message;
+        });
+        
+        setTimeout(() => { statusMessage.value = ''; }, 3000);
+        
+        // Clear error and processing state
+        phaseAiProcessing.value = false;
+        phaseAiError.value = '';
+      } catch (error) {
+        console.error("AI edit error:", error);
+        phaseAiError.value = `Error: ${error.message}`;
+        phaseAiProcessing.value = false;
+        statusMessage.value = '';
+      }
+    };
+
+    // Helper function to recursively find JSON in any text field
+    const findJsonInResponse = (obj) => {
+      if (!obj) return null;
+      
+      // If this is a string, try to find JSON in it
+      if (typeof obj === 'string') {
+        try {
+          // Check for markdown code blocks or inline JSON
+          const jsonMatch = obj.match(/```(?:json)?\s*([\s\S]*?)\s*```/) || 
+                        obj.match(/{[\s\S]*?}/);
+          
+          if (jsonMatch) {
+            const jsonContent = jsonMatch[0].startsWith('{') ? jsonMatch[0] : jsonMatch[1];
+            return JSON.parse(jsonContent);
+          }
+        } catch (e) {
+          // Continue searching if we couldn't parse JSON here
+        }
+      }
+      
+      // If this is an array, search through each element
+      if (Array.isArray(obj)) {
+        for (const item of obj) {
+          const result = findJsonInResponse(item);
+          if (result) return result;
+        }
+        return null;
+      }
+      
+      // If this is an object, search through each property
+      if (typeof obj === 'object' && obj !== null) {
+        // Check common property names first
+        const commonProperties = ['message', 'text', 'content', 'outputs', 'output', 'data'];
+        for (const prop of commonProperties) {
+          if (obj[prop] !== undefined) {
+            const result = findJsonInResponse(obj[prop]);
+            if (result) return result;
+          }
+        }
+        
+        // Then check all properties
+        for (const key in obj) {
+          const result = findJsonInResponse(obj[key]);
+          if (result) return result;
+        }
+      }
+      
+      return null;
     };
 
     return {

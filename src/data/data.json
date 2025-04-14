@@ -1218,7 +1218,6 @@
         "Press Shoot Package",
         "Styling Direction",
         "Production Roadmap",
-        "Technical Specifications"
       ],
       "rounds": {
         "R1": {
@@ -1515,8 +1514,7 @@
       "core_deliverables": [
         "3 Final Music Videos",
         "Production Roadmap & Call Sheets",
-        "Casting & Styling Packages",
-        "Technical Specifications & Camera Tests"
+        "Casting & Styling Packages"
       ],
       "rounds": {
         "R1": {
@@ -1525,8 +1523,7 @@
           "deliverables": [
             "Concept Approval",
             "Location Scouting & Casting",
-            "Storyboard & Shotlist Development",
-            "Budget & Schedule Approval"
+            "Storyboard & Shotlist Development"
           ],
           "tasks": [
             "Concept Approval",
@@ -2805,102 +2802,121 @@
       {
         "name": "Israel Riqueros",
         "role": "Creative Director",
-        "day_rate": 1100
+        "day_rate": 1100,
+        "avatarUrl": null
       },
       {
         "name": "DJ Jung",
         "role": "Art Director",
-        "day_rate": 900
+        "day_rate": 900,
+        "avatarUrl": null
       },
       {
         "name": "Juan Felipe Díaz Herrera",
         "role": "Executive Producer",
-        "day_rate": 1200
+        "day_rate": 1200,
+        "avatarUrl": null
       }
     ],
     "designers": [
       {
         "name": "Wesley So",
         "role": "Graphic Designer",
-        "day_rate": 700
+        "day_rate": 700,
+        "avatarUrl": null
       },
       {
         "name": "Blake Bohls",
         "role": "Merch Designer",
-        "day_rate": 800
+        "day_rate": 800,
+        "avatarUrl": null
       },
       {
         "name": "Lena Huang",
         "role": "Motion Designer",
-        "day_rate": 800
+        "day_rate": 800,
+        "avatarUrl": null
       },
       {
         "name": "Muhozi Nintunze",
         "role": "Product Designer",
-        "day_rate": 1000
+        "day_rate": 1000,
+        "avatarUrl": null
       }
     ],
     "production": [
       {
         "name": "Sho Schrock Manabe",
         "role": "Line Producer",
-        "day_rate": 900
+        "day_rate": 900,
+        "avatarUrl": null
       },
       {
         "name": "Alexandra Kern",
         "role": "Post-Producer",
-        "day_rate": 900
+        "day_rate": 900,
+        "avatarUrl": null
       },
       {
         "name": "Zuheng Yin",
         "role": "Creative Producer",
-        "day_rate": 900
+        "day_rate": 900,
+        "avatarUrl": null
       },
       {
         "name": "Ophelia Roster",
         "role": "Director / Photographer",
-        "day_rate": 900
+        "day_rate": 900,
+        "avatarUrl": null
       }
     ],
     "creatives": [
       {
         "name": "Angelo Rosales",
         "role": "3D Artist",
-        "day_rate": 800
+        "day_rate": 800,
+        "avatarUrl": null
       },
       {
         "name": "Jose Felipe Varón",
         "role": "Documentary/Reality TV Director",
-        "day_rate": 900
+        "day_rate": 900,
+        "avatarUrl": null
       },
       {
         "name": "Yussef Haridy",
         "role": "BTS Shooter",
-        "day_rate": 1000
+        "day_rate": 1000,
+        "avatarUrl": null
       },
       {
         "name": "Clayton McCracken",
         "role": "Experiential Designer",
-        "day_rate": 850
+        "day_rate": 850,
+        "avatarUrl": null
       },
       {
         "name": "John Burton",
         "role": "Editor / Sound Designer",
-        "day_rate": 900
+        "day_rate": 900,
+        "avatarUrl": null
       }
     ],
     "stakeholders": [
       {
         "name": "Santiago Duque",
-        "role": "Hybe Corp"
+        "role": "Hybe Corp",
+        "avatarUrl": null
       },
       {
         "name": "Juan Arenas",
-        "role": "Hybe Corp"
+        "role": "Hybe Corp",
+        "avatarUrl": null
       },
       {
         "name": "Isaac Lee",
-        "role": "Hybe Corp"
+        "role": "Hybe Corp",
+        "avatarUrl": null
       }
     ],
     "orgChart": {
@@ -3015,5 +3031,10 @@
         ]
       ]
     }
+  },
+  "budgetSettings": {
+    "insurance_rate": 3.5,
+    "markup_rate": 15,
+    "payroll_rate": 2.75
   }
 }

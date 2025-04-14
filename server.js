@@ -76,6 +76,26 @@ app.get('/api/data', (req, res) => {
   res.json(data);
 });
 
+// Save all data
+app.post('/api/data', (req, res) => {
+  console.log('API Request: POST /api/data');
+  const newData = req.body;
+  
+  if (!newData || typeof newData !== 'object') {
+    console.error('Invalid data received');
+    return res.status(400).json({ error: 'Invalid data format' });
+  }
+  
+  // Write data to file
+  if (writeDataFile(newData)) {
+    console.log('Data saved successfully');
+    res.json({ success: true });
+  } else {
+    console.error('Failed to write data file');
+    res.status(500).json({ error: 'Failed to save data' });
+  }
+});
+
 // Toggle phase enabled status
 app.put('/api/phases/:phaseName/toggle', (req, res) => {
   const { phaseName } = req.params;
