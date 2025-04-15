@@ -1535,7 +1535,7 @@
       "number": 5,
       "name": "Music Video Production",
       "displayName": "Music Video Production",
-      "enabled": true,
+      "enabled": false,
       "core_deliverables": [
         "3 Final Music Videos",
         "Production Roadmap & Call Sheets",
@@ -1545,7 +1545,7 @@
       "rounds": {
         "R1": {
           "name": "Pre Production",
-          "duration_days": 5,
+          "duration_days": 15,
           "deliverables": [
             "Concept Approval",
             "Location Scouting & Casting",
@@ -1561,11 +1561,23 @@
           "team": [
             {
               "role": "Art Director",
-              "day_rate": 775
+              "day_rate": 775,
+              "days": 5
             },
             {
               "role": "Line Producer",
-              "day_rate": 675
+              "day_rate": 675,
+              "days": 8
+            },
+            {
+              "role": "Director / Photographer",
+              "day_rate": 850,
+              "days": 4
+            },
+            {
+              "role": "Creative Producer",
+              "day_rate": 800,
+              "days": 3
             }
           ],
           "start_date": "2025-08-04",
@@ -1596,7 +1608,7 @@
         },
         "R2": {
           "name": "Production",
-          "duration_days": 5,
+          "duration_days": 3,
           "deliverables": [
             "Filming on Location",
             "Daily Reviews & Adjustments",
@@ -1610,17 +1622,59 @@
           "team": [
             {
               "role": "Art Director",
-              "day_rate": 775
+              "day_rate": 950,
+              "days": 2
             },
             {
               "role": "Line Producer",
-              "day_rate": 675
+              "day_rate": 875,
+              "days": 2
+            },
+            {
+              "role": "Director / Photographer",
+              "day_rate": 1500,
+              "days": 2
+            },
+            {
+              "role": "Camera Operator 1",
+              "day_rate": 850,
+              "days": 2
+            },
+            {
+              "role": "Camera Operator 2",
+              "day_rate": 850,
+              "days": 2
+            },
+            {
+              "role": "Lighting Director",
+              "day_rate": 1200,
+              "days": 2
+            },
+            {
+              "role": "Sound Recordist",
+              "day_rate": 750,
+              "days": 2
+            },
+            {
+              "role": "Stylist",
+              "day_rate": 900,
+              "days": 2
+            },
+            {
+              "role": "Creative Director",
+              "day_rate": 1200,
+              "days": 1
+            },
+            {
+              "role": "BTS Shooter",
+              "day_rate": 800,
+              "days": 2
             }
           ],
-          "start_date": "2025-08-11",
+          "start_date": "2025-08-19",
           "events": [
             {
-              "date": "2025-08-11",
+              "date": "2025-08-19",
               "type": "start",
               "description": "Production kickoff",
               "deliverables": [
@@ -1632,7 +1686,13 @@
                 "Director / Photographer",
                 "Line Producer",
                 "BTS Shooter",
-                "Art Director"
+                "Art Director",
+                "Camera Operator 1",
+                "Camera Operator 2",
+                "Lighting Director",
+                "Sound Recordist",
+                "Stylist",
+                "Creative Director"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -1644,7 +1704,7 @@
         },
         "R3": {
           "name": "Post Production",
-          "duration_days": 5,
+          "duration_days": 20,
           "deliverables": [
             "Editing Rough Cuts",
             "Color Grading & VFX",
@@ -1658,13 +1718,34 @@
           "team": [
             {
               "role": "Motion Designer",
-              "day_rate": 725
+              "day_rate": 725,
+              "days": 5
+            },
+            {
+              "role": "Post-Producer",
+              "day_rate": 800,
+              "days": 5
+            },
+            {
+              "role": "Editor / Sound Designer",
+              "day_rate": 850,
+              "days": 12
+            },
+            {
+              "role": "VFX Artist",
+              "day_rate": 900,
+              "days": 6
+            },
+            {
+              "role": "Colorist",
+              "day_rate": 1000,
+              "days": 3
             }
           ],
-          "start_date": "2025-08-18",
+          "start_date": "2025-08-21",
           "events": [
             {
-              "date": "2025-08-18",
+              "date": "2025-08-21",
               "type": "start",
               "description": "Post-Production kickoff",
               "deliverables": [
@@ -1675,7 +1756,9 @@
               "team_members": [
                 "Post-Producer",
                 "Editor / Sound Designer",
-                "Motion Designer"
+                "Motion Designer",
+                "VFX Artist",
+                "Colorist"
               ],
               "stakeholders": [
                 "Isaac Lee",
@@ -1701,13 +1784,24 @@
           "team": [
             {
               "role": "Line Producer",
-              "day_rate": 675
+              "day_rate": 675,
+              "days": 2
+            },
+            {
+              "role": "Post-Producer",
+              "day_rate": 800,
+              "days": 3
+            },
+            {
+              "role": "Creative Producer",
+              "day_rate": 800,
+              "days": 1
             }
           ],
-          "start_date": "2025-08-25",
+          "start_date": "2025-09-10",
           "events": [
             {
-              "date": "2025-08-25",
+              "date": "2025-09-10",
               "type": "start",
               "description": "Delivery kickoff",
               "deliverables": [
@@ -2489,7 +2583,7 @@
       "number": 9,
       "name": "Documentary Production",
       "displayName": "Documentary Production",
-      "enabled": true,
+      "enabled": false,
       "core_deliverables": [
         "Feature-Length Documentary",
         "Contestant Hometown Profiles",
