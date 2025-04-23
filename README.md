@@ -19,7 +19,7 @@ A interactive project timeline and scope visualization tool with an admin interf
 npm install
 ```
 
-2. Run the development server:
+2. Run the development server
 
 ```bash
 npm run dev
