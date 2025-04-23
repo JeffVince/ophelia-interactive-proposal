@@ -52,7 +52,7 @@ Note: The API server must be running (`npm run server`) for changes to be saved 
 
 ## Development
 
-- Frontend: Vue 3 with Vite
+- Frontend: Vue 3 with Vite.
 - Backend: Express.js for data management API
 
 ## License
