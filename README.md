@@ -11,7 +11,7 @@ A interactive project timeline and scope visualization tool with an admin interf
 - Budget dashboard
 - Admin interface for data management
 
-## Setup
+## Setup 
 
 1. Install dependencies:
 
